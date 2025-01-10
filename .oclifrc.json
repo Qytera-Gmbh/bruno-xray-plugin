@@ -1,0 +1,6 @@
+{
+  "bin": "xray",
+  "commands": "./src/commands",
+  "dirname": "xray",
+  "topicSeparator": " "
+}

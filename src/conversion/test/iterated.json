@@ -1,0 +1,608 @@
+[
+  {
+    "iterationIndex": 0,
+    "summary": {
+      "totalRequests": 2,
+      "passedRequests": 2,
+      "failedRequests": 0,
+      "totalAssertions": 2,
+      "passedAssertions": 1,
+      "failedAssertions": 1,
+      "totalTests": 0,
+      "passedTests": 0,
+      "failedTests": 0
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "DP-90\\failing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Jeff",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 11:32:51 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 23
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "gWvqYammPLj4BBh66Al2c",
+            "lhsExpr": "res.body",
+            "rhsExpr": "isJson",
+            "rhsOperand": "",
+            "operator": "isJson",
+            "status": "fail",
+            "error": "expected '' to be JSON"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0333134,
+        "suitename": "DP-90\\failing assertion",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "DP-90\\passing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Jeff",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 11:32:51 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 5
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "I0Lb2Z-BUqwOKu9MVg1t9",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0080615,
+        "suitename": "DP-90\\passing assertion",
+        "iterationIndex": 0
+      }
+    ]
+  },
+  {
+    "iterationIndex": 1,
+    "summary": {
+      "totalRequests": 2,
+      "passedRequests": 2,
+      "failedRequests": 0,
+      "totalAssertions": 2,
+      "passedAssertions": 1,
+      "failedAssertions": 1,
+      "totalTests": 0,
+      "passedTests": 0,
+      "failedTests": 0
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "DP-90\\failing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/George",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 11:32:51 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 3
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "Ovn2AdoGf3UH9mV-NJQyM",
+            "lhsExpr": "res.body",
+            "rhsExpr": "isJson",
+            "rhsOperand": "",
+            "operator": "isJson",
+            "status": "fail",
+            "error": "expected '' to be JSON"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0040275,
+        "suitename": "DP-90\\failing assertion",
+        "iterationIndex": 1
+      },
+      {
+        "test": {
+          "filename": "DP-90\\passing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/George",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 11:32:51 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "rQqIc6bUuQ5OPfdq1m4w4",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0037235,
+        "suitename": "DP-90\\passing assertion",
+        "iterationIndex": 1
+      }
+    ]
+  },
+  {
+    "iterationIndex": 2,
+    "summary": {
+      "totalRequests": 2,
+      "passedRequests": 2,
+      "failedRequests": 0,
+      "totalAssertions": 2,
+      "passedAssertions": 1,
+      "failedAssertions": 1,
+      "totalTests": 0,
+      "passedTests": 0,
+      "failedTests": 0
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "DP-90\\failing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Bob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 11:32:51 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "ID_aZ8bgaaU2zTjZptIKr",
+            "lhsExpr": "res.body",
+            "rhsExpr": "isJson",
+            "rhsOperand": "",
+            "operator": "isJson",
+            "status": "fail",
+            "error": "expected '' to be JSON"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0040877,
+        "suitename": "DP-90\\failing assertion",
+        "iterationIndex": 2
+      },
+      {
+        "test": {
+          "filename": "DP-90\\passing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Bob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 11:32:51 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "Bf3_GNNh2-36ve7pFNyv2",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0036631,
+        "suitename": "DP-90\\passing assertion",
+        "iterationIndex": 2
+      }
+    ]
+  },
+  {
+    "iterationIndex": 3,
+    "summary": {
+      "totalRequests": 2,
+      "passedRequests": 2,
+      "failedRequests": 0,
+      "totalAssertions": 2,
+      "passedAssertions": 1,
+      "failedAssertions": 1,
+      "totalTests": 0,
+      "passedTests": 0,
+      "failedTests": 0
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "DP-90\\failing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Rob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 11:32:51 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "hDXKUy6uNl7VTdjXpudRF",
+            "lhsExpr": "res.body",
+            "rhsExpr": "isJson",
+            "rhsOperand": "",
+            "operator": "isJson",
+            "status": "fail",
+            "error": "expected '' to be JSON"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0040585,
+        "suitename": "DP-90\\failing assertion",
+        "iterationIndex": 3
+      },
+      {
+        "test": {
+          "filename": "DP-90\\passing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Rob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 11:32:51 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "rl2ax3vG47gyZFzQhRMUT",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0034513,
+        "suitename": "DP-90\\passing assertion",
+        "iterationIndex": 3
+      }
+    ]
+  },
+  {
+    "iterationIndex": 4,
+    "summary": {
+      "totalRequests": 2,
+      "passedRequests": 2,
+      "failedRequests": 0,
+      "totalAssertions": 2,
+      "passedAssertions": 1,
+      "failedAssertions": 1,
+      "totalTests": 0,
+      "passedTests": 0,
+      "failedTests": 0
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "DP-90\\failing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Rob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "de"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 11:32:51 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 3
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "kpRcb8RmATJo90yG4zANx",
+            "lhsExpr": "res.body",
+            "rhsExpr": "isJson",
+            "rhsOperand": "",
+            "operator": "isJson",
+            "status": "fail",
+            "error": "expected '' to be JSON"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0055416,
+        "suitename": "DP-90\\failing assertion",
+        "iterationIndex": 4
+      },
+      {
+        "test": {
+          "filename": "DP-90\\passing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Rob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "de"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 11:32:51 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 3
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "nOjQ_p-_1RPVemVB2bByW",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.004565,
+        "suitename": "DP-90\\passing assertion",
+        "iterationIndex": 4
+      }
+    ]
+  },
+  {
+    "iterationIndex": 5,
+    "summary": {
+      "totalRequests": 2,
+      "passedRequests": 2,
+      "failedRequests": 0,
+      "totalAssertions": 2,
+      "passedAssertions": 1,
+      "failedAssertions": 1,
+      "totalTests": 0,
+      "passedTests": 0,
+      "failedTests": 0
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "DP-90\\failing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Mary",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 11:32:51 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 3
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "UyshxPNaE6LO4NUfTWPG4",
+            "lhsExpr": "res.body",
+            "rhsExpr": "isJson",
+            "rhsOperand": "",
+            "operator": "isJson",
+            "status": "fail",
+            "error": "expected '' to be JSON"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0043072,
+        "suitename": "DP-90\\failing assertion",
+        "iterationIndex": 5
+      },
+      {
+        "test": {
+          "filename": "DP-90\\passing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Mary",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 11:32:51 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "i1AyTyya091xs6M-tbSnH",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0030333,
+        "suitename": "DP-90\\passing assertion",
+        "iterationIndex": 5
+      }
+    ]
+  }
+]
