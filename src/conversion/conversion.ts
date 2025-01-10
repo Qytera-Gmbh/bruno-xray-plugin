@@ -1,4 +1,9 @@
-import type { BrunoIteration, BrunoRequest, BrunoResponse } from "../model/bruno-model.js";
+import type {
+  BrunoIteration,
+  BrunoRequest,
+  BrunoRequestResult,
+  BrunoResponse,
+} from "../model/bruno-model.js";
 import type {
   XrayEvidenceItem,
   XrayIterationResultCloud,
@@ -55,15 +60,14 @@ export function convertBrunoToXray(
       `must provide parameters for every iteration (iterations: ${brunoResults.length.toString()}, parameter sets: ${options.parameters.length.toString()})`
     );
   }
-  const iterations = getTestIterations(brunoResults);
+  const iterations = getTestIterations(brunoResults, options?.parameters);
   for (const [issueKey, brunoIterations] of iterations) {
+    const sortedIterations = brunoIterations.sort((a, b) => a.iterationIndex - b.iterationIndex);
     const test = options?.useCloudFormat
-      ? convertToXrayCloudTest(brunoIterations, {
-          parameters: options.parameters,
+      ? convertToXrayCloudTest(sortedIterations, {
           testKey: issueKey,
         })
-      : convertToXrayServerTest(brunoIterations, {
-          parameters: options?.parameters,
+      : convertToXrayServerTest(sortedIterations, {
           testKey: issueKey,
         });
     if (xrayReport.tests) {
@@ -76,8 +80,8 @@ export function convertBrunoToXray(
 }
 
 function convertToXrayCloudTest(
-  iterations: [BrunoIteration, ...BrunoIteration[]],
-  options: { parameters?: Record<string, string>[]; testKey: string }
+  iterations: BrunoXrayTestResult[],
+  options: { testKey: string }
 ): XrayTestCloud {
   const test: XrayTestCloud = {
     status: "PASSED",
@@ -96,7 +100,7 @@ function convertToXrayCloudTest(
     for (const iteration of iterations) {
       const parameters: Record<string, string> = {
         iteration: (iteration.iterationIndex + 1).toString(),
-        ...(options.parameters ? options.parameters[iteration.iterationIndex] : {}),
+        ...iteration.parameters,
       };
       const iterationResult: XrayIterationResultCloud = {
         parameters: Object.entries(parameters).map((entry) => {
@@ -132,8 +136,8 @@ function convertToXrayCloudTest(
 }
 
 function convertToXrayServerTest(
-  iterations: [BrunoIteration, ...BrunoIteration[]],
-  options: { parameters?: object[]; testKey: string }
+  iterations: BrunoXrayTestResult[],
+  options: { testKey: string }
 ): XrayTestServer {
   const test: XrayTestServer = {
     status: "PASS",
@@ -152,7 +156,7 @@ function convertToXrayServerTest(
     for (const iteration of iterations) {
       const parameters: Record<string, string> = {
         iteration: (iteration.iterationIndex + 1).toString(),
-        ...(options.parameters ? options.parameters[iteration.iterationIndex] : {}),
+        ...iteration.parameters,
       };
       const iterationResult: XrayIterationResultServer = {
         parameters: Object.entries(parameters).map((entry) => {
@@ -193,9 +197,9 @@ interface RequestSummary {
   response: BrunoResponse;
 }
 
-function getIterationSummary(iteration: BrunoIteration): RequestSummary[] {
+function getIterationSummary(iteration: BrunoXrayTestResult): RequestSummary[] {
   const summaries: RequestSummary[] = [];
-  for (const result of iteration.results) {
+  for (const result of iteration.requests) {
     const summary: RequestSummary = {
       errors: [],
       request: result.request,
@@ -227,32 +231,47 @@ function getEvidence(data: string, contentType: string, filename: string): XrayE
   };
 }
 
+interface BrunoXrayTestResult {
+  iterationIndex: number;
+  parameters: Record<string, string>;
+  requests: [BrunoRequestResult, ...BrunoRequestResult[]];
+}
+
 /**
- * Builds a mapping of Jira issue keys to their relevant Bruno iterations.
+ * Builds a mapping of Jira issue keys to their relevant Bruno requests.
  *
- * @param iterations all bruno iterations
- * @returns the bruno iterations grouped by Jira issue keys
+ * @param iterations all Bruno iterations
+ * @param parameters the Bruno iteration parameters
+ * @returns the Bruno requests grouped by Jira issue keys
  */
 function getTestIterations(
-  iterations: BrunoIteration[]
-): Map<string, [BrunoIteration, ...BrunoIteration[]]> {
-  const map = new Map<string, [BrunoIteration, ...BrunoIteration[]]>();
+  iterations: BrunoIteration[],
+  parameters?: Record<string, string>[]
+): Map<string, BrunoXrayTestResult[]> {
+  const map = new Map<string, BrunoXrayTestResult[]>();
   for (const iteration of iterations) {
-    const testIssues = new Set<string>();
     for (const result of iteration.results) {
       // Input:  'abc CYP-123 def BFG-664 asoi//QRT-3636'
       // Output: ['CYP-123', 'BFG-664', 'QRT-3636']
       const matches = result.test.filename.match(/\w+-\d+/g);
       for (const issueKey of matches ?? []) {
-        testIssues.add(issueKey);
-      }
-    }
-    for (const issueKey of testIssues) {
-      const matchingIterations = map.get(issueKey);
-      if (matchingIterations) {
-        matchingIterations.push(iteration);
-      } else {
-        map.set(issueKey, [iteration]);
+        let testIterations = map.get(issueKey);
+        if (!testIterations) {
+          testIterations = [];
+          map.set(issueKey, testIterations);
+        }
+        const iterationRequests = testIterations.find(
+          (i) => i.iterationIndex === iteration.iterationIndex
+        );
+        if (!iterationRequests) {
+          testIterations.push({
+            iterationIndex: iteration.iterationIndex,
+            parameters: parameters ? parameters[iteration.iterationIndex] : {},
+            requests: [result],
+          });
+        } else {
+          iterationRequests.requests.push(result);
+        }
       }
     }
   }

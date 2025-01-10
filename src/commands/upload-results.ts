@@ -64,7 +64,6 @@ export default class UploadResults extends Command {
 
     let parameters: Record<string, string>[] | undefined = undefined;
     if (csvFile) {
-      console.log(join(cwd(), csvFile));
       parameters = parse(readFileSync(join(cwd(), csvFile), "utf-8"), {
         columns: true,
         ["skip_empty_lines"]: true,
