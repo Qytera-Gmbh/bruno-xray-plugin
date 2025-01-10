@@ -47,7 +47,7 @@ Converts Bruno JSON results to Xray JSON and uploads them to a Jira project.
 
 ```
 USAGE
-  $ xray upload-results RESULTS --projectKey <value> [--clientId <value>] [--clientSecret <value>] [--csvFile <value>] [--description <value>] [--summary <value>] [--token <value>] [--url <value>]
+  $ bruno-xray-plugin upload-results RESULTS --projectKey <value> [--clientId <value>] [--clientSecret <value>] [--csvFile <value>] [--description <value>] [--summary <value>] [--token <value>] [--url <value>]
 
 ARGUMENTS
   RESULTS  the Bruno JSON results
@@ -62,5 +62,3 @@ FLAGS
   --token=<value>         the Jira API token
   --url=<value>           the Jira Server/DC URL
 ```
-
-<!-- commandsstop -->
