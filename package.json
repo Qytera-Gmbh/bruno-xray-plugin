@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node --import ./test/loader.js ./test/run-unit-tests.ts",
-    "build": "tsc --project tsconfig-build.json && shx cp package.json .oclifrc.json dist/ && shx mkdir dist/src/bin && shx cp src/bin/run.* dist/src/bin",
+    "build": "shx rm -r dist && tsc --project tsconfig-build.json && shx cp README.md package.json package-lock.json .oclifrc.json dist/ && shx mkdir dist/src/bin && shx cp src/bin/run.* dist/src/bin",
     "lint": "npx eslint src/**/*.ts test/**/*.ts"
   },
   "author": "dev@qytera.de",
