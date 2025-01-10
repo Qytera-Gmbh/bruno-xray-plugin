@@ -26,7 +26,7 @@
   },
   "type": "module",
   "devDependencies": {
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.10.5",
     "@usebruno/cli": "^1.38.3",
     "eslint": "^9.17.0",
     "eslint-plugin-perfectionist": "^4.6.0",
