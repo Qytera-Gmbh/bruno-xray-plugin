@@ -23,7 +23,7 @@ jobs:
           cache: npm
       - run: npm install
       - run: npm run build
-      - run: npm run eslint
+      - run: npm run lint
       - run: npm run test
       - uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
