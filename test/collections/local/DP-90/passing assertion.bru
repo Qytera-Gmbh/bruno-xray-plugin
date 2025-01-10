@@ -1,0 +1,26 @@
+meta {
+  name: passing assertion
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8083/{{name}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "language": "{{language}}"
+  }
+}
+
+vars:pre-request {
+  name: Susan
+  language: en
+}
+
+assert {
+  res.status: eq 200
+}

@@ -1,0 +1,1088 @@
+[
+  {
+    "iterationIndex": 0,
+    "summary": {
+      "totalRequests": 4,
+      "passedRequests": 4,
+      "failedRequests": 0,
+      "totalAssertions": 2,
+      "passedAssertions": 1,
+      "failedAssertions": 1,
+      "totalTests": 2,
+      "passedTests": 1,
+      "failedTests": 1
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "DP-90\\nested\\failing test.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Jeff/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 25
+        },
+        "error": null,
+        "assertionResults": [],
+        "testResults": [
+          {
+            "description": "body",
+            "status": "fail",
+            "error": "expected '' to be JSON",
+            "actual": "",
+            "uid": "vqDGbU8qCIhNg1QGwpA-W"
+          }
+        ],
+        "runtime": 0.0525536,
+        "suitename": "DP-90\\nested\\failing test",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "DP-90\\nested\\passing test.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Jeff/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 5
+        },
+        "error": null,
+        "assertionResults": [],
+        "testResults": [
+          {
+            "description": "status code",
+            "status": "pass",
+            "uid": "D7t70qkbT0uMFx_mdrZ-G"
+          }
+        ],
+        "runtime": 0.0102323,
+        "suitename": "DP-90\\nested\\passing test",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "DP-90\\failing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Jeff",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 6
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "OIgX52ZnBvPreyfo7HrhX",
+            "lhsExpr": "res.body",
+            "rhsExpr": "isJson",
+            "rhsOperand": "",
+            "operator": "isJson",
+            "status": "fail",
+            "error": "expected '' to be JSON"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0089901,
+        "suitename": "DP-90\\failing assertion",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "DP-90\\passing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Jeff",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 3
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "5h8mFa-cPzF1HQjpQ5rky",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0044684,
+        "suitename": "DP-90\\passing assertion",
+        "iterationIndex": 0
+      }
+    ]
+  },
+  {
+    "iterationIndex": 1,
+    "summary": {
+      "totalRequests": 4,
+      "passedRequests": 4,
+      "failedRequests": 0,
+      "totalAssertions": 2,
+      "passedAssertions": 1,
+      "failedAssertions": 1,
+      "totalTests": 2,
+      "passedTests": 1,
+      "failedTests": 1
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "DP-90\\nested\\failing test.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/George/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [],
+        "testResults": [
+          {
+            "description": "body",
+            "status": "fail",
+            "error": "expected '' to be JSON",
+            "actual": "",
+            "uid": "HsaHqAh9CrlRPjvnkwG9r"
+          }
+        ],
+        "runtime": 0.0066184,
+        "suitename": "DP-90\\nested\\failing test",
+        "iterationIndex": 1
+      },
+      {
+        "test": {
+          "filename": "DP-90\\nested\\passing test.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/George/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 3
+        },
+        "error": null,
+        "assertionResults": [],
+        "testResults": [
+          {
+            "description": "status code",
+            "status": "pass",
+            "uid": "buKGtdv-Gv08DXxSUHqb4"
+          }
+        ],
+        "runtime": 0.0082298,
+        "suitename": "DP-90\\nested\\passing test",
+        "iterationIndex": 1
+      },
+      {
+        "test": {
+          "filename": "DP-90\\failing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/George",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 3
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "kfreAiw8BGOown4OH8_H3",
+            "lhsExpr": "res.body",
+            "rhsExpr": "isJson",
+            "rhsOperand": "",
+            "operator": "isJson",
+            "status": "fail",
+            "error": "expected '' to be JSON"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0059614,
+        "suitename": "DP-90\\failing assertion",
+        "iterationIndex": 1
+      },
+      {
+        "test": {
+          "filename": "DP-90\\passing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/George",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "DDVDduBQl9fyfbcwNIxbQ",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0041127,
+        "suitename": "DP-90\\passing assertion",
+        "iterationIndex": 1
+      }
+    ]
+  },
+  {
+    "iterationIndex": 2,
+    "summary": {
+      "totalRequests": 4,
+      "passedRequests": 4,
+      "failedRequests": 0,
+      "totalAssertions": 2,
+      "passedAssertions": 1,
+      "failedAssertions": 1,
+      "totalTests": 2,
+      "passedTests": 1,
+      "failedTests": 1
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "DP-90\\nested\\failing test.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Bob/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 4
+        },
+        "error": null,
+        "assertionResults": [],
+        "testResults": [
+          {
+            "description": "body",
+            "status": "fail",
+            "error": "expected '' to be JSON",
+            "actual": "",
+            "uid": "2DbSU54i36m1su5B0VlER"
+          }
+        ],
+        "runtime": 0.0090256,
+        "suitename": "DP-90\\nested\\failing test",
+        "iterationIndex": 2
+      },
+      {
+        "test": {
+          "filename": "DP-90\\nested\\passing test.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Bob/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 4
+        },
+        "error": null,
+        "assertionResults": [],
+        "testResults": [
+          {
+            "description": "status code",
+            "status": "pass",
+            "uid": "Z977dnFLCMCFc0XiPzKJK"
+          }
+        ],
+        "runtime": 0.008396,
+        "suitename": "DP-90\\nested\\passing test",
+        "iterationIndex": 2
+      },
+      {
+        "test": {
+          "filename": "DP-90\\failing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Bob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 3
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "iKp69d8tV29hzgW4NeO8f",
+            "lhsExpr": "res.body",
+            "rhsExpr": "isJson",
+            "rhsOperand": "",
+            "operator": "isJson",
+            "status": "fail",
+            "error": "expected '' to be JSON"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0044439,
+        "suitename": "DP-90\\failing assertion",
+        "iterationIndex": 2
+      },
+      {
+        "test": {
+          "filename": "DP-90\\passing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Bob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "cdmGKVcl6e9GmnOVFTI6u",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0034762,
+        "suitename": "DP-90\\passing assertion",
+        "iterationIndex": 2
+      }
+    ]
+  },
+  {
+    "iterationIndex": 3,
+    "summary": {
+      "totalRequests": 4,
+      "passedRequests": 4,
+      "failedRequests": 0,
+      "totalAssertions": 2,
+      "passedAssertions": 1,
+      "failedAssertions": 1,
+      "totalTests": 2,
+      "passedTests": 1,
+      "failedTests": 1
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "DP-90\\nested\\failing test.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Rob/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [],
+        "testResults": [
+          {
+            "description": "body",
+            "status": "fail",
+            "error": "expected '' to be JSON",
+            "actual": "",
+            "uid": "YmncmFwN8w6HxeGgy7zIp"
+          }
+        ],
+        "runtime": 0.0056039,
+        "suitename": "DP-90\\nested\\failing test",
+        "iterationIndex": 3
+      },
+      {
+        "test": {
+          "filename": "DP-90\\nested\\passing test.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Rob/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [],
+        "testResults": [
+          {
+            "description": "status code",
+            "status": "pass",
+            "uid": "KptkyOuKCYCAOeRJjvd9E"
+          }
+        ],
+        "runtime": 0.005218,
+        "suitename": "DP-90\\nested\\passing test",
+        "iterationIndex": 3
+      },
+      {
+        "test": {
+          "filename": "DP-90\\failing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Rob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 4
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "uP7ETXbv9kAwA1VcNT3xd",
+            "lhsExpr": "res.body",
+            "rhsExpr": "isJson",
+            "rhsOperand": "",
+            "operator": "isJson",
+            "status": "fail",
+            "error": "expected '' to be JSON"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0059754,
+        "suitename": "DP-90\\failing assertion",
+        "iterationIndex": 3
+      },
+      {
+        "test": {
+          "filename": "DP-90\\passing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Rob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "kO2hBVSHfLa78f74yeXbv",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0039179,
+        "suitename": "DP-90\\passing assertion",
+        "iterationIndex": 3
+      }
+    ]
+  },
+  {
+    "iterationIndex": 4,
+    "summary": {
+      "totalRequests": 4,
+      "passedRequests": 4,
+      "failedRequests": 0,
+      "totalAssertions": 2,
+      "passedAssertions": 1,
+      "failedAssertions": 1,
+      "totalTests": 2,
+      "passedTests": 1,
+      "failedTests": 1
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "DP-90\\nested\\failing test.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Rob/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "de"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [],
+        "testResults": [
+          {
+            "description": "body",
+            "status": "fail",
+            "error": "expected '' to be JSON",
+            "actual": "",
+            "uid": "9x72-F0YvEs7uaMEfwlxd"
+          }
+        ],
+        "runtime": 0.0066888,
+        "suitename": "DP-90\\nested\\failing test",
+        "iterationIndex": 4
+      },
+      {
+        "test": {
+          "filename": "DP-90\\nested\\passing test.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Rob/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "de"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 3
+        },
+        "error": null,
+        "assertionResults": [],
+        "testResults": [
+          {
+            "description": "status code",
+            "status": "pass",
+            "uid": "2r5PHtSpuAb-hKEhm8Q7g"
+          }
+        ],
+        "runtime": 0.0068221,
+        "suitename": "DP-90\\nested\\passing test",
+        "iterationIndex": 4
+      },
+      {
+        "test": {
+          "filename": "DP-90\\failing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Rob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "de"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "vSLofQ5H90jhOltje-UYC",
+            "lhsExpr": "res.body",
+            "rhsExpr": "isJson",
+            "rhsOperand": "",
+            "operator": "isJson",
+            "status": "fail",
+            "error": "expected '' to be JSON"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0034285,
+        "suitename": "DP-90\\failing assertion",
+        "iterationIndex": 4
+      },
+      {
+        "test": {
+          "filename": "DP-90\\passing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Rob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "de"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "YdLBn2THzl23Ea6Fcu7f-",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0035967,
+        "suitename": "DP-90\\passing assertion",
+        "iterationIndex": 4
+      }
+    ]
+  },
+  {
+    "iterationIndex": 5,
+    "summary": {
+      "totalRequests": 4,
+      "passedRequests": 4,
+      "failedRequests": 0,
+      "totalAssertions": 2,
+      "passedAssertions": 1,
+      "failedAssertions": 1,
+      "totalTests": 2,
+      "passedTests": 1,
+      "failedTests": 1
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "DP-90\\nested\\failing test.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Mary/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [],
+        "testResults": [
+          {
+            "description": "body",
+            "status": "fail",
+            "error": "expected '' to be JSON",
+            "actual": "",
+            "uid": "frmFLFx8ctrDCYidU5ZG8"
+          }
+        ],
+        "runtime": 0.0069105,
+        "suitename": "DP-90\\nested\\failing test",
+        "iterationIndex": 5
+      },
+      {
+        "test": {
+          "filename": "DP-90\\nested\\passing test.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Mary/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [],
+        "testResults": [
+          {
+            "description": "status code",
+            "status": "pass",
+            "uid": "jYyhPjARqx8V1xNSjc-JJ"
+          }
+        ],
+        "runtime": 0.0051331,
+        "suitename": "DP-90\\nested\\passing test",
+        "iterationIndex": 5
+      },
+      {
+        "test": {
+          "filename": "DP-90\\failing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Mary",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 2
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "Jo2nrRFWkvERHaqpQN0ek",
+            "lhsExpr": "res.body",
+            "rhsExpr": "isJson",
+            "rhsOperand": "",
+            "operator": "isJson",
+            "status": "fail",
+            "error": "expected '' to be JSON"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0028,
+        "suitename": "DP-90\\failing assertion",
+        "iterationIndex": 5
+      },
+      {
+        "test": {
+          "filename": "DP-90\\passing assertion.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8083/Mary",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": {
+            "language": "en"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Fri, 10 Jan 2025 13:06:53 GMT",
+            "connection": "keep-alive",
+            "keep-alive": "timeout=5",
+            "content-length": "0"
+          },
+          "data": "",
+          "responseTime": 1
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "5bzDg39lJ2YeZo-ElqAxX",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.0029683,
+        "suitename": "DP-90\\passing assertion",
+        "iterationIndex": 5
+      }
+    ]
+  }
+]

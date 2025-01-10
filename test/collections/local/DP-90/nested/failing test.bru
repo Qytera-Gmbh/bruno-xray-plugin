@@ -1,0 +1,28 @@
+meta {
+  name: failing test
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:8083/{{name}}/nested
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "language": "{{language}}"
+  }
+}
+
+vars:pre-request {
+  name: Susan
+  language: en
+}
+
+tests {
+  test("body", () => {
+    expect(res.body).to.be.json;
+  });
+}

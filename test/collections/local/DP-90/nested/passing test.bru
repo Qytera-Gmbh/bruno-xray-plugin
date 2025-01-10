@@ -1,0 +1,29 @@
+meta {
+  name: passing test
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8083/{{name}}/nested
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "language": "{{language}}"
+  }
+}
+
+vars:pre-request {
+  name: Susan
+  language: en
+}
+
+tests {
+  test("status code", () => {
+    expect(res.status).to.eq(200);
+  });
+  
+}
