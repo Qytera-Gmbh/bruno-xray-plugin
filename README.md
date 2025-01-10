@@ -1,9 +1,27 @@
-# Bruno
+<h1 align="center">
+  <img width="100%" src="docs/logo.svg" alt="Bruno Xray Plugin">
+</h1>
 
-This directory contains a [Bruno](https://www.usebruno.com/) demo project.
-The collections can be found in the `collections` directory.
+[![npm version](https://img.shields.io/npm/v/bruno-xray-plugin?style=flat-square)](https://www.npmjs.com/package/bruno-xray-plugin)
+[![npm downloads](https://img.shields.io/npm/dm/bruno-xray-plugin?style=flat-square)](https://www.npmjs.com/package/bruno-xray-plugin)
+[![open GitHub issues](https://img.shields.io/github/issues-raw/qytera-gmbh/bruno-xray-plugin?style=flat-square)](https://github.com/Qytera-Gmbh/bruno-xray-plugin/issues?q=is%3Aissue+is%3Aopen)
+[![unaddressed GitHub issues](https://img.shields.io/github/issues-search/qytera-gmbh/bruno-xray-plugin?label=unaddressed%20issues&query=no%3Aassignee%20is%3Aopen&style=flat-square)](https://github.com/Qytera-Gmbh/bruno-xray-plugin/issues?q=is%3Aissue+is%3Aopen+no%3Aassignee)
 
-The rest of the project consists of a CLI which allows users to upload Bruno's reports to [Xray](https://docs.getxray.app/site/xray).
+# Bruno Xray Plugin
+
+This project is a command line interface for a [Bruno](https://www.usebruno.com/) and [Xray](https://docs.getxray.app/site/xray) integration.
+
+Features include:
+
+- Upload Bruno test results to Xray
+
+Planned features:
+
+- Download of Xray CSV datasets for data-driven Bruno execution
+- Customisable HTML report of test results for use as evidence
+
+> [!WARNING]
+> The plugin is still in a very early stage of development and may change a lot.
 
 # Usage
 
