@@ -9,6 +9,12 @@
   },
   "author": "dev@qytera.de",
   "license": "MIT",
+  "keywords": [
+    "bruno",
+    "xray",
+    "upload",
+    "results"
+  ],
   "dependencies": {
     "@oclif/core": "^4.0.32",
     "ansi-colors": "^4.1.3",
