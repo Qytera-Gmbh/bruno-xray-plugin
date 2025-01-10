@@ -1,6 +1,6 @@
 {
-  "bin": "bruno-xray-reporter",
+  "bin": "bruno-xray-plugin",
   "commands": "./src/commands",
-  "dirname": "bruno-xray-reporter",
+  "dirname": "bruno-xray-plugin",
   "topicSeparator": " "
 }

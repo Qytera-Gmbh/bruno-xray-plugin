@@ -10,14 +10,14 @@ The rest of the project consists of a CLI which allows users to upload Bruno's r
 To use the CLI, run the following commands which will install the packages necessary for interacting with the CLI.
 
 ```bash
-npm install @qytera/bruno-xray-reporter
+npm install @qytera/bruno-xray-plugin
 ```
 
 Afterwards, you can use the CLI as follows:
 
 ```bash
-npx bruno-xray-reporter --version
-npx bruno-xray-reporter --help
+npx bruno-xray-plugin --version
+npx bruno-xray-plugin --help
 ...
 ```
 
