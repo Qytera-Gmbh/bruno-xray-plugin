@@ -1,6 +1,6 @@
 {
   "name": "bruno-xray",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A plugin for uploading Bruno API test results to Xray.",
   "main": "index.js",
   "scripts": {
