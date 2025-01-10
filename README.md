@@ -7,25 +7,23 @@ The rest of the project consists of a CLI which allows users to upload Bruno's r
 
 # Usage
 
-To use the CLI, run the following commands which will install both the Bruno runner as well as the packages necessary for interacting with the CLI.
+To use the CLI, run the following commands which will install the packages necessary for interacting with the CLI.
 
 ```bash
-npm install
-npm run build
+npm install @qytera/bruno-xray-reporter
 ```
 
-Afterwards, you can use the CLI from inside the `dist` directory:
+Afterwards, you can use the CLI as follows:
 
 ```bash
-cd dist
-npx xray --version
-npx xray --help
+npx bruno-xray-reporter --version
+npx bruno-xray-reporter --help
 ...
 ```
 
 # Commands
 
-## `xray upload-results RESULTS`
+## `upload-results`
 
 Converts Bruno JSON results to Xray JSON and uploads them to a Jira project.
 

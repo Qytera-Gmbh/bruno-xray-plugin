@@ -1,6 +1,6 @@
 {
-  "bin": "xray",
+  "bin": "bruno-xray-reporter",
   "commands": "./src/commands",
-  "dirname": "xray",
+  "dirname": "bruno-xray-reporter",
   "topicSeparator": " "
 }
