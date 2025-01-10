@@ -6,45 +6,95 @@ import type { BrunoIteration } from "../model/bruno-model.js";
 import { convertBrunoToXray } from "./conversion.js";
 
 describe(path.relative(process.cwd(), import.meta.filename), () => {
-  it("converts iterated results without parameters", () => {
-    const results = JSON.parse(
-      readFileSync(join(import.meta.dirname, "test", "iterated.json"), "utf-8")
-    ) as BrunoIteration[];
-    const convertedResults = convertBrunoToXray(results, { useCloudFormat: true });
-    assert.deepStrictEqual(
-      convertedResults,
-      JSON.parse(
-        readFileSync(
-          join(import.meta.dirname, "test", "iterated-no-parameters-expected.json"),
-          "utf-8"
-        )
-      ) as BrunoIteration[]
-    );
+  describe("single folder", () => {
+    it("converts iterated results without parameters", () => {
+      const results = JSON.parse(
+        readFileSync(join(import.meta.dirname, "test", "iterated-single-folder.json"), "utf-8")
+      ) as BrunoIteration[];
+      const convertedResults = convertBrunoToXray(results, { useCloudFormat: true });
+      assert.deepStrictEqual(
+        convertedResults,
+        JSON.parse(
+          readFileSync(
+            join(import.meta.dirname, "test", "iterated-single-folder-no-parameters-expected.json"),
+            "utf-8"
+          )
+        ) as BrunoIteration[]
+      );
+    });
+
+    it("converts iterated results with parameters", () => {
+      const results = JSON.parse(
+        readFileSync(join(import.meta.dirname, "test", "iterated-single-folder.json"), "utf-8")
+      ) as BrunoIteration[];
+      const convertedResults = convertBrunoToXray(results, {
+        parameters: [
+          { language: "en", name: "Jeff" },
+          { language: "en", name: "George" },
+          { language: "en", name: "Bob" },
+          { language: "en", name: "Rob" },
+          { language: "de", name: "Rob" },
+          { language: "en", name: "Mary" },
+        ],
+        useCloudFormat: true,
+      });
+      assert.deepStrictEqual(
+        convertedResults,
+        JSON.parse(
+          readFileSync(
+            join(
+              import.meta.dirname,
+              "test",
+              "iterated-single-folder-with-parameters-expected.json"
+            ),
+            "utf-8"
+          )
+        ) as BrunoIteration[]
+      );
+    });
   });
 
-  it("converts iterated results with parameters", () => {
-    const results = JSON.parse(
-      readFileSync(join(import.meta.dirname, "test", "iterated.json"), "utf-8")
-    ) as BrunoIteration[];
-    const convertedResults = convertBrunoToXray(results, {
-      parameters: [
-        { language: "en", name: "Jeff" },
-        { language: "en", name: "George" },
-        { language: "en", name: "Bob" },
-        { language: "en", name: "Rob" },
-        { language: "de", name: "Rob" },
-        { language: "en", name: "Mary" },
-      ],
-      useCloudFormat: true,
+  describe("two folders", () => {
+    it("converts iterated results without parameters", () => {
+      const results = JSON.parse(
+        readFileSync(join(import.meta.dirname, "test", "iterated-two-folders.json"), "utf-8")
+      ) as BrunoIteration[];
+      const convertedResults = convertBrunoToXray(results, { useCloudFormat: false });
+      assert.deepStrictEqual(
+        convertedResults,
+        JSON.parse(
+          readFileSync(
+            join(import.meta.dirname, "test", "iterated-two-folders-no-parameters-expected.json"),
+            "utf-8"
+          )
+        ) as BrunoIteration[]
+      );
     });
-    assert.deepStrictEqual(
-      convertedResults,
-      JSON.parse(
-        readFileSync(
-          join(import.meta.dirname, "test", "iterated-with-parameters-expected.json"),
-          "utf-8"
-        )
-      ) as BrunoIteration[]
-    );
+
+    it("converts iterated results with parameters", () => {
+      const results = JSON.parse(
+        readFileSync(join(import.meta.dirname, "test", "iterated-two-folders.json"), "utf-8")
+      ) as BrunoIteration[];
+      const convertedResults = convertBrunoToXray(results, {
+        parameters: [
+          { language: "en", name: "Jeff" },
+          { language: "en", name: "George" },
+          { language: "en", name: "Bob" },
+          { language: "en", name: "Rob" },
+          { language: "de", name: "Rob" },
+          { language: "en", name: "Mary" },
+        ],
+        useCloudFormat: false,
+      });
+      assert.deepStrictEqual(
+        convertedResults,
+        JSON.parse(
+          readFileSync(
+            join(import.meta.dirname, "test", "iterated-two-folders-with-parameters-expected.json"),
+            "utf-8"
+          )
+        ) as BrunoIteration[]
+      );
+    });
   });
 });

@@ -2,11 +2,11 @@
 
 export interface BrunoIteration {
   iterationIndex: number;
-  results: Result[];
-  summary: Summary;
+  results: BrunoRequestResult[];
+  summary: BrunoSummary;
 }
 
-export interface Summary {
+export interface BrunoSummary {
   failedAssertions: number;
   failedRequests: number;
   failedTests: number;
@@ -18,19 +18,19 @@ export interface Summary {
   totalTests: number;
 }
 
-export interface Result {
-  assertionResults: AssertionResult[];
+export interface BrunoRequestResult {
+  assertionResults: BrunoAssertionResult[];
   error: unknown;
   iterationIndex: number;
   request: BrunoRequest;
   response: BrunoResponse;
   runtime: number;
   suitename: string;
-  test: Test;
-  testResults: TestResult[];
+  test: BrunoTest;
+  testResults: BrunoTestResult[];
 }
 
-export interface Test {
+export interface BrunoTest {
   filename: string;
 }
 
@@ -49,7 +49,7 @@ export interface BrunoResponse {
   statusText: string;
 }
 
-export interface AssertionResult {
+export interface BrunoAssertionResult {
   error?: string;
   lhsExpr: string;
   operator: string;
@@ -59,7 +59,7 @@ export interface AssertionResult {
   uid: string;
 }
 
-export interface TestResult {
+export interface BrunoTestResult {
   actual?: number;
   description: string;
   error?: string;
