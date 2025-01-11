@@ -1,6 +1,0 @@
-{
-  "bin": "bruno-xray-plugin",
-  "commands": "./src/commands",
-  "dirname": "bruno-xray-plugin",
-  "topicSeparator": " "
-}
