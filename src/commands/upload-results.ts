@@ -44,6 +44,9 @@ export default class UploadResults extends Command {
       default: "Bruno test execution",
       description: "the summary of the test execution issue",
     }),
+    ["test-execution"]: Flags.string({
+      description: "the Jira test execution issue to upload the test results to",
+    }),
     ["token"]: Flags.string({ description: "the Jira API token", helpGroup: "authentication" }),
     ["url"]: Flags.string({ description: "the Jira Server/DC URL" }),
   };
@@ -58,6 +61,7 @@ export default class UploadResults extends Command {
         description,
         "project-key": projectKey,
         summary,
+        "test-execution": testExecution,
         token,
         url,
       },
@@ -89,6 +93,7 @@ export default class UploadResults extends Command {
       description,
       parameters,
       summary,
+      testExecution,
       useCloudFormat: isCloudProject,
     });
 

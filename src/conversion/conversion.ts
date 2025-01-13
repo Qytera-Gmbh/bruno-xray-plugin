@@ -40,6 +40,10 @@ export function convertBrunoToXray(
      */
     summary?: string;
     /**
+     * The test execution issue key to upload the results to.
+     */
+    testExecution?: string;
+    /**
      * Whether to use Xray cloud JSON format or Xray server JSON format. This is relevant for the
      * status mapping of Bruno's `pass/fail` to Xray's `PASSED/FAILED` (Xray cloud) or
      * `FAILED/FAIL` (Xray server) respectively.
@@ -75,6 +79,9 @@ export function convertBrunoToXray(
     } else {
       xrayReport.tests = [test];
     }
+  }
+  if (options?.testExecution) {
+    xrayReport.testExecutionKey = options.testExecution;
   }
   return xrayReport;
 }

@@ -6,6 +6,16 @@ import type { BrunoIteration } from "../model/bruno-model.js";
 import { convertBrunoToXray } from "./conversion.js";
 
 describe(path.relative(process.cwd(), import.meta.filename), () => {
+  describe("test execution reuse", () => {
+    it("adds the test execution issue key", () => {
+      const results = JSON.parse(
+        readFileSync(join(import.meta.dirname, "test", "iterated-single-folder.json"), "utf-8")
+      ) as BrunoIteration[];
+      const convertedResults = convertBrunoToXray(results, { testExecution: "ABC-123" });
+      assert.deepStrictEqual(convertedResults.testExecutionKey, "ABC-123");
+    });
+  });
+
   describe("single folder", () => {
     it("converts iterated results without parameters", () => {
       const results = JSON.parse(
