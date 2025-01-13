@@ -47,18 +47,19 @@ Converts Bruno JSON results to Xray JSON and uploads them to a Jira project.
 
 ```
 USAGE
-  $ bruno-xray-plugin upload-results RESULTS --projectKey <value> [--clientId <value>] [--clientSecret <value>] [--csvFile <value>] [--description <value>] [--summary <value>] [--token <value>] [--url <value>]
+  $ bruno-xray-plugin upload-results RESULTS --project-key <value> [--client-id <value>] [--client-secret <value>] [--csv-file <value>] [--description <value>] [--summary <value>] [--token <value>] [--url <value>]
 
 ARGUMENTS
   RESULTS  the Bruno JSON results
 
 FLAGS
-  --clientId=<value>      the Xray Cloud client ID
-  --clientSecret=<value>  the Xray Cloud client secret
-  --csvFile=<value>       the CSV file which was used for data-driven collection execution
-  --description=<value>   [default: Generated from Bruno JSON report] the description of the test execution issue
-  --projectKey=<value>    (required) the Jira project key where the test execution issue will be created
-  --summary=<value>       [default: Bruno test execution] the summary of the test execution issue
-  --token=<value>         the Jira API token
-  --url=<value>           the Jira Server/DC URL
+  --csv-file=<value>        the CSV file which was used for data-driven collection execution  --description=<value>     [default: Generated from Bruno JSON report] the description of the test execution issue
+  --project-key=<value>     (required) the Jira project key where the test execution issue will be created
+  --summary=<value>         [default: Bruno test execution] the summary of the test execution issue
+  --url=<value>             the Jira Server/DC URL
+
+AUTHENTICATION FLAGS
+  --client-id=<value>      the Xray Cloud client ID
+  --client-secret=<value>  the Xray Cloud client secret
+  --token=<value>          the Jira API token
 ```
