@@ -21,31 +21,46 @@ export default class UploadResults extends Command {
   static override examples = ["<%= config.bin %> <%= command.id %>"];
 
   static override flags = {
-    clientId: Flags.string({ description: "the Xray Cloud client ID" }),
-    clientSecret: Flags.string({ description: "the Xray Cloud client secret" }),
-    csvFile: Flags.string({
+    ["client-id"]: Flags.string({
+      description: "the Xray Cloud client ID",
+      helpGroup: "authentication",
+    }),
+    ["client-secret"]: Flags.string({
+      description: "the Xray Cloud client secret",
+      helpGroup: "authentication",
+    }),
+    ["csv-file"]: Flags.string({
       description: "the CSV file which was used for data-driven collection execution",
     }),
-    description: Flags.string({
+    ["description"]: Flags.string({
       default: "Generated from Bruno JSON report",
       description: "the description of the test execution issue",
     }),
-    projectKey: Flags.string({
+    ["project-key"]: Flags.string({
       description: "the Jira project key where the test execution issue will be created",
       required: true,
     }),
-    summary: Flags.string({
+    ["summary"]: Flags.string({
       default: "Bruno test execution",
       description: "the summary of the test execution issue",
     }),
-    token: Flags.string({ description: "the Jira API token" }),
-    url: Flags.string({ description: "the Jira Server/DC URL" }),
+    ["token"]: Flags.string({ description: "the Jira API token", helpGroup: "authentication" }),
+    ["url"]: Flags.string({ description: "the Jira Server/DC URL" }),
   };
 
   public async run(): Promise<void> {
     const {
       args: { results },
-      flags: { clientId, clientSecret, csvFile, description, projectKey, summary, token, url },
+      flags: {
+        "client-id": clientId,
+        "client-secret": clientSecret,
+        "csv-file": csvFile,
+        description,
+        "project-key": projectKey,
+        summary,
+        token,
+        url,
+      },
     } = await this.parse(UploadResults);
 
     const brunoResults: BrunoIteration[] = JSON.parse(
@@ -58,7 +73,7 @@ export default class UploadResults extends Command {
 
     if (!isCloudProject && !isServerProject) {
       throw new Error(
-        `One of [--clientId ... --clientSecret ...] or [--token ... --url ...] must be provided`
+        `One of [--client-id ... --client-secret ...] or [--token ... --url ...] must be provided`
       );
     }
 
