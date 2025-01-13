@@ -47,7 +47,7 @@ Converts Bruno JSON results to Xray JSON and uploads them to a Jira project.
 
 ```
 USAGE
-  $ bruno-xray-plugin upload-results RESULTS --project-key <value> [--client-id <value>] [--client-secret <value>] [--csv-file <value>] [--description <value>] [--summary <value>] [--token <value>] [--url <value>]
+  $ bruno-xray-plugin upload-results RESULTS --project-key <value> [--client-id <value>] [--client-secret <value>] [--csv-file <value>] [--description <value>] [--summary <value>] [--test-execution <value>] [--token <value>] [--url <value>]
 
 ARGUMENTS
   RESULTS  the Bruno JSON results
@@ -56,6 +56,7 @@ FLAGS
   --csv-file=<value>        the CSV file which was used for data-driven collection execution  --description=<value>     [default: Generated from Bruno JSON report] the description of the test execution issue
   --project-key=<value>     (required) the Jira project key where the test execution issue will be created
   --summary=<value>         [default: Bruno test execution] the summary of the test execution issue
+  --test-execution=<value>  the Jira test execution issue to upload the test results to
   --url=<value>             the Jira Server/DC URL
 
 AUTHENTICATION FLAGS
