@@ -47,20 +47,23 @@ Converts Bruno JSON results to Xray JSON and uploads them to a Jira project.
 
 ```
 USAGE
-  $ bruno-xray-plugin upload-results RESULTS --project-key <value> [--client-id <value>] [--client-secret <value>] [--csv-file <value>] [--description <value>] [--summary <value>] [--test-execution <value>] [--token <value>] [--url <value>]
+  $ bruno-xray-plugin upload-results RESULTS --jira-url <value> --project-key <value> [--csv-file <value>] [--description <value>] [--jira-token <value> ] [--summary <value>] [--test-execution <value>] [--xray-client-id <value> --xray-client-secret <value>]
 
 ARGUMENTS
   RESULTS  the Bruno JSON results
 
 FLAGS
-  --csv-file=<value>        the CSV file which was used for data-driven collection execution  --description=<value>     [default: Generated from Bruno JSON report] the description of the test execution issue
-  --project-key=<value>     (required) the Jira project key where the test execution issue will be created
+  --jira-url=<value>     (required) the Jira URL
+  --project-key=<value>  (required) the Jira project key where new test execution issues will be created
+
+TEST EXECUTION ISSUE FLAGS
+  --csv-file=<value>        a CSV file which was used for data-driven Bruno execution and will be mapped to Xray's iterations
+  --description=<value>     [default: Generated from Bruno JSON report] the description of the test execution issue
   --summary=<value>         [default: Bruno test execution] the summary of the test execution issue
-  --test-execution=<value>  the Jira test execution issue to upload the test results to
-  --url=<value>             the Jira Server/DC URL
+  --test-execution=<value>  an existing Jira test execution issue to upload the test results to
 
 AUTHENTICATION FLAGS
-  --client-id=<value>      the Xray Cloud client ID
-  --client-secret=<value>  the Xray Cloud client secret
-  --token=<value>          the Jira API token
+  --jira-token=<value>          the Jira API token
+  --xray-client-id=<value>      the Xray Cloud client ID
+  --xray-client-secret=<value>  the Xray Cloud client secret
 ```
