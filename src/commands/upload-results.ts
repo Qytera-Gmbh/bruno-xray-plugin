@@ -5,7 +5,7 @@ import { join } from "path";
 import { cwd } from "process";
 import { convertBrunoToXray } from "../conversion/conversion.js";
 import type { BrunoIteration } from "../model/bruno-model.js";
-import { importExecution } from "../rest/xray.js";
+import { XrayClient } from "../rest/xray.js";
 
 enum Flag {
   CSV_FILE = "csv-file",
@@ -106,12 +106,17 @@ export default class UploadResults extends Command {
 
     // Choose Xray server or cloud depending on the provided option combinations.
     const isCloudProject = xrayClientId !== undefined && xrayClientSecret !== undefined;
-    const isServerProject = jiraToken !== undefined;
+    let xrayClient: XrayClient;
 
-    if (!isCloudProject && !isServerProject) {
-      throw new Error(
-        `One of [--xray-client-id ... --xray-client-secret ...] or [--jira-token ... --jira-url ...] must be provided`
-      );
+    if (isCloudProject) {
+      xrayClient = new XrayClient({ clientId: xrayClientId, clientSecret: xrayClientSecret });
+    } else {
+      if (jiraToken === undefined) {
+        throw new Error(
+          `One of [--${Flag.XRAY_CLIENT_ID} ... --${Flag.XRAY_CLIENT_SECRET} ...] or [--${Flag.JIRA_TOKEN} ... --${Flag.JIRA_URL} ...] must be provided`
+        );
+      }
+      xrayClient = new XrayClient({ baseUrl: jiraUrl, token: jiraToken });
     }
 
     let parameters: Record<string, string>[] | undefined = undefined;
@@ -134,21 +139,7 @@ export default class UploadResults extends Command {
       throw new Error("No Xray tests found in Bruno JSON");
     }
 
-    let response;
-
-    if (isCloudProject) {
-      response = await importExecution(
-        `https://xray.cloud.getxray.app/api/v2/import/execution?projectKey=${projectKey}`,
-        xrayResults,
-        { clientId: xrayClientId, clientSecret: xrayClientSecret }
-      );
-    } else if (isServerProject) {
-      response = await importExecution(
-        `${jiraUrl}/rest/raven/1.0/import/execution?projectKey=${projectKey}`,
-        xrayResults,
-        { token: jiraToken }
-      );
-    }
+    const response = await xrayClient.importExecution(xrayResults, projectKey);
 
     this.log(JSON.stringify(response, null, 2));
   }
