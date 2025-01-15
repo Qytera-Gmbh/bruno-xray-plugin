@@ -5,21 +5,21 @@ interface ImportResponse {
 }
 
 type XrayCredentials =
-    | {
-        /**
-         * The Jira server PAT.
-         */
-        token: string;
-      }
-    | {
-        /**
-         * The Xray cloud client ID.
-         */
-        clientId: string;
-        /**
-         * The Xray cloud client secret.
-         */
-        clientSecret: string;
+  | {
+      /**
+       * The Jira server PAT.
+       */
+      token: string;
+    }
+  | {
+      /**
+       * The Xray cloud client ID.
+       */
+      clientId: string;
+      /**
+       * The Xray cloud client secret.
+       */
+      clientSecret: string;
     };
 
 export class XrayClient {
@@ -64,22 +64,53 @@ export class XrayClient {
     const url = this.isCloudClient
       ? `${this.url}/api/v2/import/execution?projectKey=${projectKey}`
       : `${this.url}/rest/raven/1.0/import/execution?projectKey=${projectKey}`;
-  const response = await fetch(url, {
-    body: JSON.stringify(results),
-    headers: {
-      ["Accept"]: "application/json",
-      ["Authorization"]: authorizationValue,
-      ["Content-Type"]: "application/json",
-    },
-    method: "POST",
-  });
-  if (response.status === 200) {
-    return (await response.json()) as ImportResponse;
+    const response = await fetch(url, {
+      body: JSON.stringify(results),
+      headers: {
+        ["Accept"]: "application/json",
+        ["Authorization"]: authorizationValue,
+        ["Content-Type"]: "application/json",
+      },
+      method: "POST",
+    });
+    if (response.status === 200) {
+      return (await response.json()) as ImportResponse;
+    }
+    throw new Error(
+      `Unexpected response status ${response.status.toString()}: ${await response.text()}`
+    );
   }
-  throw new Error(
-    `Unexpected response status ${response.status.toString()}: ${await response.text()}`
-  );
-}
+
+  /**
+   * Uploads test results to the Xray instance.
+   *
+   * @param url the Xray URL
+   * @param results the test results
+   * @param credentials the credentials to use
+   * @returns the import response
+   *
+   * @see https://docs.getxray.app/display/XRAY/Import+Execution+Results+-+REST#ImportExecutionResultsREST-XrayJSONresults
+   * @see https://docs.getxray.app/display/XRAYCLOUD/Exporting+datasets+-+REST+v2
+   */
+  public async downloadDataset(testIssueKey: string): Promise<string> {
+    const authorizationValue = await this.getAuthorizationHeader(this.credentials);
+    const url = this.isCloudClient
+      ? `${this.url}/api/v2/dataset/export?testIssueKey=${testIssueKey}`
+      : `${this.url}/rest/raven/2.0/dataset/export?testIssueKey=${testIssueKey}`;
+    const response = await fetch(url, {
+      headers: {
+        ["Authorization"]: authorizationValue,
+      },
+      method: "GET",
+    });
+    if (response.status === 200) {
+      return await response.text();
+    }
+    throw new Error(
+      `Unexpected response status ${response.status.toString()}: ${await response.text()}`
+    );
+  }
+
   private async getAuthorizationHeader(credentials: XrayCredentials) {
     if ("token" in credentials) {
       return `Bearer ${credentials.token}`;
