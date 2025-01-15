@@ -7,6 +7,23 @@ import { convertBrunoToXray } from "../conversion/conversion.js";
 import type { BrunoIteration } from "../model/bruno-model.js";
 import { importExecution } from "../rest/xray.js";
 
+enum Flag {
+  CSV_FILE = "csv-file",
+  DESCRIPTION = "description",
+  JIRA_TOKEN = "jira-token",
+  JIRA_URL = "jira-url",
+  PROJECT_KEY = "project-key",
+  SUMMARY = "summary",
+  TEST_EXECUTION = "test-execution",
+  XRAY_CLIENT_ID = "xray-client-id",
+  XRAY_CLIENT_SECRET = "xray-client-secret",
+}
+
+enum HelpGroup {
+  AUTHENTICATION = "AUTHENTICATION",
+  TEST_EXECUTION_ISSUE = "TEST EXECUTION ISSUE",
+}
+
 export default class UploadResults extends Command {
   static override args = {
     results: Args.string({
@@ -21,50 +38,49 @@ export default class UploadResults extends Command {
   static override examples = ["<%= config.bin %> <%= command.id %>"];
 
   static override flags = {
-    ["csv-file"]: Flags.string({
+    [Flag.CSV_FILE]: Flags.string({
       description:
         "a CSV file which was used for data-driven Bruno execution and will be mapped to Xray's iterations",
-      helpGroup: "TEST EXECUTION ISSUE",
+      helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
     }),
-    ["description"]: Flags.string({
+    [Flag.DESCRIPTION]: Flags.string({
       default: "Generated from Bruno JSON report",
       description: "the description of the test execution issue",
-      helpGroup: "TEST EXECUTION ISSUE",
+      helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
     }),
-    ["jira-token"]: Flags.string({
-      dependsOn: ["url"],
+    [Flag.JIRA_TOKEN]: Flags.string({
       description: "the Jira API token",
       env: "JIRA_TOKEN",
-      helpGroup: "AUTHENTICATION",
+      helpGroup: HelpGroup.AUTHENTICATION,
     }),
-    ["jira-url"]: Flags.string({
+    [Flag.JIRA_URL]: Flags.string({
       description: "the Jira URL",
       required: true,
     }),
-    ["project-key"]: Flags.string({
+    [Flag.PROJECT_KEY]: Flags.string({
       description: "the Jira project key where new test execution issues will be created",
       required: true,
     }),
-    ["summary"]: Flags.string({
+    [Flag.SUMMARY]: Flags.string({
       default: "Bruno test execution",
       description: "the summary of the test execution issue",
-      helpGroup: "TEST EXECUTION ISSUE",
+      helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
     }),
-    ["test-execution"]: Flags.string({
+    [Flag.TEST_EXECUTION]: Flags.string({
       description: "an existing Jira test execution issue to upload the test results to",
-      helpGroup: "TEST EXECUTION ISSUE",
+      helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
     }),
-    ["xray-client-id"]: Flags.string({
-      dependsOn: ["xray-client-secret"],
+    [Flag.XRAY_CLIENT_ID]: Flags.string({
+      dependsOn: [Flag.XRAY_CLIENT_SECRET],
       description: "the Xray Cloud client ID",
       env: "XRAY_CLIENT_ID",
-      helpGroup: "AUTHENTICATION",
+      helpGroup: HelpGroup.AUTHENTICATION,
     }),
-    ["xray-client-secret"]: Flags.string({
-      dependsOn: ["xray-client-id"],
+    [Flag.XRAY_CLIENT_SECRET]: Flags.string({
+      dependsOn: [Flag.XRAY_CLIENT_ID],
       description: "the Xray Cloud client secret",
       env: "XRAY_CLIENT_SECRET",
-      helpGroup: "AUTHENTICATION",
+      helpGroup: HelpGroup.AUTHENTICATION,
     }),
   };
 
@@ -72,15 +88,15 @@ export default class UploadResults extends Command {
     const {
       args: { results },
       flags: {
-        "csv-file": csvFile,
-        description,
-        "jira-token": jiraToken,
-        "jira-url": jiraUrl,
-        "project-key": projectKey,
-        summary,
-        "test-execution": testExecution,
-        "xray-client-id": xrayClientId,
-        "xray-client-secret": xrayClientSecret,
+        [Flag.CSV_FILE]: csvFile,
+        [Flag.DESCRIPTION]: description,
+        [Flag.JIRA_TOKEN]: jiraToken,
+        [Flag.JIRA_URL]: jiraUrl,
+        [Flag.PROJECT_KEY]: projectKey,
+        [Flag.SUMMARY]: summary,
+        [Flag.TEST_EXECUTION]: testExecution,
+        [Flag.XRAY_CLIENT_ID]: xrayClientId,
+        [Flag.XRAY_CLIENT_SECRET]: xrayClientSecret,
       },
     } = await this.parse(UploadResults);
 
