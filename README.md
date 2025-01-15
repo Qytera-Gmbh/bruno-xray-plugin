@@ -14,10 +14,10 @@ This project is a command line interface for a [Bruno](https://www.usebruno.com/
 Features include:
 
 - Upload Bruno test results to Xray
+- Download of Xray CSV datasets for data-driven Bruno execution
 
 Planned features:
 
-- Download of Xray CSV datasets for data-driven Bruno execution
 - Customisable HTML report of test results for use as evidence
 
 > [!WARNING]
@@ -61,6 +61,27 @@ TEST EXECUTION ISSUE FLAGS
   --description=<value>     [default: Generated from Bruno JSON report] the description of the test execution issue
   --summary=<value>         [default: Bruno test execution] the summary of the test execution issue
   --test-execution=<value>  an existing Jira test execution issue to upload the test results to
+
+AUTHENTICATION FLAGS
+  --jira-token=<value>          the Jira API token
+  --xray-client-id=<value>      the Xray Cloud client ID
+  --xray-client-secret=<value>  the Xray Cloud client secret
+```
+
+## `download-dataset`
+
+Converts Bruno JSON results to Xray JSON and uploads them to a Jira project.
+
+```
+USAGE
+  $ bruno-xray-plugin download-dataset ISSUE-KEY --jira-url <value> [--jira-token <value>] [--output <value>] [--xray-client-id <value> --xray-client-secret <value>]
+
+ARGUMENTS
+  ISSUE-KEY  the Jira test issue key whose dataset to download
+
+FLAGS
+  --jira-url=<value>  (required) the Jira URL
+  --output=<value>    [default: data.csv] a file path to write the CSV data to
 
 AUTHENTICATION FLAGS
   --jira-token=<value>          the Jira API token
