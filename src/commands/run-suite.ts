@@ -3,29 +3,29 @@ import { spawn } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { cwd } from "node:process";
-import type { PluginTestPlan } from "../model/plugin-model.js";
+import type { PluginTestSuite } from "../model/plugin-model.js";
 import { envName } from "../util/env.js";
-import { downloadDataset } from "./download-dataset.js";
-import { uploadResults } from "./upload-results.js";
+import { downloadDataset } from "./xray/download-dataset.js";
+import { uploadResults } from "./xray/upload-results.js";
 
 enum Positional {
-  TEST_PLAN_FILE = "test-plan-file",
+  TEST_SUITE_FILE = "file",
 }
 
 enum Flag {
   COLLECTION_DIRECTORY = "collection-directory",
 }
 
-export default class RunTests extends Command {
+export default class RunSuite extends Command {
   static override args = {
-    [Positional.TEST_PLAN_FILE]: Args.string({
-      description: "the path to the Bruno test plan file to execute",
+    [Positional.TEST_SUITE_FILE]: Args.string({
+      description: "the path to the Bruno test suite file to execute",
       required: true,
     }),
   };
 
   static override description =
-    "Runs a Bruno test plan file and uploads the results to a test execution issue.";
+    "Runs a plugin test suite file and uploads the results to a test execution issue.";
 
   static override examples = ["<%= config.bin %> <%= command.id %>"];
 
@@ -38,10 +38,10 @@ export default class RunTests extends Command {
 
   public async run(): Promise<void> {
     const {
-      args: { [Positional.TEST_PLAN_FILE]: testPlanFile },
+      args: { [Positional.TEST_SUITE_FILE]: testPlanFile },
       flags: { [Flag.COLLECTION_DIRECTORY]: collectionDirectory },
-    } = await this.parse(RunTests);
-    const testPlan = JSON.parse(readFileSync(testPlanFile, "utf-8")) as PluginTestPlan;
+    } = await this.parse(RunSuite);
+    const testPlan = JSON.parse(readFileSync(testPlanFile, "utf-8")) as PluginTestSuite;
     for (const test of testPlan.tests) {
       const response = await runDirectory(test, { ...testPlan.config, cwd: collectionDirectory });
       this.log(JSON.stringify(response, null, 2));
@@ -50,10 +50,10 @@ export default class RunTests extends Command {
 }
 
 async function runDirectory(
-  test: PluginTestPlan["tests"][number],
-  options: PluginTestPlan["config"] & { cwd: string }
+  test: PluginTestSuite["tests"][number],
+  options: PluginTestSuite["config"] & { cwd: string }
 ) {
-  const resolvedOptions: PluginTestPlan["config"] = {
+  const resolvedOptions: PluginTestSuite["config"] = {
     certFile: options.certFile ? resolve(options.cwd, options.certFile) : undefined,
     environment: options.environment,
     projectKey: options.projectKey,
@@ -66,7 +66,7 @@ async function runDirectory(
       : undefined,
     url: options.url,
   };
-  const resolvedTest: PluginTestPlan["tests"][number] = {
+  const resolvedTest: PluginTestSuite["tests"][number] = {
     dataset: test.dataset
       ? {
           issueKey: test.dataset.issueKey,
