@@ -1,8 +1,8 @@
 /**
- * Models the test plan of the Bruno Xray plugin. It contains a general configuration and an array
- * of tests to execute.
+ * Models a test suite of the Bruno Xray plugin. It contains a general configuration and an array of
+ * tests to execute.
  */
-export interface PluginTestPlan {
+export interface PluginTestSuite {
   /**
    * The general test execution configuration.
    */
@@ -39,7 +39,7 @@ export interface PluginTestPlan {
     url: string;
   };
   /**
-   * The tests to execute in this plan.
+   * The tests to execute in this suite.
    */
   tests: {
     /**

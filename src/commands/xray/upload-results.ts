@@ -1,10 +1,10 @@
 import { Args, Command, Flags } from "@oclif/core";
 import { parse } from "csv-parse/sync";
 import { readFileSync } from "fs";
-import { convertBrunoToXray } from "../conversion/conversion.js";
-import type { BrunoIteration } from "../model/bruno-model.js";
-import { XrayClient } from "../rest/xray.js";
-import { envName } from "../util/env.js";
+import { convertBrunoToXray } from "../../conversion/conversion.js";
+import type { BrunoIteration } from "../../model/bruno-model.js";
+import { XrayClient } from "../../rest/xray.js";
+import { envName } from "../../util/env.js";
 
 enum Flag {
   CSV_FILE = "csv-file",

@@ -2,8 +2,8 @@ import { Args, Command, Flags } from "@oclif/core";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { cwd } from "node:process";
-import { XrayClient } from "../rest/xray.js";
-import { envName } from "../util/env.js";
+import { XrayClient } from "../../rest/xray.js";
+import { envName } from "../../util/env.js";
 
 enum Positional {
   ISSUE_KEY = "issue-key",
