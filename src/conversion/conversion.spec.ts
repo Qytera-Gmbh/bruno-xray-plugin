@@ -62,6 +62,22 @@ describe(path.relative(process.cwd(), import.meta.filename), () => {
         ) as BrunoIteration[]
       );
     });
+
+    it("handles connection refused results", () => {
+      const results = JSON.parse(
+        readFileSync(join(import.meta.dirname, "test", "iterated-connection-refused.json"), "utf-8")
+      ) as BrunoIteration[];
+      const convertedResults = convertBrunoToXray(results, { useCloudFormat: true });
+      assert.deepStrictEqual(
+        convertedResults,
+        JSON.parse(
+          readFileSync(
+            join(import.meta.dirname, "test", "iterated-connection-refused-expected.json"),
+            "utf-8"
+          )
+        ) as BrunoIteration[]
+      );
+    });
   });
 
   describe("two folders", () => {

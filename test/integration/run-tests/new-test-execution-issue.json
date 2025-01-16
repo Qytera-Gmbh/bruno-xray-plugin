@@ -1,0 +1,16 @@
+{
+  "config": {
+    "environment": "local",
+    "projectKey": "BRU",
+    "url": "https://qualitymaster.atlassian.net"
+  },
+  "tests": [
+    {
+      "directory": "BRU-1",
+      "dataset": {
+        "location": "BRU-1/data.csv",
+        "issueKey": "BRU-1"
+      }
+    }
+  ]
+}

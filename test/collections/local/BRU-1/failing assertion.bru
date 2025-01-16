@@ -1,11 +1,11 @@
 meta {
-  name: failing test
+  name: failing assertion
   type: http
   seq: 1
 }
 
-get {
-  url: http://localhost:8083/{{name}}/nested
+post {
+  url: http://localhost:8083/{{name}}
   body: json
   auth: none
 }
@@ -21,8 +21,6 @@ vars:pre-request {
   language: en
 }
 
-tests {
-  test("body", () => {
-    expect(res.body).to.be.json;
-  });
+assert {
+  res.body: isJson
 }

@@ -1,6 +1,12 @@
 import type { XrayTestExecutionResults } from "../model/xray-model.js";
 
-interface ImportResponse {
+/**
+ * Models the Xray response after a successful JSON result import.
+ */
+export interface ImportResponse {
+  /**
+   * The issue key of the test execution into which the results were imported.
+   */
   key: string;
 }
 

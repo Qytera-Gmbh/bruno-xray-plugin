@@ -1,19 +1,23 @@
-const http = require('http');
-const server = http.createServer();
+import { createServer } from "http";
+const server = createServer();
 
-server.on('request', (request, response) => {
+server
+  .on("request", (request, response) => {
     let body = [];
-    request.on('data', (chunk) => {
+    request
+      .on("data", (chunk) => {
         body.push(chunk);
-    }).on('end', () => {
+      })
+      .on("end", () => {
         body = Buffer.concat(body).toString();
 
-	console.log(`==== ${request.method} ${request.url}`);
-	console.log('> Headers');
+        console.log(`==== ${request.method} ${request.url}`);
+        console.log("> Headers");
         console.log(request.headers);
 
-	console.log('> Body');
-	console.log(body);
+        console.log("> Body");
+        console.log(body);
         response.end();
-    });
-}).listen(8083);
+      });
+  })
+  .listen(8083);
