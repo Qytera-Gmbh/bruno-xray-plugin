@@ -41,13 +41,62 @@ npx bruno-xray-plugin --help
 
 # Commands
 
-## `download-dataset`
+## Main Commands
+
+These are the main commands you should use to interact with Xray and Bruno.
+
+### `run-suite`
+
+Runs a plugin test suite file and uploads the results to a test execution issue.
+
+```
+USAGE
+  $ bruno-xray-plugin run-suite FILE [--collection-directory <value>]
+
+ARGUMENTS
+  FILE  the path to the Bruno test suite file to execute
+
+FLAGS
+  --collection-directory=<value>  [default: .] the root collection directory
+```
+
+Plugin test suite files look like this:
+
+```json
+{
+  "config": {
+    "environment": "local",
+    "projectKey": "BRU",
+    "url": "https://example.atlassian.net",
+    "testExecution": {
+      "key": "BRU-5",
+      "summary": "A reused test execution issue",
+      "description": "This test execution issue was reused by the plugin."
+    }
+  },
+  "tests": [
+    {
+      "directory": "BRU-1 requests",
+      "dataset": {
+        "location": "BRU-1 requests/data.csv",
+        "issueKey": "BRU-1"
+      }
+    }
+  ]
+}
+```
+
+## Sub Commands
+
+If a main command does not meet your needs, you can also use the individual commands it consists of to build your own solution.
+
+### `xray download-dataset`
 
 Downloads an Xray dataset from a Jira test issue and saves it to the local file system.
 
 ```
 USAGE
-  $ bruno-xray-plugin download-dataset ISSUE-KEY --jira-url <value> [--jira-token <value>] [--output <value>] [--xray-client-id <value> --xray-client-secret <value>]
+  $ bruno-xray-plugin xray download-dataset ISSUE-KEY --jira-url <value> [--jira-token <value>] [--output <value>] [--xray-client-id <value> --xray-client-secret <value>]
 
 ARGUMENTS
   ISSUE-KEY  the Jira test issue key whose dataset to download
@@ -62,13 +111,13 @@ AUTHENTICATION FLAGS
   --xray-client-secret=<value>  the Xray Cloud client secret
 ```
 
-## `upload-results`
+### `xray upload-results`
 
 Converts Bruno JSON results to Xray JSON and uploads them to a Jira project.
 
 ```
 USAGE
-  $ bruno-xray-plugin upload-results RESULTS --jira-url <value> --project-key <value> [--csv-file <value>] [--description <value>] [--jira-token <value>] [--summary <value>] [--test-execution <value>] [--xray-client-id <value> --xray-client-secret <value>]
+  $ bruno-xray-plugin xray upload-results RESULTS --jira-url <value> --project-key <value> [--csv-file <value>] [--description <value>] [--jira-token <value>] [--summary <value>] [--test-execution <value>] [--xray-client-id <value> --xray-client-secret <value>]
 
 ARGUMENTS
   RESULTS  the Bruno JSON results
