@@ -1,4 +1,5 @@
 import { Args, Command, Flags } from "@oclif/core";
+import ansiColors from "ansi-colors";
 import { spawn } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -108,6 +109,7 @@ async function runDirectory(
     console.log("Encountered errors during Bruno execution", error);
     return;
   }
+  console.log(ansiColors.gray("Uploading results to Xray..."));
   return await uploadResults({
     csvFile: resolvedTest.dataset?.location,
     description: resolvedOptions.jira.testExecution?.description,
