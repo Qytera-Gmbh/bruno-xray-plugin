@@ -8,35 +8,45 @@ export interface PluginTestSuite {
    */
   config: {
     /**
-     * The path to a CA certificate that Bruno will use during its execution.
+     * The relevant Bruno settings.
      */
-    certFile?: string;
-    /**
-     * The Bruno environment to use.
-     */
-    environment: string;
-    /**
-     * The Jira project key where new test execution issues will be created.
-     */
-    projectKey: string;
-    /**
-     * The test execution information.
-     */
-    testExecution?: {
+    bruno: {
       /**
-       * The description of the test execution issue.
+       * The path to a CA certificate that Bruno will use during its execution.
        */
-      description?: string;
+      certFile?: string;
       /**
-       * An existing Jira test execution issue to upload the test results to.
+       * The Bruno environment to use.
        */
-      key?: string;
-      /**
-       * The summary of the test execution issue.
-       */
-      summary?: string;
+      environment: string;
     };
-    url: string;
+    /**
+     * The relevant Jira settings.
+     */
+    jira: {
+      /**
+       * The Jira project key where new test execution issues will be created.
+       */
+      projectKey: string;
+      /**
+       * The test execution information.
+       */
+      testExecution?: {
+        /**
+         * The description of the test execution issue.
+         */
+        description?: string;
+        /**
+         * An existing Jira test execution issue to upload the test results to.
+         */
+        key?: string;
+        /**
+         * The summary of the test execution issue.
+         */
+        summary?: string;
+      };
+      url: string;
+    };
   };
   /**
    * The tests to execute in this suite.
