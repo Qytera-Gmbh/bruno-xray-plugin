@@ -20,7 +20,7 @@ export interface BrunoSummary {
 
 export interface BrunoRequestResult {
   assertionResults: BrunoAssertionResult[];
-  error: unknown;
+  error: null | string;
   iterationIndex: number;
   request: BrunoRequest;
   response: BrunoResponse;
@@ -43,10 +43,10 @@ export interface BrunoRequest {
 
 export interface BrunoResponse {
   data: unknown;
-  headers: Record<string, string>;
+  headers: null | Record<string, string>;
   responseTime: number;
-  status: number;
-  statusText: string;
+  status: null | number;
+  statusText: null | string;
 }
 
 export interface BrunoAssertionResult {

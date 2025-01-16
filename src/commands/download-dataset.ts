@@ -1,10 +1,11 @@
 import { Args, Command, Flags } from "@oclif/core";
-import { writeFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { mkdirSync, writeFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
 import { cwd } from "node:process";
 import { XrayClient } from "../rest/xray.js";
+import { envName } from "../util/env.js";
 
-enum Positionals {
+enum Positional {
   ISSUE_KEY = "issue-key",
 }
 
@@ -23,7 +24,7 @@ enum HelpGroup {
 
 export default class DownloadDataset extends Command {
   static override args = {
-    [Positionals.ISSUE_KEY]: Args.string({
+    [Positional.ISSUE_KEY]: Args.string({
       description: "the Jira test issue key whose dataset to download",
       required: true,
     }),
@@ -37,7 +38,7 @@ export default class DownloadDataset extends Command {
   static override flags = {
     [Flag.JIRA_TOKEN]: Flags.string({
       description: "the Jira API token",
-      env: "JIRA_TOKEN",
+      env: envName("jira-token"),
       helpGroup: HelpGroup.AUTHENTICATION,
     }),
     [Flag.JIRA_URL]: Flags.string({
@@ -51,20 +52,20 @@ export default class DownloadDataset extends Command {
     [Flag.XRAY_CLIENT_ID]: Flags.string({
       dependsOn: [Flag.XRAY_CLIENT_SECRET],
       description: "the Xray Cloud client ID",
-      env: "XRAY_CLIENT_ID",
+      env: envName("xray-client-id"),
       helpGroup: HelpGroup.AUTHENTICATION,
     }),
     [Flag.XRAY_CLIENT_SECRET]: Flags.string({
       dependsOn: [Flag.XRAY_CLIENT_ID],
       description: "the Xray Cloud client secret",
-      env: "XRAY_CLIENT_SECRET",
+      env: envName("xray-client-secret"),
       helpGroup: HelpGroup.AUTHENTICATION,
     }),
   };
 
   public async run(): Promise<void> {
     const {
-      args: { [Positionals.ISSUE_KEY]: issueKey },
+      args: { [Positional.ISSUE_KEY]: issueKey },
       flags: {
         [Flag.JIRA_TOKEN]: jiraToken,
         [Flag.JIRA_URL]: jiraUrl,
@@ -73,26 +74,36 @@ export default class DownloadDataset extends Command {
         [Flag.XRAY_CLIENT_SECRET]: xrayClientSecret,
       },
     } = await this.parse(DownloadDataset);
-
-    // Choose Xray server or cloud depending on the provided option combinations.
-    const isCloudProject = xrayClientId !== undefined && xrayClientSecret !== undefined;
-    let xrayClient: XrayClient;
-
-    if (isCloudProject) {
-      xrayClient = new XrayClient({ clientId: xrayClientId, clientSecret: xrayClientSecret });
-    } else {
-      if (jiraToken === undefined) {
-        throw new Error(
-          `One of [--${Flag.XRAY_CLIENT_ID} ... --${Flag.XRAY_CLIENT_SECRET} ...] or [--${Flag.JIRA_TOKEN} ... --${Flag.JIRA_URL} ...] must be provided`
-        );
-      }
-      xrayClient = new XrayClient({ baseUrl: jiraUrl, token: jiraToken });
-    }
-
-    const response = await xrayClient.downloadDataset(issueKey);
-
-    writeFileSync(output, response);
-
+    await downloadDataset({ issueKey, jiraToken, jiraUrl, output, xrayClientId, xrayClientSecret });
     this.log(`dataset for ${issueKey} written to ${resolve(cwd(), output)}`);
   }
+}
+
+export async function downloadDataset(options: {
+  issueKey: string;
+  jiraToken?: string;
+  jiraUrl: string;
+  output: string;
+  xrayClientId?: string;
+  xrayClientSecret?: string;
+}) {
+  // Choose Xray server or cloud client depending on the provided authentication combinations.
+  let xrayClient: XrayClient;
+  if (options.xrayClientId !== undefined && options.xrayClientSecret !== undefined) {
+    xrayClient = new XrayClient({
+      clientId: options.xrayClientId,
+      clientSecret: options.xrayClientSecret,
+    });
+  } else {
+    if (options.jiraToken === undefined) {
+      throw new Error(
+        `One of [--${Flag.XRAY_CLIENT_ID} ... --${Flag.XRAY_CLIENT_SECRET} ...] or [--${Flag.JIRA_TOKEN} ... --${Flag.JIRA_URL} ...] must be provided`
+      );
+    }
+    xrayClient = new XrayClient({ baseUrl: options.jiraUrl, token: options.jiraToken });
+  }
+  const response = await xrayClient.downloadDataset(options.issueKey);
+  const destination = resolve(options.output);
+  mkdirSync(dirname(destination), { recursive: true });
+  writeFileSync(destination, response);
 }

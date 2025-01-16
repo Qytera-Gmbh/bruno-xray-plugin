@@ -15,7 +15,7 @@
     "results": [
       {
         "test": {
-          "filename": "DP-90\\nested\\failing test.bru"
+          "filename": "DP-90/nested/failing test.bru"
         },
         "request": {
           "method": "GET",
@@ -49,12 +49,12 @@
           }
         ],
         "runtime": 0.0535463,
-        "suitename": "DP-90\\nested\\failing test",
+        "suitename": "DP-90/nested/failing test",
         "iterationIndex": 0
       },
       {
         "test": {
-          "filename": "DP-90\\nested\\passing test.bru"
+          "filename": "DP-90/nested/passing test.bru"
         },
         "request": {
           "method": "GET",
@@ -86,12 +86,12 @@
           }
         ],
         "runtime": 0.0095954,
-        "suitename": "DP-90\\nested\\passing test",
+        "suitename": "DP-90/nested/passing test",
         "iterationIndex": 0
       },
       {
         "test": {
-          "filename": "DP-90\\failing assertion.bru"
+          "filename": "DP-90/failing assertion.bru"
         },
         "request": {
           "method": "GET",
@@ -127,12 +127,12 @@
         ],
         "testResults": [],
         "runtime": 0.0058899,
-        "suitename": "DP-90\\failing assertion",
+        "suitename": "DP-90/failing assertion",
         "iterationIndex": 0
       },
       {
         "test": {
-          "filename": "DP-90\\passing assertion.bru"
+          "filename": "DP-90/passing assertion.bru"
         },
         "request": {
           "method": "GET",
@@ -167,12 +167,12 @@
         ],
         "testResults": [],
         "runtime": 0.0052606,
-        "suitename": "DP-90\\passing assertion",
+        "suitename": "DP-90/passing assertion",
         "iterationIndex": 0
       },
       {
         "test": {
-          "filename": "DP-91\\echo.bru"
+          "filename": "DP-91/echo.bru"
         },
         "request": {
           "method": "GET",
@@ -207,7 +207,7 @@
         ],
         "testResults": [],
         "runtime": 0.0045365,
-        "suitename": "DP-91\\echo",
+        "suitename": "DP-91/echo",
         "iterationIndex": 0
       }
     ]
@@ -228,7 +228,7 @@
     "results": [
       {
         "test": {
-          "filename": "DP-90\\nested\\failing test.bru"
+          "filename": "DP-90/nested/failing test.bru"
         },
         "request": {
           "method": "GET",
@@ -262,12 +262,12 @@
           }
         ],
         "runtime": 0.0063254,
-        "suitename": "DP-90\\nested\\failing test",
+        "suitename": "DP-90/nested/failing test",
         "iterationIndex": 1
       },
       {
         "test": {
-          "filename": "DP-90\\nested\\passing test.bru"
+          "filename": "DP-90/nested/passing test.bru"
         },
         "request": {
           "method": "GET",
@@ -299,12 +299,12 @@
           }
         ],
         "runtime": 0.0060512,
-        "suitename": "DP-90\\nested\\passing test",
+        "suitename": "DP-90/nested/passing test",
         "iterationIndex": 1
       },
       {
         "test": {
-          "filename": "DP-90\\failing assertion.bru"
+          "filename": "DP-90/failing assertion.bru"
         },
         "request": {
           "method": "GET",
@@ -340,12 +340,12 @@
         ],
         "testResults": [],
         "runtime": 0.0044882,
-        "suitename": "DP-90\\failing assertion",
+        "suitename": "DP-90/failing assertion",
         "iterationIndex": 1
       },
       {
         "test": {
-          "filename": "DP-90\\passing assertion.bru"
+          "filename": "DP-90/passing assertion.bru"
         },
         "request": {
           "method": "GET",
@@ -380,12 +380,12 @@
         ],
         "testResults": [],
         "runtime": 0.0052015,
-        "suitename": "DP-90\\passing assertion",
+        "suitename": "DP-90/passing assertion",
         "iterationIndex": 1
       },
       {
         "test": {
-          "filename": "DP-91\\echo.bru"
+          "filename": "DP-91/echo.bru"
         },
         "request": {
           "method": "GET",
@@ -420,7 +420,7 @@
         ],
         "testResults": [],
         "runtime": 0.0077228,
-        "suitename": "DP-91\\echo",
+        "suitename": "DP-91/echo",
         "iterationIndex": 1
       }
     ]
@@ -441,7 +441,7 @@
     "results": [
       {
         "test": {
-          "filename": "DP-90\\nested\\failing test.bru"
+          "filename": "DP-90/nested/failing test.bru"
         },
         "request": {
           "method": "GET",
@@ -475,12 +475,12 @@
           }
         ],
         "runtime": 0.0088365,
-        "suitename": "DP-90\\nested\\failing test",
+        "suitename": "DP-90/nested/failing test",
         "iterationIndex": 2
       },
       {
         "test": {
-          "filename": "DP-90\\nested\\passing test.bru"
+          "filename": "DP-90/nested/passing test.bru"
         },
         "request": {
           "method": "GET",
@@ -512,12 +512,12 @@
           }
         ],
         "runtime": 0.0076693,
-        "suitename": "DP-90\\nested\\passing test",
+        "suitename": "DP-90/nested/passing test",
         "iterationIndex": 2
       },
       {
         "test": {
-          "filename": "DP-90\\failing assertion.bru"
+          "filename": "DP-90/failing assertion.bru"
         },
         "request": {
           "method": "GET",
@@ -553,12 +553,12 @@
         ],
         "testResults": [],
         "runtime": 0.0043335,
-        "suitename": "DP-90\\failing assertion",
+        "suitename": "DP-90/failing assertion",
         "iterationIndex": 2
       },
       {
         "test": {
-          "filename": "DP-90\\passing assertion.bru"
+          "filename": "DP-90/passing assertion.bru"
         },
         "request": {
           "method": "GET",
@@ -593,12 +593,12 @@
         ],
         "testResults": [],
         "runtime": 0.0055862,
-        "suitename": "DP-90\\passing assertion",
+        "suitename": "DP-90/passing assertion",
         "iterationIndex": 2
       },
       {
         "test": {
-          "filename": "DP-91\\echo.bru"
+          "filename": "DP-91/echo.bru"
         },
         "request": {
           "method": "GET",
@@ -633,7 +633,7 @@
         ],
         "testResults": [],
         "runtime": 0.0075876,
-        "suitename": "DP-91\\echo",
+        "suitename": "DP-91/echo",
         "iterationIndex": 2
       }
     ]
@@ -654,7 +654,7 @@
     "results": [
       {
         "test": {
-          "filename": "DP-90\\nested\\failing test.bru"
+          "filename": "DP-90/nested/failing test.bru"
         },
         "request": {
           "method": "GET",
@@ -688,12 +688,12 @@
           }
         ],
         "runtime": 0.0110976,
-        "suitename": "DP-90\\nested\\failing test",
+        "suitename": "DP-90/nested/failing test",
         "iterationIndex": 3
       },
       {
         "test": {
-          "filename": "DP-90\\nested\\passing test.bru"
+          "filename": "DP-90/nested/passing test.bru"
         },
         "request": {
           "method": "GET",
@@ -725,12 +725,12 @@
           }
         ],
         "runtime": 0.0059994,
-        "suitename": "DP-90\\nested\\passing test",
+        "suitename": "DP-90/nested/passing test",
         "iterationIndex": 3
       },
       {
         "test": {
-          "filename": "DP-90\\failing assertion.bru"
+          "filename": "DP-90/failing assertion.bru"
         },
         "request": {
           "method": "GET",
@@ -766,12 +766,12 @@
         ],
         "testResults": [],
         "runtime": 0.0032773,
-        "suitename": "DP-90\\failing assertion",
+        "suitename": "DP-90/failing assertion",
         "iterationIndex": 3
       },
       {
         "test": {
-          "filename": "DP-90\\passing assertion.bru"
+          "filename": "DP-90/passing assertion.bru"
         },
         "request": {
           "method": "GET",
@@ -806,12 +806,12 @@
         ],
         "testResults": [],
         "runtime": 0.0031244,
-        "suitename": "DP-90\\passing assertion",
+        "suitename": "DP-90/passing assertion",
         "iterationIndex": 3
       },
       {
         "test": {
-          "filename": "DP-91\\echo.bru"
+          "filename": "DP-91/echo.bru"
         },
         "request": {
           "method": "GET",
@@ -846,7 +846,7 @@
         ],
         "testResults": [],
         "runtime": 0.0031985,
-        "suitename": "DP-91\\echo",
+        "suitename": "DP-91/echo",
         "iterationIndex": 3
       }
     ]
@@ -867,7 +867,7 @@
     "results": [
       {
         "test": {
-          "filename": "DP-90\\nested\\failing test.bru"
+          "filename": "DP-90/nested/failing test.bru"
         },
         "request": {
           "method": "GET",
@@ -901,12 +901,12 @@
           }
         ],
         "runtime": 0.008566,
-        "suitename": "DP-90\\nested\\failing test",
+        "suitename": "DP-90/nested/failing test",
         "iterationIndex": 4
       },
       {
         "test": {
-          "filename": "DP-90\\nested\\passing test.bru"
+          "filename": "DP-90/nested/passing test.bru"
         },
         "request": {
           "method": "GET",
@@ -938,12 +938,12 @@
           }
         ],
         "runtime": 0.0059127,
-        "suitename": "DP-90\\nested\\passing test",
+        "suitename": "DP-90/nested/passing test",
         "iterationIndex": 4
       },
       {
         "test": {
-          "filename": "DP-90\\failing assertion.bru"
+          "filename": "DP-90/failing assertion.bru"
         },
         "request": {
           "method": "GET",
@@ -979,12 +979,12 @@
         ],
         "testResults": [],
         "runtime": 0.0064245,
-        "suitename": "DP-90\\failing assertion",
+        "suitename": "DP-90/failing assertion",
         "iterationIndex": 4
       },
       {
         "test": {
-          "filename": "DP-90\\passing assertion.bru"
+          "filename": "DP-90/passing assertion.bru"
         },
         "request": {
           "method": "GET",
@@ -1019,12 +1019,12 @@
         ],
         "testResults": [],
         "runtime": 0.0036318,
-        "suitename": "DP-90\\passing assertion",
+        "suitename": "DP-90/passing assertion",
         "iterationIndex": 4
       },
       {
         "test": {
-          "filename": "DP-91\\echo.bru"
+          "filename": "DP-91/echo.bru"
         },
         "request": {
           "method": "GET",
@@ -1059,7 +1059,7 @@
         ],
         "testResults": [],
         "runtime": 0.0032594,
-        "suitename": "DP-91\\echo",
+        "suitename": "DP-91/echo",
         "iterationIndex": 4
       }
     ]
@@ -1080,7 +1080,7 @@
     "results": [
       {
         "test": {
-          "filename": "DP-90\\nested\\failing test.bru"
+          "filename": "DP-90/nested/failing test.bru"
         },
         "request": {
           "method": "GET",
@@ -1114,12 +1114,12 @@
           }
         ],
         "runtime": 0.0058696,
-        "suitename": "DP-90\\nested\\failing test",
+        "suitename": "DP-90/nested/failing test",
         "iterationIndex": 5
       },
       {
         "test": {
-          "filename": "DP-90\\nested\\passing test.bru"
+          "filename": "DP-90/nested/passing test.bru"
         },
         "request": {
           "method": "GET",
@@ -1151,12 +1151,12 @@
           }
         ],
         "runtime": 0.0062626,
-        "suitename": "DP-90\\nested\\passing test",
+        "suitename": "DP-90/nested/passing test",
         "iterationIndex": 5
       },
       {
         "test": {
-          "filename": "DP-90\\failing assertion.bru"
+          "filename": "DP-90/failing assertion.bru"
         },
         "request": {
           "method": "GET",
@@ -1192,12 +1192,12 @@
         ],
         "testResults": [],
         "runtime": 0.0034309,
-        "suitename": "DP-90\\failing assertion",
+        "suitename": "DP-90/failing assertion",
         "iterationIndex": 5
       },
       {
         "test": {
-          "filename": "DP-90\\passing assertion.bru"
+          "filename": "DP-90/passing assertion.bru"
         },
         "request": {
           "method": "GET",
@@ -1232,12 +1232,12 @@
         ],
         "testResults": [],
         "runtime": 0.0065358,
-        "suitename": "DP-90\\passing assertion",
+        "suitename": "DP-90/passing assertion",
         "iterationIndex": 5
       },
       {
         "test": {
-          "filename": "DP-91\\echo.bru"
+          "filename": "DP-91/echo.bru"
         },
         "request": {
           "method": "GET",
@@ -1272,7 +1272,7 @@
         ],
         "testResults": [],
         "runtime": 0.0044123,
-        "suitename": "DP-91\\echo",
+        "suitename": "DP-91/echo",
         "iterationIndex": 5
       }
     ]

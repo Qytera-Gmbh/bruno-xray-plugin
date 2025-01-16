@@ -212,6 +212,9 @@ function getIterationSummary(iteration: BrunoXrayTestResult): RequestSummary[] {
       request: result.request,
       response: result.response,
     };
+    if (result.error) {
+      summary.errors.push({ error: result.error, test: "internal Bruno error" });
+    }
     for (const assertion of result.assertionResults) {
       if (assertion.error) {
         summary.errors.push({

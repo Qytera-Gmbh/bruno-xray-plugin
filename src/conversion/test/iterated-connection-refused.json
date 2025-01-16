@@ -1,0 +1,722 @@
+[
+  {
+    "iterationIndex": 0,
+    "summary": {
+      "totalRequests": 4,
+      "passedRequests": 0,
+      "failedRequests": 4,
+      "totalAssertions": 0,
+      "passedAssertions": 0,
+      "failedAssertions": 0,
+      "totalTests": 0,
+      "passedTests": 0,
+      "failedTests": 0
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "BRU-1/nested/failing test.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Jeff/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0320945,
+        "suitename": "BRU-1/nested/failing test",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "BRU-1/nested/passing test.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Jeff/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0068463,
+        "suitename": "BRU-1/nested/passing test",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "BRU-1/failing assertion.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Jeff",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0048006,
+        "suitename": "BRU-1/failing assertion",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "BRU-1/passing assertion.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Jeff",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0046032,
+        "suitename": "BRU-1/passing assertion",
+        "iterationIndex": 0
+      }
+    ]
+  },
+  {
+    "iterationIndex": 1,
+    "summary": {
+      "totalRequests": 4,
+      "passedRequests": 0,
+      "failedRequests": 4,
+      "totalAssertions": 0,
+      "passedAssertions": 0,
+      "failedAssertions": 0,
+      "totalTests": 0,
+      "passedTests": 0,
+      "failedTests": 0
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "BRU-1/nested/failing test.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/George/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0073152,
+        "suitename": "BRU-1/nested/failing test",
+        "iterationIndex": 1
+      },
+      {
+        "test": {
+          "filename": "BRU-1/nested/passing test.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/George/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0039068,
+        "suitename": "BRU-1/nested/passing test",
+        "iterationIndex": 1
+      },
+      {
+        "test": {
+          "filename": "BRU-1/failing assertion.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/George",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0043174,
+        "suitename": "BRU-1/failing assertion",
+        "iterationIndex": 1
+      },
+      {
+        "test": {
+          "filename": "BRU-1/passing assertion.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/George",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0059926,
+        "suitename": "BRU-1/passing assertion",
+        "iterationIndex": 1
+      }
+    ]
+  },
+  {
+    "iterationIndex": 2,
+    "summary": {
+      "totalRequests": 4,
+      "passedRequests": 0,
+      "failedRequests": 4,
+      "totalAssertions": 0,
+      "passedAssertions": 0,
+      "failedAssertions": 0,
+      "totalTests": 0,
+      "passedTests": 0,
+      "failedTests": 0
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "BRU-1/nested/failing test.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Bob/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.008016,
+        "suitename": "BRU-1/nested/failing test",
+        "iterationIndex": 2
+      },
+      {
+        "test": {
+          "filename": "BRU-1/nested/passing test.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Bob/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0040961,
+        "suitename": "BRU-1/nested/passing test",
+        "iterationIndex": 2
+      },
+      {
+        "test": {
+          "filename": "BRU-1/failing assertion.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Bob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0045282,
+        "suitename": "BRU-1/failing assertion",
+        "iterationIndex": 2
+      },
+      {
+        "test": {
+          "filename": "BRU-1/passing assertion.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Bob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.005733,
+        "suitename": "BRU-1/passing assertion",
+        "iterationIndex": 2
+      }
+    ]
+  },
+  {
+    "iterationIndex": 3,
+    "summary": {
+      "totalRequests": 4,
+      "passedRequests": 0,
+      "failedRequests": 4,
+      "totalAssertions": 0,
+      "passedAssertions": 0,
+      "failedAssertions": 0,
+      "totalTests": 0,
+      "passedTests": 0,
+      "failedTests": 0
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "BRU-1/nested/failing test.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Rob/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.006593,
+        "suitename": "BRU-1/nested/failing test",
+        "iterationIndex": 3
+      },
+      {
+        "test": {
+          "filename": "BRU-1/nested/passing test.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Rob/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0070092,
+        "suitename": "BRU-1/nested/passing test",
+        "iterationIndex": 3
+      },
+      {
+        "test": {
+          "filename": "BRU-1/failing assertion.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Rob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0040932,
+        "suitename": "BRU-1/failing assertion",
+        "iterationIndex": 3
+      },
+      {
+        "test": {
+          "filename": "BRU-1/passing assertion.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Rob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0041341,
+        "suitename": "BRU-1/passing assertion",
+        "iterationIndex": 3
+      }
+    ]
+  },
+  {
+    "iterationIndex": 4,
+    "summary": {
+      "totalRequests": 4,
+      "passedRequests": 0,
+      "failedRequests": 4,
+      "totalAssertions": 0,
+      "passedAssertions": 0,
+      "failedAssertions": 0,
+      "totalTests": 0,
+      "passedTests": 0,
+      "failedTests": 0
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "BRU-1/nested/failing test.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Rob/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"de\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0056625,
+        "suitename": "BRU-1/nested/failing test",
+        "iterationIndex": 4
+      },
+      {
+        "test": {
+          "filename": "BRU-1/nested/passing test.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Rob/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"de\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0038511,
+        "suitename": "BRU-1/nested/passing test",
+        "iterationIndex": 4
+      },
+      {
+        "test": {
+          "filename": "BRU-1/failing assertion.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Rob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"de\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.003488,
+        "suitename": "BRU-1/failing assertion",
+        "iterationIndex": 4
+      },
+      {
+        "test": {
+          "filename": "BRU-1/passing assertion.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Rob",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"de\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0056317,
+        "suitename": "BRU-1/passing assertion",
+        "iterationIndex": 4
+      }
+    ]
+  },
+  {
+    "iterationIndex": 5,
+    "summary": {
+      "totalRequests": 4,
+      "passedRequests": 0,
+      "failedRequests": 4,
+      "totalAssertions": 0,
+      "passedAssertions": 0,
+      "failedAssertions": 0,
+      "totalTests": 0,
+      "passedTests": 0,
+      "failedTests": 0
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "BRU-1/nested/failing test.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Mary/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0074327,
+        "suitename": "BRU-1/nested/failing test",
+        "iterationIndex": 5
+      },
+      {
+        "test": {
+          "filename": "BRU-1/nested/passing test.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Mary/nested",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0045319,
+        "suitename": "BRU-1/nested/passing test",
+        "iterationIndex": 5
+      },
+      {
+        "test": {
+          "filename": "BRU-1/failing assertion.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Mary",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0036666,
+        "suitename": "BRU-1/failing assertion",
+        "iterationIndex": 5
+      },
+      {
+        "test": {
+          "filename": "BRU-1/passing assertion.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8083/Mary",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"language\": \"en\"\n}"
+        },
+        "response": {
+          "status": null,
+          "statusText": null,
+          "headers": null,
+          "data": null,
+          "responseTime": 0
+        },
+        "error": "connect ECONNREFUSED ::1:8083",
+        "assertionResults": [],
+        "testResults": [],
+        "runtime": 0.0082018,
+        "suitename": "BRU-1/passing assertion",
+        "iterationIndex": 5
+      }
+    ]
+  }
+]
