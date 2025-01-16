@@ -1,8 +1,12 @@
 {
   "config": {
-    "environment": "local",
-    "projectKey": "BRU",
-    "url": "https://qualitymaster.atlassian.net"
+    "bruno": {
+      "environment": "local"
+    },
+    "jira": {
+      "projectKey": "BRU",
+      "url": "https://qualitymaster.atlassian.net"
+    }
   },
   "tests": [
     {

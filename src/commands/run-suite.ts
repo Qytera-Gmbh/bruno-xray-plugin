@@ -54,17 +54,21 @@ async function runDirectory(
   options: PluginTestSuite["config"] & { cwd: string }
 ) {
   const resolvedOptions: PluginTestSuite["config"] = {
-    certFile: options.certFile ? resolve(options.cwd, options.certFile) : undefined,
-    environment: options.environment,
-    projectKey: options.projectKey,
-    testExecution: options.testExecution
-      ? {
-          description: options.testExecution.description,
-          key: options.testExecution.key,
-          summary: options.testExecution.summary,
-        }
-      : undefined,
-    url: options.url,
+    bruno: {
+      certFile: options.bruno.certFile ? resolve(options.cwd, options.bruno.certFile) : undefined,
+      environment: options.bruno.environment,
+    },
+    jira: {
+      projectKey: options.jira.projectKey,
+      testExecution: options.jira.testExecution
+        ? {
+            description: options.jira.testExecution.description,
+            key: options.jira.testExecution.key,
+            summary: options.jira.testExecution.summary,
+          }
+        : undefined,
+      url: options.jira.url,
+    },
   };
   const resolvedTest: PluginTestSuite["tests"][number] = {
     dataset: test.dataset
@@ -80,7 +84,7 @@ async function runDirectory(
       await downloadDataset({
         issueKey: resolvedTest.dataset.issueKey,
         jiraToken: process.env[envName("jira-token")],
-        jiraUrl: resolvedOptions.url,
+        jiraUrl: resolvedOptions.jira.url,
         output: resolvedTest.dataset.location,
         xrayClientId: process.env[envName("xray-client-id")],
         xrayClientSecret: process.env[envName("xray-client-secret")],
@@ -90,10 +94,10 @@ async function runDirectory(
   const resolvedResults = resolve(options.cwd, "results.json");
   // Run Bruno.
   const brunoArgs = ["bru", "run", "-r", `"${resolvedTest.directory}"`];
-  brunoArgs.push("--env", `"${resolvedOptions.environment}"`);
+  brunoArgs.push("--env", `"${resolvedOptions.bruno.environment}"`);
   brunoArgs.push("--output", `"${resolvedResults}"`);
-  if (resolvedOptions.certFile) {
-    brunoArgs.push("--cacert", `"${resolvedOptions.certFile}"`);
+  if (resolvedOptions.bruno.certFile) {
+    brunoArgs.push("--cacert", `"${resolvedOptions.bruno.certFile}"`);
   }
   if (resolvedTest.dataset?.location) {
     brunoArgs.push("--csv-file-path", `"${resolvedTest.dataset.location}"`);
@@ -106,13 +110,13 @@ async function runDirectory(
   }
   return await uploadResults({
     csvFile: resolvedTest.dataset?.location,
-    description: resolvedOptions.testExecution?.description,
+    description: resolvedOptions.jira.testExecution?.description,
     jiraToken: process.env[envName("jira-token")],
-    jiraUrl: resolvedOptions.url,
-    projectKey: resolvedOptions.projectKey,
+    jiraUrl: resolvedOptions.jira.url,
+    projectKey: resolvedOptions.jira.projectKey,
     results: resolvedResults,
-    summary: resolvedOptions.testExecution?.summary,
-    testExecution: resolvedOptions.testExecution?.key,
+    summary: resolvedOptions.jira.testExecution?.summary,
+    testExecution: resolvedOptions.jira.testExecution?.key,
     xrayClientId: process.env[envName("xray-client-id")],
     xrayClientSecret: process.env[envName("xray-client-secret")],
   });
