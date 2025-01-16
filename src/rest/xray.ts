@@ -102,7 +102,7 @@ export class XrayClient {
     const authorizationValue = await this.getAuthorizationHeader(this.credentials);
     const url = this.isCloudClient
       ? `${this.url}/api/v2/dataset/export?testIssueKey=${testIssueKey}`
-      : `${this.url}/rest/raven/2.0/dataset/export?testIssueKey=${testIssueKey}`;
+      : `${this.url}/rest/raven/2.0/api/dataset/export?testIssueKey=${testIssueKey}`;
     const response = await fetch(url, {
       headers: {
         ["Authorization"]: authorizationValue,
