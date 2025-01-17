@@ -9,7 +9,7 @@ export default {
     },
     jira: {
       projectKey: "BRU",
-      url: "http://qualitymaster.atlassian.net",
+      url: "https://qualitymaster.atlassian.net",
     },
   },
   tests: [
