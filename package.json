@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node --import ./test/loader.js ./test/run-unit-tests.ts",
+    "test:integration": "node --import ./test/loader.js ./test/run-integration-tests.ts",
     "build": "tsc --project tsconfig-build.json && shx cp README.md package.json package-lock.json oclif.config.mjs dist/ && shx mkdir -p dist/src/bin && shx cp src/bin/run.* dist/src/bin",
     "lint": "npx eslint src/**/*.ts test/**/*.ts"
   },
@@ -23,17 +24,23 @@
   "dependencies": {
     "@oclif/core": "^4.0.32",
     "ansi-colors": "^4.1.3",
-    "csv-parse": "^5.6.0"
+    "csv-parse": "^5.6.0",
+    "dotenv": "^16.4.7"
   },
   "bin": {
     "bruno-xray-plugin": "src/bin/run.js"
   },
+  "exports": {
+    ".": "./index.js"
+  },
+  "types": "index.d.ts",
   "type": "module",
   "devDependencies": {
     "@types/node": "^22.10.5",
     "@usebruno/cli": "^1.38.3",
     "eslint": "^9.17.0",
     "eslint-plugin-perfectionist": "^4.6.0",
+    "jira.js": "^4.0.6",
     "oclif": "^4.17.10",
     "prettier": "^3.4.2",
     "shx": "^0.3.4",

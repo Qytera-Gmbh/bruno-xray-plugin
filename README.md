@@ -65,13 +65,17 @@ Plugin test suite files look like this:
 ```json
 {
   "config": {
-    "environment": "local",
-    "projectKey": "BRU",
-    "url": "https://example.atlassian.net",
-    "testExecution": {
-      "key": "BRU-5",
-      "summary": "A reused test execution issue",
-      "description": "This test execution issue was reused by the plugin."
+    "bruno": {
+      "environment": "local"
+    },
+    "jira": {
+      "projectKey": "BRU",
+      "testExecution": {
+        "key": "BRU-5",
+        "summary": "A reused test execution issue",
+        "description": "This test execution issue was reused by the plugin."
+      },
+      "url": "https://example.atlassian.net"
     }
   },
   "tests": [

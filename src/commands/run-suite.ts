@@ -4,10 +4,13 @@ import { spawn } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { cwd } from "node:process";
+import { pathToFileURL } from "node:url";
 import type { PluginTestSuite } from "../model/plugin-model.js";
 import { envName } from "../util/env.js";
 import { downloadDataset } from "./xray/download-dataset.js";
 import { uploadResults } from "./xray/upload-results.js";
+
+import "dotenv/config";
 
 enum Positional {
   TEST_SUITE_FILE = "file",
@@ -42,10 +45,35 @@ export default class RunSuite extends Command {
       args: { [Positional.TEST_SUITE_FILE]: testPlanFile },
       flags: { [Flag.COLLECTION_DIRECTORY]: collectionDirectory },
     } = await this.parse(RunSuite);
-    const testPlan = JSON.parse(readFileSync(testPlanFile, "utf-8")) as PluginTestSuite;
+
+    let testPlan: PluginTestSuite;
+
+    const resolvedPath = resolve(cwd(), testPlanFile);
+
+    if (resolvedPath.endsWith(".mjs") || resolvedPath.endsWith(".js")) {
+      testPlan = (
+        (await import(pathToFileURL(resolvedPath).toString())) as { default: PluginTestSuite }
+      ).default;
+    } else if (testPlanFile.endsWith(".json")) {
+      testPlan = JSON.parse(readFileSync(resolvedPath, "utf-8")) as PluginTestSuite;
+    } else {
+      throw new Error(`Unsupported test suite file extension: ${resolvedPath}`);
+    }
+
     for (const test of testPlan.tests) {
       const response = await runDirectory(test, { ...testPlan.config, cwd: collectionDirectory });
-      this.log(JSON.stringify(response, null, 2));
+      if (response) {
+        let key: string;
+        if ("key" in response) {
+          key = response.key;
+        } else {
+          key = response.testExecIssue.key;
+        }
+        this.log(
+          ansiColors.green(`Uploaded results to: ${testPlan.config.jira.url}/browse/${key}`)
+        );
+        this.log(JSON.stringify(response, null, 2));
+      }
     }
   }
 }
@@ -80,6 +108,7 @@ async function runDirectory(
       : undefined,
     directory: resolve(options.cwd, test.directory),
   };
+  const resolvedResults = resolve(options.cwd, "results.json");
   if (resolvedTest.dataset) {
     if (!existsSync(resolvedTest.dataset.location)) {
       await downloadDataset({
@@ -92,19 +121,8 @@ async function runDirectory(
       });
     }
   }
-  const resolvedResults = resolve(options.cwd, "results.json");
-  // Run Bruno.
-  const brunoArgs = ["bru", "run", "-r", `"${resolvedTest.directory}"`];
-  brunoArgs.push("--env", `"${resolvedOptions.bruno.environment}"`);
-  brunoArgs.push("--output", `"${resolvedResults}"`);
-  if (resolvedOptions.bruno.certFile) {
-    brunoArgs.push("--cacert", `"${resolvedOptions.bruno.certFile}"`);
-  }
-  if (resolvedTest.dataset?.location) {
-    brunoArgs.push("--csv-file-path", `"${resolvedTest.dataset.location}"`);
-  }
   try {
-    await run("npx", { args: brunoArgs, cwd: options.cwd });
+    await runBruno(resolvedOptions, resolvedTest, resolvedResults, options.cwd);
   } catch (error: unknown) {
     console.log("Encountered errors during Bruno execution", error);
     return;
@@ -122,6 +140,24 @@ async function runDirectory(
     xrayClientId: process.env[envName("xray-client-id")],
     xrayClientSecret: process.env[envName("xray-client-secret")],
   });
+}
+
+async function runBruno(
+  config: PluginTestSuite["config"],
+  test: PluginTestSuite["tests"][number],
+  resultsFile: string,
+  workingDirectory: string
+) {
+  const brunoArgs = ["bru", "run", "-r", `"${test.directory}"`];
+  brunoArgs.push("--env", `"${config.bruno.environment}"`);
+  brunoArgs.push("--output", `"${resultsFile}"`);
+  if (config.bruno.certFile) {
+    brunoArgs.push("--cacert", `"${config.bruno.certFile}"`);
+  }
+  if (test.dataset?.location) {
+    brunoArgs.push("--csv-file-path", `"${test.dataset.location}"`);
+  }
+  await run("npx", { args: brunoArgs, cwd: workingDirectory });
 }
 
 function run(command: string, config: { args: readonly string[]; cwd?: string }) {
