@@ -14,34 +14,34 @@ export function getActualTestExecutionIssueKey(projectKey: string, output: strin
 }
 
 const XRAY_CLIENT_CLOUD = new XrayClient({
-  clientId: getEnvValue("PLUGIN_XRAY_CLIENT_ID_CLOUD", "XRAY_CLIENT_ID"),
-  clientSecret: getEnvValue("PLUGIN_XRAY_CLIENT_SECRET_CLOUD", "XRAY_CLIENT_SECRET"),
+  clientId: getEnvValue("XRAY_CLIENT_ID_CLOUD", "XRAY_CLIENT_ID"),
+  clientSecret: getEnvValue("XRAY_CLIENT_SECRET_CLOUD", "XRAY_CLIENT_SECRET"),
 });
 
 const XRAY_CLIENT_SERVER = new XrayClient({
-  baseUrl: getEnvValue("PLUGIN_JIRA_URL_SERVER"),
-  password: getEnvValue("PLUGIN_JIRA_PASSWORD_SERVER"),
-  username: getEnvValue("PLUGIN_JIRA_USERNAME_SERVER"),
+  baseUrl: "https://xray-demo3.getxray.app",
+  password: getEnvValue("JIRA_PASSWORD_SERVER"),
+  username: getEnvValue("JIRA_USERNAME_SERVER"),
 });
 
 const JIRA_CLIENT_CLOUD = new Version3Client({
   authentication: {
     basic: {
-      apiToken: getEnvValue("PLUGIN_JIRA_TOKEN_CLOUD"),
-      email: getEnvValue("PLUGIN_JIRA_USERNAME_CLOUD"),
+      apiToken: getEnvValue("JIRA_TOKEN_CLOUD"),
+      email: getEnvValue("JIRA_USERNAME_CLOUD"),
     },
   },
-  host: getEnvValue("PLUGIN_JIRA_URL_CLOUD"),
+  host: "https://qualitymaster.atlassian.net",
 });
 
 const JIRA_CLIENT_SERVER = new Version2Client({
   authentication: {
     basic: {
-      password: getEnvValue("PLUGIN_JIRA_PASSWORD_SERVER"),
-      username: getEnvValue("PLUGIN_JIRA_USERNAME_SERVER"),
+      password: getEnvValue("JIRA_PASSWORD_SERVER"),
+      username: getEnvValue("JIRA_USERNAME_SERVER"),
     },
   },
-  host: getEnvValue("PLUGIN_JIRA_URL_SERVER"),
+  host: "https://xray-demo3.getxray.app",
 });
 
 export function getIntegrationClient(client: "xray", service: "cloud" | "server"): XrayClient;
