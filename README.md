@@ -60,7 +60,7 @@ FLAGS
   --collection-directory=<value>  [default: .] the root collection directory
 ```
 
-Plugin test suite files look like this:
+A typical plugin test suite file looks like this:
 
 ```json
 {
@@ -71,9 +71,8 @@ Plugin test suite files look like this:
     "jira": {
       "projectKey": "BRU",
       "testExecution": {
-        "key": "BRU-5",
-        "summary": "A reused test execution issue",
-        "description": "This test execution issue was reused by the plugin."
+        "summary": "A Bruno test suite execution",
+        "description": "This test execution issue was created by the bruno-xray-plugin."
       },
       "url": "https://example.atlassian.net"
     }
@@ -88,6 +87,39 @@ Plugin test suite files look like this:
     }
   ]
 }
+```
+
+You can also define the suite in a `.js` or `.mjs` file to benefit from type checking:
+
+```mjs
+// @ts-check
+/**
+ * @type {import("@qytera/bruno-xray-plugin").PluginTestSuite}
+ */
+export default {
+  config: {
+    bruno: {
+      environment: "local",
+    },
+    jira: {
+      projectKey: "BRU",
+      testExecution: {
+        description: "This test execution issue was created by the bruno-xray-plugin."
+        summary: "A Bruno js suite execution",
+      },
+      url: "https://example.atlassian.net",
+    },
+  },
+  tests: [
+    {
+      dataset: {
+        issueKey: "BRU-123",
+        location: "BRU-123/data.csv",
+      },
+      directory: "directory for BRU-123",
+    },
+  ],
+};
 ```
 
 ## Sub Commands
