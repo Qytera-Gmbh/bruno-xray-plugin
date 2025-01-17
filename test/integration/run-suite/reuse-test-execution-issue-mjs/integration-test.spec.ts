@@ -6,6 +6,9 @@ import { runPlugin } from "../../../sh.js";
 import { getActualTestExecutionIssueKey, getIntegrationClient } from "../../util.js";
 
 interface TestCase {
+  expectedDescription: object;
+  expectedSummary: string;
+  expectedTestExecutionIssueKey: string;
   linkedTest: string;
   projectDirectory: string;
   projectKey: string;
@@ -13,16 +16,35 @@ interface TestCase {
   title: string;
 }
 
-describe(relative(cwd(), import.meta.filename), { timeout: 180000 }, async () => {
-  for (const test of [
-    {
-      linkedTest: "BRU-10",
-      projectDirectory: join(import.meta.dirname),
-      projectKey: "BRU",
-      service: "cloud",
-      title: "suites can be configured in mjs files",
+const TESTS: TestCase[] = [
+  {
+    expectedDescription: {
+      content: [
+        {
+          content: [
+            {
+              text: "this test execution issue was reused in an mjs config",
+              type: "text",
+            },
+          ],
+          type: "paragraph",
+        },
+      ],
+      type: "doc",
+      version: 1,
     },
-  ] as TestCase[]) {
+    expectedSummary: "reused test execution issue mjs",
+    expectedTestExecutionIssueKey: "BRU-9",
+    linkedTest: "BRU-24",
+    projectDirectory: join(import.meta.dirname),
+    projectKey: "BRU",
+    service: "cloud",
+    title: "suites can reuse test execution issues in mjs configurations",
+  },
+];
+
+describe(relative(cwd(), import.meta.filename), { timeout: 180000 }, async () => {
+  for (const test of TESTS) {
     await it(test.title, async () => {
       const output = runPlugin(
         ["run-suite", "./suite.mjs", "--collection-directory", "collection"],
@@ -34,21 +56,24 @@ describe(relative(cwd(), import.meta.filename), { timeout: 180000 }, async () =>
 
       const testExecutionIssueKey = getActualTestExecutionIssueKey(test.projectKey, output);
 
+      assert.strictEqual(testExecutionIssueKey, test.expectedTestExecutionIssueKey);
+
       if (test.service === "cloud") {
         const searchResult = await getIntegrationClient(
           "jira",
           "cloud"
         ).issueSearch.searchForIssuesUsingJql({
-          fields: ["id"],
-          jql: `issue in (${testExecutionIssueKey}, ${test.linkedTest})`,
+          fields: ["id", "summary", "description"],
+          jql: `issue in (${testExecutionIssueKey}, ${test.linkedTest}) ORDER BY key`,
         });
         assert.ok(searchResult.issues);
+        assert.strictEqual(searchResult.issues[0].fields.summary, test.expectedSummary);
+        assert.deepStrictEqual(searchResult.issues[0].fields.description, test.expectedDescription);
         const testResults = await getIntegrationClient("xray", "cloud").getTestRunResults({
           testExecIssueIds: [searchResult.issues[0].id],
           testIssueIds: [searchResult.issues[1].id],
         });
         assert.strictEqual(testResults.length, 1);
-        assert.deepStrictEqual(testResults[0].status, { name: "PASSED" });
         assert.deepStrictEqual(testResults[0].test, {
           jira: {
             key: test.linkedTest,

@@ -1,0 +1,25 @@
+{
+  "config": {
+    "bruno": {
+      "environment": "local"
+    },
+    "jira": {
+      "projectKey": "BRU",
+      "url": "https://qualitymaster.atlassian.net",
+      "testExecution": {
+        "key": "BRU-8",
+        "summary": "reused test execution issue json",
+        "description": "this test execution issue was reused in a json config"
+      }
+    }
+  },
+  "tests": [
+    {
+      "dataset": {
+        "issueKey": "BRU-23",
+        "location": "BRU-23/data.csv"
+      },
+      "directory": "BRU-23"
+    }
+  ]
+}
