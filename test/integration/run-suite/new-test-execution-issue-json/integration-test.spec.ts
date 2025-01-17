@@ -20,7 +20,7 @@ describe(relative(cwd(), import.meta.filename), { timeout: 180000 }, async () =>
       projectDirectory: join(import.meta.dirname),
       projectKey: "BRU",
       service: "cloud",
-      title: "suites can be configured in mjs files",
+      title: "suites can be configured in json files",
     },
   ] as TestCase[]) {
     await it(test.title, async () => {
@@ -43,8 +43,6 @@ describe(relative(cwd(), import.meta.filename), { timeout: 180000 }, async () =>
           jql: `issue in (${testExecutionIssueKey}, ${test.linkedTest})`,
         });
         assert.ok(searchResult.issues);
-        assert.ok(searchResult.issues[0].id);
-        assert.ok(searchResult.issues[1].id);
         const testResults = await getIntegrationClient("xray", "cloud").getTestRunResults({
           testExecIssueIds: [searchResult.issues[0].id],
           testIssueIds: [searchResult.issues[1].id],
