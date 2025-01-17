@@ -5,16 +5,16 @@
     },
     "jira": {
       "projectKey": "BRU",
-      "url": "https://qualitymaster.atlassian.net"
+      "url": "http://qualitymaster.atlassian.net"
     }
   },
   "tests": [
     {
-      "directory": "BRU-1",
       "dataset": {
-        "location": "BRU-1/data.csv",
-        "issueKey": "BRU-1"
-      }
+        "issueKey": "BRU-16",
+        "location": "BRU-16/data.csv"
+      },
+      "directory": "BRU-16"
     }
   ]
 }

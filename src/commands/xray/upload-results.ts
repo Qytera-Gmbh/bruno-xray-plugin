@@ -6,6 +6,8 @@ import type { BrunoIteration } from "../../model/bruno-model.js";
 import { XrayClient } from "../../rest/xray.js";
 import { envName } from "../../util/env.js";
 
+import "dotenv/config";
+
 enum Flag {
   CSV_FILE = "csv-file",
   DESCRIPTION = "description",
@@ -134,7 +136,7 @@ export async function uploadResults(options: {
   let xrayClient: XrayClient;
 
   if (options.xrayClientId !== undefined && options.xrayClientSecret !== undefined) {
-    xrayClient = new XrayClient({
+    xrayClient = XrayClient.instance({
       clientId: options.xrayClientId,
       clientSecret: options.xrayClientSecret,
     });
@@ -144,7 +146,7 @@ export async function uploadResults(options: {
         `One of [--${Flag.XRAY_CLIENT_ID} ... --${Flag.XRAY_CLIENT_SECRET} ...] or [--${Flag.JIRA_TOKEN} ... --${Flag.JIRA_URL} ...] must be provided`
       );
     }
-    xrayClient = new XrayClient({ baseUrl: options.jiraUrl, token: options.jiraToken });
+    xrayClient = XrayClient.instance({ baseUrl: options.jiraUrl, token: options.jiraToken });
   }
 
   let parameters: Record<string, string>[] | undefined = undefined;

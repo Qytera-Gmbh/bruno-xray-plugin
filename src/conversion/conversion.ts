@@ -11,7 +11,7 @@ import type {
   XrayTestCloud,
   XrayTestExecutionResults,
   XrayTestServer,
-} from "../model/xray-model.js";
+} from "../model/xray/import-execution.js";
 
 /**
  * Converts Bruno JSON results into Xray JSON format.

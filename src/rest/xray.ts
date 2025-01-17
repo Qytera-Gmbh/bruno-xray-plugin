@@ -1,16 +1,18 @@
-import type { XrayTestExecutionResults } from "../model/xray-model.js";
-
-/**
- * Models the Xray response after a successful JSON result import.
- */
-export interface ImportResponse {
-  /**
-   * The issue key of the test execution into which the results were imported.
-   */
-  key: string;
-}
+import type { GetTestRunsResponseCloud } from "../model/xray/graphql/get-test-runs.js";
+import type { TestRun } from "../model/xray/graphql/xray.js";
+import type { ImportResponse, XrayTestExecutionResults } from "../model/xray/import-execution.js";
 
 type XrayCredentials =
+  | {
+      /**
+       * The Jira server basic auth password.
+       */
+      password: string;
+      /**
+       * The Jira server basic auth username.
+       */
+      username: string;
+    }
   | {
       /**
        * The Jira server PAT.
@@ -28,13 +30,25 @@ type XrayCredentials =
       clientSecret: string;
     };
 
+/**
+ * A singleton client instance.
+ */
+let client: null | XrayClient = null;
+
 export class XrayClient {
+  public static readonly CLOUD_URL = "https://xray.cloud.getxray.app";
+  private static readonly CLOUD_URL_GRAPHQL = `${XrayClient.CLOUD_URL}/api/v2/graphql`;
+  private static readonly CLOUD_GRAPHQL_LIMIT = 100;
+
   private readonly url: string;
   private readonly isCloudClient: boolean;
   private readonly credentials: XrayCredentials;
 
   constructor(
-    config: { baseUrl: string; token: string } | { clientId: string; clientSecret: string }
+    config:
+      | { baseUrl: string; password: string; username: string }
+      | { baseUrl: string; token: string }
+      | { clientId: string; clientSecret: string }
   ) {
     if ("token" in config) {
       this.url = config.baseUrl;
@@ -42,14 +56,34 @@ export class XrayClient {
         token: config.token,
       };
       this.isCloudClient = false;
+    } else if ("username" in config) {
+      this.url = config.baseUrl;
+      this.credentials = {
+        password: config.password,
+        username: config.username,
+      };
+      this.isCloudClient = false;
     } else {
-      this.url = "https://xray.cloud.getxray.app";
+      this.url = XrayClient.CLOUD_URL;
       this.credentials = {
         clientId: config.clientId,
         clientSecret: config.clientSecret,
       };
       this.isCloudClient = true;
     }
+  }
+
+  /**
+   * Obtains an instance of an Xray client.
+   *
+   * @param args Xray client constructor arguments
+   * @returns the Xray client
+   */
+  public static instance(...args: ConstructorParameters<typeof XrayClient>) {
+    if (!client) {
+      client = new XrayClient(...args);
+    }
+    return client;
   }
 
   /**
@@ -88,14 +122,12 @@ export class XrayClient {
   }
 
   /**
-   * Uploads test results to the Xray instance.
+   * Downloads a dataset from a test issue.
    *
-   * @param url the Xray URL
-   * @param results the test results
-   * @param credentials the credentials to use
-   * @returns the import response
+   * @param testIssueKey the test issue key
+   * @returns the dataset's CSV content
    *
-   * @see https://docs.getxray.app/display/XRAY/Import+Execution+Results+-+REST#ImportExecutionResultsREST-XrayJSONresults
+   * @see https://docs.getxray.app/display/XRAY/v2.0#/Dataset/get_dataset_export
    * @see https://docs.getxray.app/display/XRAYCLOUD/Exporting+datasets+-+REST+v2
    */
   public async downloadDataset(testIssueKey: string): Promise<string> {
@@ -117,9 +149,98 @@ export class XrayClient {
     );
   }
 
+  /**
+   * Returns a test execution by issue ID.
+   *
+   * @param options - the GraphQL options
+   * @returns the test run results
+   * @see https://us.xray.cloud.getxray.app/doc/graphql/gettestruns.doc.html
+   */
+  public async getTestRunResults(options: {
+    /**
+     * The issue ids of the test execution of the test runs.
+     */
+    testExecIssueIds: [string, ...string[]];
+    /**
+     * The issue ids of the test of the test runs.
+     */
+    testIssueIds: [string, ...string[]];
+  }): Promise<TestRun<{ key: string }>[]> {
+    const authorizationValue = await this.getAuthorizationHeader(this.credentials);
+    const runResults: TestRun<{ key: string }>[] = [];
+    let total = 0;
+    let start = 0;
+    const query = `
+      query($testIssueIds: [String], $testExecIssueIds: [String], $start: Int!, $limit: Int!) {
+        getTestRuns( testIssueIds: $testIssueIds, testExecIssueIds: $testExecIssueIds, limit: $limit, start: $start) {
+          total
+          limit
+          start
+          results {
+            status {
+              name
+            }
+            test {
+              jira(fields: ["key"])
+            }
+            evidence {
+              filename
+              downloadLink
+            }
+            iterations(limit: $limit) {
+              results {
+                parameters {
+                  name
+                  value
+                }
+                status {
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
+    do {
+      const paginatedRequest = {
+        query: query,
+        variables: {
+          limit: XrayClient.CLOUD_GRAPHQL_LIMIT,
+          start: start,
+          testExecIssueIds: options.testExecIssueIds,
+          testIssueIds: options.testIssueIds,
+        },
+      };
+      const response = await fetch(XrayClient.CLOUD_URL_GRAPHQL, {
+        body: JSON.stringify(paginatedRequest),
+        headers: {
+          ["Accept"]: "application/json",
+          ["Authorization"]: authorizationValue,
+          ["Content-Type"]: "application/json",
+        },
+        method: "POST",
+      });
+      const body = (await response.json()) as GetTestRunsResponseCloud<{ key: string }>;
+      const testRuns = body.data.getTestRuns;
+      total = testRuns?.total ?? total;
+      if (testRuns?.results) {
+        if (typeof testRuns.start === "number") {
+          start = testRuns.start + testRuns.results.length;
+        }
+        for (const test of testRuns.results) {
+          runResults.push(test);
+        }
+      }
+    } while (start && start < total);
+    return runResults;
+  }
+
   private async getAuthorizationHeader(credentials: XrayCredentials) {
     if ("token" in credentials) {
       return `Bearer ${credentials.token}`;
+    } else if ("username" in credentials) {
+      return Buffer.from(`${credentials.username}:${credentials.password}`).toString("base64");
     } else {
       const token = await fetch(`${this.url}/api/v2/authenticate`, {
         body: JSON.stringify({

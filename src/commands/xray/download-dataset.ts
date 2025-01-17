@@ -5,6 +5,8 @@ import { cwd } from "node:process";
 import { XrayClient } from "../../rest/xray.js";
 import { envName } from "../../util/env.js";
 
+import "dotenv/config";
+
 enum Positional {
   ISSUE_KEY = "issue-key",
 }
@@ -90,7 +92,7 @@ export async function downloadDataset(options: {
   // Choose Xray server or cloud client depending on the provided authentication combinations.
   let xrayClient: XrayClient;
   if (options.xrayClientId !== undefined && options.xrayClientSecret !== undefined) {
-    xrayClient = new XrayClient({
+    xrayClient = XrayClient.instance({
       clientId: options.xrayClientId,
       clientSecret: options.xrayClientSecret,
     });
@@ -100,7 +102,7 @@ export async function downloadDataset(options: {
         `One of [--${Flag.XRAY_CLIENT_ID} ... --${Flag.XRAY_CLIENT_SECRET} ...] or [--${Flag.JIRA_TOKEN} ... --${Flag.JIRA_URL} ...] must be provided`
       );
     }
-    xrayClient = new XrayClient({ baseUrl: options.jiraUrl, token: options.jiraToken });
+    xrayClient = XrayClient.instance({ baseUrl: options.jiraUrl, token: options.jiraToken });
   }
   const response = await xrayClient.downloadDataset(options.issueKey);
   const destination = resolve(options.output);

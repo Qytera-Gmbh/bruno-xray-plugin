@@ -366,3 +366,28 @@ export interface XrayCustomFieldCloud extends XrayCustomField {
 
 // Small utility type to better express meaning.
 export type Base64String = string;
+
+/**
+ * @see https://docs.getxray.app/display/XRAY/Import+Execution+Results+-+REST
+ */
+export interface ImportExecutionResponseServer {
+  testExecIssue: {
+    id: string;
+    key: string;
+    name: string;
+  };
+}
+
+/**
+ * @see https://docs.getxray.app/display/XRAYCLOUD/Import+Execution+Results+-+REST
+ */
+export interface ImportExecutionResponseCloud {
+  id: string;
+  key: string;
+  self: string;
+}
+
+/**
+ * Models the Xray response after a successful JSON result import.
+ */
+export type ImportResponse = ImportExecutionResponseCloud | ImportExecutionResponseServer;
