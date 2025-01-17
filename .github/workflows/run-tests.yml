@@ -38,6 +38,13 @@ jobs:
             unit.xml
           time_unit: seconds
       - run: npm run test:integration
+        env:
+          JIRA_TOKEN_CLOUD: ${{ secrets.JIRA_TOKEN_CLOUD }}
+          JIRA_PASSWORD_SERVER: ${{ secrets.JIRA_PASSWORD_SERVER }}
+          JIRA_USERNAME_CLOUD: ${{ secrets.JIRA_USERNAME_CLOUD }}
+          JIRA_USERNAME_SERVER: ${{ secrets.JIRA_USERNAME_SERVER }}
+          XRAY_CLIENT_ID_CLOUD: ${{ secrets.XRAY_CLIENT_ID }}
+          XRAY_CLIENT_SECRET_CLOUD: ${{ secrets.XRAY_CLIENT_SECRET }}
       - uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:

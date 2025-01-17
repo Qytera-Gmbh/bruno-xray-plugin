@@ -8,23 +8,19 @@ const ENV_BACKUP = { ...process.env };
 import "dotenv/config";
 
 const ENV_CLOUD = [
-  "PLUGIN_JIRA_PROJECT_KEY_CLOUD",
-  "PLUGIN_XRAY_CLIENT_SECRET_CLOUD",
-  "PLUGIN_XRAY_CLIENT_ID_CLOUD",
-  "PLUGIN_JIRA_TOKEN_CLOUD",
-  "PLUGIN_JIRA_USERNAME_CLOUD",
-  "PLUGIN_JIRA_URL_CLOUD",
-  "PLUGIN_JIRA_PASSWORD_CLOUD",
+  "XRAY_CLIENT_SECRET_CLOUD",
+  "XRAY_CLIENT_ID_CLOUD",
+  "JIRA_TOKEN_CLOUD",
+  "JIRA_USERNAME_CLOUD",
+  "JIRA_PASSWORD_CLOUD",
 ];
 
 const ENV_SERVER = [
-  "PLUGIN_JIRA_PROJECT_KEY_SERVER",
-  "PLUGIN_XRAY_CLIENT_SECRET_SERVER",
-  "PLUGIN_XRAY_CLIENT_ID_SERVER",
-  "PLUGIN_JIRA_TOKEN_SERVER",
-  "PLUGIN_JIRA_USERNAME_SERVER",
-  "PLUGIN_JIRA_URL_SERVER",
-  "PLUGIN_JIRA_PASSWORD_SERVER",
+  "XRAY_CLIENT_SECRET_SERVER",
+  "XRAY_CLIENT_ID_SERVER",
+  "JIRA_TOKEN_SERVER",
+  "JIRA_USERNAME_SERVER",
+  "JIRA_PASSWORD_SERVER",
 ];
 
 export function runPlugin(
@@ -61,7 +57,6 @@ export function runPlugin(
       .filter((entry): entry is [string, string] => entry[1] !== undefined)
       .map((entry) => `${entry[0]}=${entry[1]}`)
       .join("\n")
-      .replaceAll("PLUGIN_", "")
   );
   if (!fs.existsSync(join(options.cwd, "node_modules"))) {
     const result = childProcess.spawnSync("npm", ["install"], {
