@@ -107,9 +107,9 @@ export default {
       projectKey: "BRU",
       testExecution: {
         details: {
-          description: "This test execution issue was created by the bruno-xray-plugin."
+          description: "This test execution issue was created by the bruno-xray-plugin.",
           summary: "A Bruno js suite execution",
-        }
+        },
       },
       url: "https://example.atlassian.net",
     },
