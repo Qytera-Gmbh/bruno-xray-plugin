@@ -87,17 +87,7 @@ async function runDirectory(
       certFile: options.bruno.certFile ? resolve(options.cwd, options.bruno.certFile) : undefined,
       environment: options.bruno.environment,
     },
-    jira: {
-      projectKey: options.jira.projectKey,
-      testExecution: options.jira.testExecution
-        ? {
-            description: options.jira.testExecution.description,
-            key: options.jira.testExecution.key,
-            summary: options.jira.testExecution.summary,
-          }
-        : undefined,
-      url: options.jira.url,
-    },
+    jira: options.jira,
   };
   const resolvedTest: PluginTestSuite["tests"][number] = {
     dataset: test.dataset
@@ -130,13 +120,11 @@ async function runDirectory(
   console.log(ansiColors.gray("Uploading results to Xray..."));
   return await uploadResults({
     csvFile: resolvedTest.dataset?.location,
-    description: resolvedOptions.jira.testExecution?.description,
     jiraToken: process.env[envName("jira-token")],
     jiraUrl: resolvedOptions.jira.url,
     projectKey: resolvedOptions.jira.projectKey,
     results: resolvedResults,
-    summary: resolvedOptions.jira.testExecution?.summary,
-    testExecution: resolvedOptions.jira.testExecution?.key,
+    testExecution: resolvedOptions.jira.testExecution,
     xrayClientId: process.env[envName("xray-client-id")],
     xrayClientSecret: process.env[envName("xray-client-secret")],
   });

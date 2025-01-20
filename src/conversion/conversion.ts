@@ -4,6 +4,7 @@ import type {
   BrunoRequestResult,
   BrunoResponse,
 } from "../model/bruno-model.js";
+import type { PluginTestSuite } from "../model/plugin-model.js";
 import type {
   XrayEvidenceItem,
   XrayIterationResultCloud,
@@ -24,25 +25,13 @@ export function convertBrunoToXray(
   brunoResults: BrunoIteration[],
   options?: {
     /**
-     * The description to assign to the test execution issue.
-     *
-     * @default "Generated from Bruno JSON report"
-     */
-    description?: string;
-    /**
      * The data-driven iteration parameters.
      */
     parameters?: Record<string, string>[];
     /**
-     * The summary to assign to the test execution issue.
-     *
-     * @default "Bruno test execution"
+     * The test execution information that can be used to update existing issues or create new ones.
      */
-    summary?: string;
-    /**
-     * The test execution issue key to upload the results to.
-     */
-    testExecution?: string;
+    testExecution?: PluginTestSuite["config"]["jira"]["testExecution"];
     /**
      * Whether to use Xray cloud JSON format or Xray server JSON format. This is relevant for the
      * status mapping of Bruno's `pass/fail` to Xray's `PASSED/FAILED` (Xray cloud) or
@@ -55,10 +44,14 @@ export function convertBrunoToXray(
 ): XrayTestExecutionResults {
   const xrayReport: XrayTestExecutionResults = {
     info: {
-      description: options?.description ?? "Generated from Bruno JSON report",
-      summary: options?.summary ?? "Bruno test execution",
+      description: "Generated from Bruno JSON report",
+      summary: "Bruno test execution",
+      ...options?.testExecution?.details,
     },
   };
+  if (options?.testExecution?.key) {
+    xrayReport.testExecutionKey = options.testExecution.key;
+  }
   if (options?.parameters && options.parameters.length !== brunoResults.length) {
     throw new Error(
       `must provide parameters for every iteration (iterations: ${brunoResults.length.toString()}, parameter sets: ${options.parameters.length.toString()})`
@@ -79,9 +72,6 @@ export function convertBrunoToXray(
     } else {
       xrayReport.tests = [test];
     }
-  }
-  if (options?.testExecution) {
-    xrayReport.testExecutionKey = options.testExecution;
   }
   return xrayReport;
 }
