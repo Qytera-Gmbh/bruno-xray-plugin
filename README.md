@@ -91,7 +91,7 @@ A typical plugin test suite file looks like this:
 }
 ```
 
-You can also define the suite in a `.js` or `.mjs` file to benefit from type checking:
+You can also define the suite in a `.js` or `.mjs` file to benefit from type checking and programmatic/dynamic values:
 
 ```mjs
 // @ts-check
@@ -107,7 +107,7 @@ export default {
       projectKey: "BRU",
       testExecution: {
         details: {
-          description: "This test execution issue was created by the bruno-xray-plugin.",
+          description: `This test execution issue was created by the bruno-xray-plugin at ${new Date()}.`,
           summary: "A Bruno js suite execution",
         },
       },
