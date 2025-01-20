@@ -8,8 +8,10 @@
       "url": "https://qualitymaster.atlassian.net",
       "testExecution": {
         "key": "BRU-8",
-        "summary": "reused test execution issue json",
-        "description": "this test execution issue was reused in a json config"
+        "details": {
+          "summary": "reused test execution issue json",
+          "description": "this test execution issue was reused in a json config"
+        }
       }
     }
   },

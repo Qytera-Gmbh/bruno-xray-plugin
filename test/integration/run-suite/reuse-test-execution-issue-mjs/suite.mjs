@@ -10,9 +10,11 @@ export default {
     jira: {
       projectKey: "BRU",
       testExecution: {
-        description: "this test execution issue was reused in an mjs config",
+        details: {
+          description: "this test execution issue was reused in an mjs config",
+          summary: "reused test execution issue mjs",
+        },
         key: "BRU-9",
-        summary: "reused test execution issue mjs",
       },
       url: "https://qualitymaster.atlassian.net",
     },
