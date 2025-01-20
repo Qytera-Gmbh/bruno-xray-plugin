@@ -1,3 +1,5 @@
+import type { XrayTestExecutionInfo } from "./xray/import-execution.js";
+
 /**
  * Models a test suite of the Bruno Xray plugin. It contains a general configuration and an array of
  * tests to execute.
@@ -33,17 +35,14 @@ export interface PluginTestSuite {
        */
       testExecution?: {
         /**
-         * The description of the test execution issue.
+         * If `key` is not specified, these details will be applied to a new test execution issue.
+         * Otherwise, the existing issue will be updated with the information specified here.
          */
-        description?: string;
+        details?: XrayTestExecutionInfo;
         /**
          * An existing Jira test execution issue to upload the test results to.
          */
         key?: string;
-        /**
-         * The summary of the test execution issue.
-         */
-        summary?: string;
       };
       url: string;
     };

@@ -71,8 +71,10 @@ A typical plugin test suite file looks like this:
     "jira": {
       "projectKey": "BRU",
       "testExecution": {
-        "summary": "A Bruno test suite execution",
-        "description": "This test execution issue was created by the bruno-xray-plugin."
+        "details": {
+          "summary": "A Bruno test suite execution",
+          "description": "This test execution issue was created by the bruno-xray-plugin."
+        }
       },
       "url": "https://example.atlassian.net"
     }
@@ -104,8 +106,10 @@ export default {
     jira: {
       projectKey: "BRU",
       testExecution: {
-        description: "This test execution issue was created by the bruno-xray-plugin."
-        summary: "A Bruno js suite execution",
+        details: {
+          description: "This test execution issue was created by the bruno-xray-plugin."
+          summary: "A Bruno js suite execution",
+        }
       },
       url: "https://example.atlassian.net",
     },
@@ -153,7 +157,7 @@ Converts Bruno JSON results to Xray JSON and uploads them to a Jira project.
 
 ```
 USAGE
-  $ bruno-xray-plugin xray upload-results RESULTS --jira-url <value> --project-key <value> [--csv-file <value>] [--description <value>] [--jira-token <value>] [--summary <value>] [--test-execution <value>] [--xray-client-id <value> --xray-client-secret <value>]
+  $ bruno-xray-plugin xray upload-results RESULTS --jira-url <value> --project-key <value> [--csv-file <value>] [--jira-token <value>] [--test-execution-description <value>] [--test-execution-key <value>] [--test-execution-revision <value>] [--test-execution-summary <value>] [--test-execution-test-environments <value>...] [--test-execution-test-plan-key <value>] [--test-execution-user <value>] [--test-execution-version <value>] [--xray-client-id <value> --xray-client-secret <value>]
 
 ARGUMENTS
   RESULTS  the Bruno JSON results
@@ -163,10 +167,15 @@ FLAGS
   --project-key=<value>  (required) the Jira project key where new test execution issues will be created
 
 TEST EXECUTION ISSUE FLAGS
-  --csv-file=<value>        a CSV file which was used for data-driven Bruno execution and will be mapped to Xray's iterations
-  --description=<value>     [default: Generated from Bruno JSON report] the description of the test execution issue
-  --summary=<value>         [default: Bruno test execution] the summary of the test execution issue
-  --test-execution=<value>  an existing Jira test execution issue to upload the test results to
+  --csv-file=<value>                             a CSV file which was used for data-driven Bruno execution and will be mapped to Xray's iterations
+  --test-execution-description=<value>           [default: Generated from Bruno JSON report] the description for the test execution issue
+  --test-execution-key=<value>                   an existing Jira test execution issue to upload the test results to
+  --test-execution-revision=<value>              a revision for the revision custom field
+  --test-execution-summary=<value>               [default: Bruno test execution] the summary of the test execution issue
+  --test-execution-test-environments=<value>...  Xray test execution environments to assign the test execution issue to
+  --test-execution-test-plan-key=<value>         the test plan key for associating the test execution issue
+  --test-execution-user=<value>                  the username for the Jira user who executed the tests
+  --test-execution-version=<value>               the version name for the fix version field of the test execution issue
 
 AUTHENTICATION FLAGS
   --jira-token=<value>          the Jira API token

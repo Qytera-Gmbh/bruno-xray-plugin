@@ -3,6 +3,8 @@ import { parse } from "csv-parse/sync";
 import { readFileSync } from "fs";
 import { convertBrunoToXray } from "../../conversion/conversion.js";
 import type { BrunoIteration } from "../../model/bruno-model.js";
+import type { PluginTestSuite } from "../../model/plugin-model.js";
+import type { XrayTestExecutionInfo } from "../../model/xray/import-execution.js";
 import { XrayClient } from "../../rest/xray.js";
 import { envName } from "../../util/env.js";
 
@@ -10,12 +12,17 @@ import "dotenv/config";
 
 enum Flag {
   CSV_FILE = "csv-file",
-  DESCRIPTION = "description",
   JIRA_TOKEN = "jira-token",
   JIRA_URL = "jira-url",
   PROJECT_KEY = "project-key",
-  SUMMARY = "summary",
-  TEST_EXECUTION = "test-execution",
+  TEST_EXECUTION_DESCRIPTION = "test-execution-description",
+  TEST_EXECUTION_KEY = "test-execution-key",
+  TEST_EXECUTION_REVISION = "test-execution-revision",
+  TEST_EXECUTION_SUMMARY = "test-execution-summary",
+  TEST_EXECUTION_TEST_ENVIRONMENTS = "test-execution-test-environments",
+  TEST_EXECUTION_TEST_PLAN_KEY = "test-execution-test-plan-key",
+  TEST_EXECUTION_USER = "test-execution-user",
+  TEST_EXECUTION_VERSION = "test-execution-version",
   XRAY_CLIENT_ID = "xray-client-id",
   XRAY_CLIENT_SECRET = "xray-client-secret",
 }
@@ -44,11 +51,6 @@ export default class UploadResults extends Command {
         "a CSV file which was used for data-driven Bruno execution and will be mapped to Xray's iterations",
       helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
     }),
-    [Flag.DESCRIPTION]: Flags.string({
-      default: "Generated from Bruno JSON report",
-      description: "the description of the test execution issue",
-      helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
-    }),
     [Flag.JIRA_TOKEN]: Flags.string({
       description: "the Jira API token",
       env: envName("jira-token"),
@@ -62,13 +64,39 @@ export default class UploadResults extends Command {
       description: "the Jira project key where new test execution issues will be created",
       required: true,
     }),
-    [Flag.SUMMARY]: Flags.string({
+    [Flag.TEST_EXECUTION_DESCRIPTION]: Flags.string({
+      default: "Generated from Bruno JSON report",
+      description: "the description for the test execution issue",
+      helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
+    }),
+    [Flag.TEST_EXECUTION_KEY]: Flags.string({
+      description: "an existing Jira test execution issue to upload the test results to",
+      helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
+    }),
+    [Flag.TEST_EXECUTION_REVISION]: Flags.string({
+      description: "a revision for the revision custom field",
+      helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
+    }),
+    [Flag.TEST_EXECUTION_SUMMARY]: Flags.string({
       default: "Bruno test execution",
       description: "the summary of the test execution issue",
       helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
     }),
-    [Flag.TEST_EXECUTION]: Flags.string({
-      description: "an existing Jira test execution issue to upload the test results to",
+    [Flag.TEST_EXECUTION_TEST_ENVIRONMENTS]: Flags.string({
+      description: "Xray test execution environments to assign the test execution issue to",
+      helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
+      multiple: true,
+    }),
+    [Flag.TEST_EXECUTION_TEST_PLAN_KEY]: Flags.string({
+      description: "the test plan key for associating the test execution issue",
+      helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
+    }),
+    [Flag.TEST_EXECUTION_USER]: Flags.string({
+      description: "the username for the Jira user who executed the tests",
+      helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
+    }),
+    [Flag.TEST_EXECUTION_VERSION]: Flags.string({
+      description: "the version name for the fix version field of the test execution issue",
       helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
     }),
     [Flag.XRAY_CLIENT_ID]: Flags.string({
@@ -90,25 +118,40 @@ export default class UploadResults extends Command {
       args: { results },
       flags: {
         [Flag.CSV_FILE]: csvFile,
-        [Flag.DESCRIPTION]: description,
         [Flag.JIRA_TOKEN]: jiraToken,
         [Flag.JIRA_URL]: jiraUrl,
         [Flag.PROJECT_KEY]: projectKey,
-        [Flag.SUMMARY]: summary,
-        [Flag.TEST_EXECUTION]: testExecution,
+        [Flag.TEST_EXECUTION_DESCRIPTION]: testExecutionDescription,
+        [Flag.TEST_EXECUTION_KEY]: testExecutionKey,
+        [Flag.TEST_EXECUTION_REVISION]: testExecutionRevision,
+        [Flag.TEST_EXECUTION_SUMMARY]: testExecutionSummary,
+        [Flag.TEST_EXECUTION_TEST_ENVIRONMENTS]: testExecutionTestEnvironments,
+        [Flag.TEST_EXECUTION_TEST_PLAN_KEY]: testExecutionTestPlanKey,
+        [Flag.TEST_EXECUTION_USER]: testExecutionUser,
+        [Flag.TEST_EXECUTION_VERSION]: testExecutionVersion,
         [Flag.XRAY_CLIENT_ID]: xrayClientId,
         [Flag.XRAY_CLIENT_SECRET]: xrayClientSecret,
       },
     } = await this.parse(UploadResults);
+    const testExecutionDetails: XrayTestExecutionInfo = {
+      description: testExecutionDescription,
+      revision: testExecutionRevision,
+      summary: testExecutionSummary,
+      testEnvironments: testExecutionTestEnvironments,
+      testPlanKey: testExecutionTestPlanKey,
+      user: testExecutionUser,
+      version: testExecutionVersion,
+    };
     const response = await uploadResults({
       csvFile,
-      description,
       jiraToken,
       jiraUrl,
       projectKey,
       results,
-      summary,
-      testExecution,
+      testExecution: {
+        details: testExecutionDetails,
+        key: testExecutionKey,
+      },
       xrayClientId,
       xrayClientSecret,
     });
@@ -124,7 +167,7 @@ export async function uploadResults(options: {
   projectKey: string;
   results: string;
   summary?: string;
-  testExecution?: string;
+  testExecution?: PluginTestSuite["config"]["jira"]["testExecution"];
   xrayClientId?: string;
   xrayClientSecret?: string;
 }) {
@@ -158,10 +201,11 @@ export async function uploadResults(options: {
   }
 
   const xrayResults = convertBrunoToXray(brunoResults, {
-    description: options.description,
     parameters,
-    summary: options.summary,
-    testExecution: options.testExecution,
+    testExecution: {
+      details: options.testExecution?.details,
+      key: options.testExecution?.key,
+    },
     useCloudFormat: options.xrayClientId !== undefined && options.xrayClientSecret !== undefined,
   });
 

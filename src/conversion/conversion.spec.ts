@@ -11,8 +11,18 @@ describe(path.relative(process.cwd(), import.meta.filename), () => {
       const results = JSON.parse(
         readFileSync(join(import.meta.dirname, "test", "iterated-single-folder.json"), "utf-8")
       ) as BrunoIteration[];
-      const convertedResults = convertBrunoToXray(results, { testExecution: "ABC-123" });
+      const convertedResults = convertBrunoToXray(results, { testExecution: { key: "ABC-123" } });
       assert.deepStrictEqual(convertedResults.testExecutionKey, "ABC-123");
+    });
+
+    it("adds test environments", () => {
+      const results = JSON.parse(
+        readFileSync(join(import.meta.dirname, "test", "iterated-single-folder.json"), "utf-8")
+      ) as BrunoIteration[];
+      const convertedResults = convertBrunoToXray(results, {
+        testExecution: { details: { testEnvironments: ["production", "live"] } },
+      });
+      assert.deepStrictEqual(convertedResults.info?.testEnvironments, ["production", "live"]);
     });
   });
 
