@@ -16,9 +16,10 @@ export default {
     {
       dataset: {
         issueKey: "BRU-10",
-        location: "BRU-10/data.csv",
+        location: "first-test/data.csv",
       },
-      directory: "BRU-10",
+      directory: "first-test",
+      key: "BRU-10",
     },
   ],
 };

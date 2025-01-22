@@ -56,9 +56,10 @@ export interface PluginTestSuite {
      */
     dataset?: {
       /**
-       * The test issue key to download the data set from.
+       * The test issue key to download the data set from if there is no file at the specified
+       * `location`.
        */
-      issueKey: string;
+      issueKey?: string;
       /**
        * The location to save the dataset file to if not already present.
        */
@@ -68,5 +69,9 @@ export interface PluginTestSuite {
      * The directory representing the test case.
      */
     directory: string;
+    /**
+     * The Jira issue key to attribute this test's results to.
+     */
+    key: string;
   }[];
 }
