@@ -81,11 +81,12 @@ A typical plugin test suite file looks like this:
   },
   "tests": [
     {
-      "directory": "BRU-1 requests",
+      "directory": "my-directory",
       "dataset": {
-        "location": "BRU-1 requests/data.csv",
+        "location": "my-directory/data.csv",
         "issueKey": "BRU-1"
-      }
+      },
+      "key": "BRU-1"
     }
   ]
 }
@@ -118,9 +119,10 @@ export default {
     {
       dataset: {
         issueKey: "BRU-123",
-        location: "BRU-123/data.csv",
+        location: "my-directory/data.csv",
       },
-      directory: "directory for BRU-123",
+      directory: "my-directory",
+      key: "BRU-123",
     },
   ],
 };
