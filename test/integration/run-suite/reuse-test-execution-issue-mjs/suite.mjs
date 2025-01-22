@@ -23,9 +23,10 @@ export default {
     {
       dataset: {
         issueKey: "BRU-24",
-        location: "BRU-24/data.csv",
+        location: "first-test/data.csv",
       },
-      directory: "BRU-24",
+      directory: "first-test",
+      key: "BRU-24",
     },
   ],
 };

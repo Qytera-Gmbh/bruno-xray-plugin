@@ -19,9 +19,10 @@
     {
       "dataset": {
         "issueKey": "BRU-23",
-        "location": "BRU-23/data.csv"
+        "location": "first-test/data.csv"
       },
-      "directory": "BRU-23"
+      "directory": "first-test",
+      "key": "BRU-23"
     }
   ]
 }

@@ -97,10 +97,14 @@ async function runDirectory(
         }
       : undefined,
     directory: resolve(options.cwd, test.directory),
+    key: test.key,
   };
   const resolvedResults = resolve(options.cwd, "results.json");
   if (resolvedTest.dataset) {
     if (!existsSync(resolvedTest.dataset.location)) {
+      if (!resolvedTest.dataset.issueKey) {
+        throw new Error(`Failed to find test dataset ${resolvedTest.dataset.location}`);
+      }
       await downloadDataset({
         issueKey: resolvedTest.dataset.issueKey,
         jiraToken: process.env[envName("jira-token")],
@@ -125,6 +129,7 @@ async function runDirectory(
     projectKey: resolvedOptions.jira.projectKey,
     results: resolvedResults,
     testExecution: resolvedOptions.jira.testExecution,
+    testKey: resolvedTest.key,
     xrayClientId: process.env[envName("xray-client-id")],
     xrayClientSecret: process.env[envName("xray-client-secret")],
   });
