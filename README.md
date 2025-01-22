@@ -51,7 +51,7 @@ Runs a plugin test suite file and uploads the results to a test execution issue.
 
 ```
 USAGE
-  $ bruno-xray-plugin run-suite FILE [--collection-directory <value>]
+  $ bruno-xray-plugin run-suite FILE
 
 ARGUMENTS
   FILE  the path to the Bruno test suite file to execute
@@ -136,7 +136,7 @@ Downloads an Xray dataset from a Jira test issue and saves it to the local file 
 
 ```
 USAGE
-  $ bruno-xray-plugin xray download-dataset ISSUE-KEY --jira-url <value> [--jira-token <value>] [--output <value>] [--xray-client-id <value> --xray-client-secret <value>]
+  $ bruno-xray-plugin xray download-dataset ISSUE-KEY --jira-url <value>
 
 ARGUMENTS
   ISSUE-KEY  the Jira test issue key whose dataset to download
@@ -157,7 +157,7 @@ Converts Bruno JSON results to Xray JSON and uploads them to a Jira project.
 
 ```
 USAGE
-  $ bruno-xray-plugin xray upload-results RESULTS --jira-url <value> --project-key <value> [--csv-file <value>] [--jira-token <value>] [--test-execution-description <value>] [--test-execution-key <value>] [--test-execution-revision <value>] [--test-execution-summary <value>] [--test-execution-test-environments <value>...] [--test-execution-test-plan-key <value>] [--test-execution-user <value>] [--test-execution-version <value>] [--xray-client-id <value> --xray-client-secret <value>]
+  $ bruno-xray-plugin xray upload-results RESULTS --jira-url <value> --project-key <value>
 
 ARGUMENTS
   RESULTS  the Bruno JSON results
