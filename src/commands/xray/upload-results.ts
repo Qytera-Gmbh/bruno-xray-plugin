@@ -23,6 +23,7 @@ enum Flag {
   TEST_EXECUTION_TEST_PLAN_KEY = "test-execution-test-plan-key",
   TEST_EXECUTION_USER = "test-execution-user",
   TEST_EXECUTION_VERSION = "test-execution-version",
+  TEST_KEY = "test-key",
   XRAY_CLIENT_ID = "xray-client-id",
   XRAY_CLIENT_SECRET = "xray-client-secret",
 }
@@ -99,6 +100,10 @@ export default class UploadResults extends Command {
       description: "the version name for the fix version field of the test execution issue",
       helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
     }),
+    [Flag.TEST_KEY]: Flags.string({
+      description: "the Jira test issue to attribute the test results to",
+      required: true,
+    }),
     [Flag.XRAY_CLIENT_ID]: Flags.string({
       dependsOn: [Flag.XRAY_CLIENT_SECRET],
       description: "the Xray Cloud client ID",
@@ -129,6 +134,7 @@ export default class UploadResults extends Command {
         [Flag.TEST_EXECUTION_TEST_PLAN_KEY]: testExecutionTestPlanKey,
         [Flag.TEST_EXECUTION_USER]: testExecutionUser,
         [Flag.TEST_EXECUTION_VERSION]: testExecutionVersion,
+        [Flag.TEST_KEY]: testKey,
         [Flag.XRAY_CLIENT_ID]: xrayClientId,
         [Flag.XRAY_CLIENT_SECRET]: xrayClientSecret,
       },
@@ -152,6 +158,7 @@ export default class UploadResults extends Command {
         details: testExecutionDetails,
         key: testExecutionKey,
       },
+      testKey,
       xrayClientId,
       xrayClientSecret,
     });
@@ -161,13 +168,12 @@ export default class UploadResults extends Command {
 
 export async function uploadResults(options: {
   csvFile?: string;
-  description?: string;
   jiraToken?: string;
   jiraUrl: string;
   projectKey: string;
   results: string;
-  summary?: string;
   testExecution?: PluginTestSuite["config"]["jira"]["testExecution"];
+  testKey: string;
   xrayClientId?: string;
   xrayClientSecret?: string;
 }) {
@@ -206,6 +212,7 @@ export async function uploadResults(options: {
       details: options.testExecution?.details,
       key: options.testExecution?.key,
     },
+    testKey: options.testKey,
     useCloudFormat: options.xrayClientId !== undefined && options.xrayClientSecret !== undefined,
   });
 

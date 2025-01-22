@@ -11,7 +11,10 @@ describe(path.relative(process.cwd(), import.meta.filename), () => {
       const results = JSON.parse(
         readFileSync(join(import.meta.dirname, "test", "iterated-single-folder.json"), "utf-8")
       ) as BrunoIteration[];
-      const convertedResults = convertBrunoToXray(results, { testExecution: { key: "ABC-123" } });
+      const convertedResults = convertBrunoToXray(results, {
+        testExecution: { key: "ABC-123" },
+        testKey: "ABC-456",
+      });
       assert.deepStrictEqual(convertedResults.testExecutionKey, "ABC-123");
     });
 
@@ -21,6 +24,7 @@ describe(path.relative(process.cwd(), import.meta.filename), () => {
       ) as BrunoIteration[];
       const convertedResults = convertBrunoToXray(results, {
         testExecution: { details: { testEnvironments: ["production", "live"] } },
+        testKey: "ABC-456",
       });
       assert.deepStrictEqual(convertedResults.info?.testEnvironments, ["production", "live"]);
     });
@@ -31,7 +35,10 @@ describe(path.relative(process.cwd(), import.meta.filename), () => {
       const results = JSON.parse(
         readFileSync(join(import.meta.dirname, "test", "iterated-single-folder.json"), "utf-8")
       ) as BrunoIteration[];
-      const convertedResults = convertBrunoToXray(results, { useCloudFormat: true });
+      const convertedResults = convertBrunoToXray(results, {
+        testKey: "DP-90",
+        useCloudFormat: true,
+      });
       assert.deepStrictEqual(
         convertedResults,
         JSON.parse(
@@ -56,6 +63,7 @@ describe(path.relative(process.cwd(), import.meta.filename), () => {
           { language: "de", name: "Rob" },
           { language: "en", name: "Mary" },
         ],
+        testKey: "DP-90",
         useCloudFormat: true,
       });
       assert.deepStrictEqual(
@@ -77,7 +85,10 @@ describe(path.relative(process.cwd(), import.meta.filename), () => {
       const results = JSON.parse(
         readFileSync(join(import.meta.dirname, "test", "iterated-connection-refused.json"), "utf-8")
       ) as BrunoIteration[];
-      const convertedResults = convertBrunoToXray(results, { useCloudFormat: true });
+      const convertedResults = convertBrunoToXray(results, {
+        testKey: "BRU-1",
+        useCloudFormat: true,
+      });
       assert.deepStrictEqual(
         convertedResults,
         JSON.parse(
@@ -95,7 +106,10 @@ describe(path.relative(process.cwd(), import.meta.filename), () => {
       const results = JSON.parse(
         readFileSync(join(import.meta.dirname, "test", "iterated-two-folders.json"), "utf-8")
       ) as BrunoIteration[];
-      const convertedResults = convertBrunoToXray(results, { useCloudFormat: false });
+      const convertedResults = convertBrunoToXray(results, {
+        testKey: "DP-90",
+        useCloudFormat: false,
+      });
       assert.deepStrictEqual(
         convertedResults,
         JSON.parse(
@@ -120,6 +134,7 @@ describe(path.relative(process.cwd(), import.meta.filename), () => {
           { language: "de", name: "Rob" },
           { language: "en", name: "Mary" },
         ],
+        testKey: "DP-90",
         useCloudFormat: false,
       });
       assert.deepStrictEqual(
