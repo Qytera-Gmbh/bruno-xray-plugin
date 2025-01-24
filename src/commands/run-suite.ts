@@ -99,7 +99,7 @@ async function runDirectory(
     directory: resolve(options.cwd, test.directory),
     key: test.key,
   };
-  const resolvedResults = resolve(options.cwd, "results.json");
+  const resolvedResults = resolve(resolvedTest.directory, "results.json");
   if (resolvedTest.dataset) {
     if (!existsSync(resolvedTest.dataset.location)) {
       if (!resolvedTest.dataset.issueKey) {
