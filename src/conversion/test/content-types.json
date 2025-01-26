@@ -1,0 +1,177 @@
+[
+  {
+    "iterationIndex": 0,
+    "summary": {
+      "totalRequests": 3,
+      "passedRequests": 3,
+      "failedRequests": 0,
+      "totalAssertions": 2,
+      "passedAssertions": 2,
+      "failedAssertions": 0,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0
+    },
+    "results": [
+      {
+        "test": {
+          "filename": "HTML.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "https://example.org",
+          "headers": {}
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "accept-ranges": "bytes",
+            "content-type": "text/html",
+            "etag": "\"84238dfc8092e5d9c0dac8ef93371a07:1736799080.121134\"",
+            "last-modified": "Mon, 13 Jan 2025 20:11:20 GMT",
+            "vary": "Accept-Encoding",
+            "content-length": "648",
+            "cache-control": "max-age=2352",
+            "date": "Sat, 25 Jan 2025 23:41:36 GMT",
+            "alt-svc": "h3=\":443\"; ma=93600,h3-29=\":443\"; ma=93600,h3-Q050=\":443\"; ma=93600,quic=\":443\"; ma=93600; v=\"46,43\"",
+            "connection": "keep-alive"
+          },
+          "data": "response content redacted",
+          "responseTime": 378
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "KjcmUM0msOCBO6h5m03Wu",
+            "lhsExpr": "res.body",
+            "rhsExpr": "isString",
+            "rhsOperand": "",
+            "operator": "isString",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "runtime": 0.431862,
+        "suitename": "HTML",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "Image.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "https://picsum.photos/300/300",
+          "headers": {}
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "connection": "keep-alive",
+            "content-length": "8887",
+            "server": "nginx",
+            "content-type": "image/jpeg",
+            "cache-control": "public, max-age=2592000, stale-while-revalidate=60, stale-if-error=43200, immutable",
+            "content-disposition": "inline; filename=\"552-300x300.jpg\"",
+            "picsum-id": "552",
+            "timing-allow-origin": "*",
+            "accept-ranges": "bytes",
+            "age": "1542203",
+            "date": "Sat, 25 Jan 2025 23:41:36 GMT",
+            "via": "1.1 varnish",
+            "x-served-by": "cache-fra-etou8220022-FRA",
+            "x-cache": "HIT",
+            "x-cache-hits": "0",
+            "x-timer": "S1737848497.608526,VS0,VE1",
+            "vary": "Origin"
+          },
+          "data": "response content redacted",
+          "responseTime": 203
+        },
+        "error": null,
+        "assertionResults": [],
+        "testResults": [
+          {
+            "description": "status code is 200",
+            "status": "pass",
+            "uid": "sCOAmxFF6x2wcx-rQbP5w"
+          }
+        ],
+        "runtime": 0.2258687,
+        "suitename": "Image",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "JSON.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "https://jsonplaceholder.typicode.com/todos/1",
+          "headers": {}
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "date": "Sat, 25 Jan 2025 23:41:36 GMT",
+            "content-type": "application/json; charset=utf-8",
+            "transfer-encoding": "chunked",
+            "connection": "keep-alive",
+            "report-to": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1735111589&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&s=ouCPOIK655IVzb1YxGEzRaJnWSfRlYIy1%2Bxc%2BjRWc94%3D\"}]}",
+            "reporting-endpoints": "heroku-nel=https://nel.heroku.com/reports?ts=1735111589&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&s=ouCPOIK655IVzb1YxGEzRaJnWSfRlYIy1%2Bxc%2BjRWc94%3D",
+            "nel": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}",
+            "x-powered-by": "Express",
+            "x-ratelimit-limit": "1000",
+            "x-ratelimit-remaining": "999",
+            "x-ratelimit-reset": "1735111641",
+            "vary": "Origin, Accept-Encoding",
+            "access-control-allow-credentials": "true",
+            "cache-control": "max-age=43200",
+            "pragma": "no-cache",
+            "expires": "-1",
+            "x-content-type-options": "nosniff",
+            "etag": "W/\"53-hfEnumeNh6YirfjyjaujcOPPT+s\"",
+            "via": "1.1 vegur",
+            "cf-cache-status": "HIT",
+            "age": "679",
+            "server": "cloudflare",
+            "cf-ray": "907c1d703ecf2c79-FRA",
+            "alt-svc": "h3=\":443\"; ma=86400",
+            "server-timing": "cfL4;desc=\"?proto=TCP&rtt=9697&min_rtt=6329&rtt_var=4779&sent=4&recv=5&lost=0&retrans=0&sent_bytes=2826&recv_bytes=731&delivery_rate=644651&cwnd=252&unsent_bytes=0&cid=9f4e9926271b055e&ts=20&x=0\""
+          },
+          "data": {
+            "userId": 1,
+            "id": 1,
+            "title": "delectus aut autem",
+            "completed": false
+          },
+          "responseTime": 74
+        },
+        "error": null,
+        "assertionResults": [
+          {
+            "uid": "ILU8SbipO67dyzuNRmGEj",
+            "lhsExpr": "res.body",
+            "rhsExpr": "isJson",
+            "rhsOperand": "",
+            "operator": "isJson",
+            "status": "pass"
+          }
+        ],
+        "testResults": [
+          {
+            "description": "body contains an id",
+            "status": "pass",
+            "uid": "UlcfH1ajuzaMhHNLc6fLJ"
+          }
+        ],
+        "runtime": 0.0823827,
+        "suitename": "JSON",
+        "iterationIndex": 0
+      }
+    ]
+  }
+]

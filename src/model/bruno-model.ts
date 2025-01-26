@@ -60,10 +60,10 @@ export interface BrunoAssertionResult {
 }
 
 export interface BrunoTestResult {
-  actual?: number;
+  actual?: number | string;
   description: string;
   error?: string;
-  expected?: number;
+  expected?: number | string;
   status: "fail" | "pass";
   uid: string;
 }
