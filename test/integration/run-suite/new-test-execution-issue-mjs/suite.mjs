@@ -9,6 +9,11 @@ export default {
     },
     jira: {
       projectKey: "BRU",
+      testExecution: {
+        details: {
+          summary: "Test execution using mjs file",
+        },
+      },
       url: "https://qualitymaster.atlassian.net",
     },
   },

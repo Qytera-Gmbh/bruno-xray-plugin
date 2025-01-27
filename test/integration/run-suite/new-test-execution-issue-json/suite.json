@@ -5,6 +5,11 @@
     },
     "jira": {
       "projectKey": "BRU",
+      "testExecution": {
+        "details": {
+          "summary": "Test execution using json file"
+        }
+      },
       "url": "https://qualitymaster.atlassian.net"
     }
   },
