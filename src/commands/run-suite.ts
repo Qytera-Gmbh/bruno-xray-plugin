@@ -18,6 +18,11 @@ enum Positional {
 
 enum Flag {
   COLLECTION_DIRECTORY = "collection-directory",
+  MASK_VALUE = "mask-value",
+}
+
+enum HelpGroup {
+  REPORTING = "REPORTING",
 }
 
 export default class RunSuite extends Command {
@@ -38,12 +43,18 @@ export default class RunSuite extends Command {
       default: ".",
       description: "the root collection directory",
     }),
+    [Flag.MASK_VALUE]: Flags.string({
+      description: "a sensitive value to mask in uploaded evidence",
+      helpGroup: HelpGroup.REPORTING,
+      multiple: true,
+      multipleNonGreedy: true,
+    }),
   };
 
   public async run(): Promise<void> {
     const {
       args: { [Positional.TEST_SUITE_FILE]: testPlanFile },
-      flags: { [Flag.COLLECTION_DIRECTORY]: collectionDirectory },
+      flags: { [Flag.COLLECTION_DIRECTORY]: collectionDirectory, [Flag.MASK_VALUE]: maskedValues },
     } = await this.parse(RunSuite);
 
     let testPlan: PluginTestSuite;
@@ -61,7 +72,11 @@ export default class RunSuite extends Command {
     }
 
     for (const test of testPlan.tests) {
-      const response = await runDirectory(test, { ...testPlan.config, cwd: collectionDirectory });
+      const response = await runDirectory(test, {
+        ...testPlan.config,
+        cwd: collectionDirectory,
+        maskedValues,
+      });
       if (response) {
         let key: string;
         if ("key" in response) {
@@ -80,7 +95,7 @@ export default class RunSuite extends Command {
 
 async function runDirectory(
   test: PluginTestSuite["tests"][number],
-  options: PluginTestSuite["config"] & { cwd: string }
+  options: PluginTestSuite["config"] & { cwd: string; maskedValues?: string[] }
 ) {
   const resolvedOptions: PluginTestSuite["config"] = {
     bruno: {
@@ -135,6 +150,7 @@ async function runDirectory(
     csvFile: resolvedTest.dataset?.location,
     jiraToken: process.env[envName("jira-token")],
     jiraUrl: resolvedOptions.jira.url,
+    maskedValues: options.maskedValues,
     projectKey: resolvedOptions.jira.projectKey,
     results: {
       htmlFile: resolvedHtmlResult,

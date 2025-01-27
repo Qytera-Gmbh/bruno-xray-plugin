@@ -58,6 +58,9 @@ ARGUMENTS
 
 FLAGS
   --collection-directory=<value>  [default: .] the root collection directory
+
+REPORTING FLAGS
+  --mask-value=<value>...  a sensitive value to mask in uploaded evidence
 ```
 
 A typical plugin test suite file looks like this:
