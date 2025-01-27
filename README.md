@@ -171,17 +171,18 @@ FLAGS
 
 REPORTING FLAGS
   --bruno-html-report=<value>  the Bruno HTML report file to upload as evidence
+  --mask-value=<value>...      a sensitive value to mask in uploaded evidence
 
 TEST EXECUTION ISSUE FLAGS
-  --csv-file=<value>                             a CSV file which was used for data-driven Bruno execution and will be mapped to Xray's iterations
-  --test-execution-description=<value>           [default: Generated from Bruno JSON report] the description for the test execution issue
-  --test-execution-key=<value>                   an existing Jira test execution issue to upload the test results to
-  --test-execution-revision=<value>              a revision for the revision custom field
-  --test-execution-summary=<value>               [default: Bruno test execution] the summary of the test execution issue
-  --test-execution-test-environments=<value>...  Xray test execution environments to assign the test execution issue to
-  --test-execution-test-plan-key=<value>         the test plan key for associating the test execution issue
-  --test-execution-user=<value>                  the username for the Jira user who executed the tests
-  --test-execution-version=<value>               the version name for the fix version field of the test execution issue
+  --csv-file=<value>                            a CSV file which was used for data-driven Bruno execution and will be mapped to Xray's iterations
+  --test-execution-description=<value>          [default: Generated from Bruno JSON report] the description for the test execution issue
+  --test-execution-key=<value>                  an existing Jira test execution issue to upload the test results to
+  --test-execution-revision=<value>             a revision for the revision custom field
+  --test-execution-summary=<value>              [default: Bruno test execution] the summary of the test execution issue
+  --test-execution-test-environment=<value>...  Xray test execution environments to assign the test execution issue to
+  --test-execution-test-plan-key=<value>        the test plan key for associating the test execution issue
+  --test-execution-user=<value>                 the username for the Jira user who executed the tests
+  --test-execution-version=<value>              the version name for the fix version field of the test execution issue
 
 AUTHENTICATION FLAGS
   --jira-token=<value>          the Jira API token

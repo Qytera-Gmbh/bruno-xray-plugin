@@ -15,6 +15,7 @@ import type {
   XrayTestExecutionResults,
   XrayTestServer,
 } from "../model/xray/import-execution.js";
+import { maskSensitiveValues } from "../util/security.js";
 
 /**
  * Converts Bruno JSON results into Xray JSON format.
@@ -35,6 +36,10 @@ export function convertBrunoToXray(
        */
       htmlReportFile?: string;
     };
+    /**
+     * Sensitive values to mark in all uploaded data.
+     */
+    maskedValues?: string[];
     /**
      * The data-driven iteration parameters.
      */
@@ -76,16 +81,22 @@ export function convertBrunoToXray(
   const sortedIterations = iterations.sort((a, b) => a.iterationIndex - b.iterationIndex);
   const test = options.useCloudFormat
     ? convertToXrayCloudTest(sortedIterations, {
+        maskedValues: options.maskedValues,
         testKey: options.testKey,
       })
     : convertToXrayServerTest(sortedIterations, {
+        maskedValues: options.maskedValues,
         testKey: options.testKey,
       });
   xrayReport.tests = [test];
   if (options.evidence?.htmlReportFile) {
+    let htmlContent = readFileSync(options.evidence.htmlReportFile, "utf-8");
+    if (options.maskedValues) {
+      htmlContent = maskSensitiveValues(htmlContent, options.maskedValues);
+    }
     const evidence = {
       contentType: "text/html",
-      data: Buffer.from(readFileSync(options.evidence.htmlReportFile, "utf-8")).toString("base64"),
+      data: Buffer.from(htmlContent).toString("base64"),
       filename: basename(options.evidence.htmlReportFile),
     };
     if (test.evidence) {
@@ -99,7 +110,7 @@ export function convertBrunoToXray(
 
 function convertToXrayCloudTest(
   iterations: BrunoXrayIteration[],
-  options: { testKey: string }
+  options: { maskedValues?: string[]; testKey: string }
 ): XrayTestCloud {
   const test: XrayTestCloud = {
     status: "PASSED",
@@ -107,9 +118,11 @@ function convertToXrayCloudTest(
   };
   if (iterations.length === 1) {
     const summaries = getIterationSummary(iterations[0]);
-    test.evidence = [
-      getEvidence(JSON.stringify(summaries, null, 2), "application/json", "summary.json"),
-    ];
+    let summaryString = JSON.stringify(summaries, null, 2);
+    if (options.maskedValues) {
+      summaryString = maskSensitiveValues(summaryString, options.maskedValues);
+    }
+    test.evidence = [getEvidence(summaryString, "application/json", "summary.json")];
     if (summaries.some((summary) => summary.errors.length > 0)) {
       test.status = "FAILED";
     }
@@ -130,8 +143,12 @@ function convertToXrayCloudTest(
         status: "PASSED",
       };
       const summaries = getIterationSummary(iteration);
+      let summaryString = JSON.stringify(summaries, null, 2);
+      if (options.maskedValues) {
+        summaryString = maskSensitiveValues(summaryString, options.maskedValues);
+      }
       const evidence = getEvidence(
-        JSON.stringify(summaries, null, 2),
+        summaryString,
         "application/json",
         `iteration ${(iteration.iterationIndex + 1).toString()} - summary.json`
       );
@@ -155,7 +172,7 @@ function convertToXrayCloudTest(
 
 function convertToXrayServerTest(
   iterations: BrunoXrayIteration[],
-  options: { testKey: string }
+  options: { maskedValues?: string[]; testKey: string }
 ): XrayTestServer {
   const test: XrayTestServer = {
     status: "PASS",
@@ -163,9 +180,11 @@ function convertToXrayServerTest(
   };
   if (iterations.length === 1) {
     const summaries = getIterationSummary(iterations[0]);
-    test.evidence = [
-      getEvidence(JSON.stringify(summaries, null, 2), "application/json", "summary.json"),
-    ];
+    let summaryString = JSON.stringify(summaries, null, 2);
+    if (options.maskedValues) {
+      summaryString = maskSensitiveValues(summaryString, options.maskedValues);
+    }
+    test.evidence = [getEvidence(summaryString, "application/json", "summary.json")];
     if (summaries.some((summary) => summary.errors.length > 0)) {
       test.status = "FAIL";
     }
@@ -186,8 +205,12 @@ function convertToXrayServerTest(
         status: "PASS",
       };
       const summaries = getIterationSummary(iteration);
+      let summaryString = JSON.stringify(summaries, null, 2);
+      if (options.maskedValues) {
+        summaryString = maskSensitiveValues(summaryString, options.maskedValues);
+      }
       const evidence = getEvidence(
-        JSON.stringify(summaries, null, 2),
+        summaryString,
         "application/json",
         `iteration ${(iteration.iterationIndex + 1).toString()} - summary.json`
       );

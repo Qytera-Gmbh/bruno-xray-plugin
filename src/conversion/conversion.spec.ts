@@ -28,6 +28,25 @@ describe(path.relative(process.cwd(), import.meta.filename), () => {
       });
       assert.deepStrictEqual(convertedResults.info?.testEnvironments, ["production", "live"]);
     });
+
+    it("masks sensitive values", () => {
+      const results = JSON.parse(
+        readFileSync(join(import.meta.dirname, "test", "iterated-single-folder.json"), "utf-8")
+      ) as BrunoIteration[];
+      const convertedResults = convertBrunoToXray(results, {
+        maskedValues: ["Jeff", "George"],
+        testKey: "DP-90",
+      });
+      assert.deepStrictEqual(
+        convertedResults,
+        JSON.parse(
+          readFileSync(
+            join(import.meta.dirname, "test", "iterated-single-folder-masked-expected.json"),
+            "utf-8"
+          )
+        ) as BrunoIteration[]
+      );
+    });
   });
 
   describe("single folder", () => {
