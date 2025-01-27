@@ -11,6 +11,7 @@ import { envName } from "../../util/env.js";
 import "dotenv/config";
 
 enum Flag {
+  BRUNO_HTML_REPORT = "bruno-html-report",
   CSV_FILE = "csv-file",
   JIRA_TOKEN = "jira-token",
   JIRA_URL = "jira-url",
@@ -30,6 +31,7 @@ enum Flag {
 
 enum HelpGroup {
   AUTHENTICATION = "AUTHENTICATION",
+  REPORTING = "REPORTING",
   TEST_EXECUTION_ISSUE = "TEST EXECUTION ISSUE",
 }
 
@@ -47,6 +49,10 @@ export default class UploadResults extends Command {
   static override examples = ["<%= config.bin %> <%= command.id %>"];
 
   static override flags = {
+    [Flag.BRUNO_HTML_REPORT]: Flags.string({
+      description: "the Bruno HTML report file to upload as evidence",
+      helpGroup: HelpGroup.REPORTING,
+    }),
     [Flag.CSV_FILE]: Flags.string({
       description:
         "a CSV file which was used for data-driven Bruno execution and will be mapped to Xray's iterations",
@@ -122,6 +128,7 @@ export default class UploadResults extends Command {
     const {
       args: { results },
       flags: {
+        [Flag.BRUNO_HTML_REPORT]: brunoHtmlReport,
         [Flag.CSV_FILE]: csvFile,
         [Flag.JIRA_TOKEN]: jiraToken,
         [Flag.JIRA_URL]: jiraUrl,
@@ -153,7 +160,7 @@ export default class UploadResults extends Command {
       jiraToken,
       jiraUrl,
       projectKey,
-      results,
+      results: { htmlFile: brunoHtmlReport, jsonFile: results },
       testExecution: {
         details: testExecutionDetails,
         key: testExecutionKey,
@@ -171,14 +178,17 @@ export async function uploadResults(options: {
   jiraToken?: string;
   jiraUrl: string;
   projectKey: string;
-  results: string;
+  results: {
+    htmlFile?: string;
+    jsonFile: string;
+  };
   testExecution?: PluginTestSuite["config"]["jira"]["testExecution"];
   testKey: string;
   xrayClientId?: string;
   xrayClientSecret?: string;
 }) {
   const brunoResults: BrunoIteration[] = JSON.parse(
-    readFileSync(options.results, "utf-8")
+    readFileSync(options.results.jsonFile, "utf-8")
   ) as BrunoIteration[];
 
   // Choose Xray server or cloud depending on the provided option combinations.
@@ -207,6 +217,9 @@ export async function uploadResults(options: {
   }
 
   const xrayResults = convertBrunoToXray(brunoResults, {
+    evidence: {
+      htmlReportFile: options.results.htmlFile,
+    },
     parameters,
     testExecution: {
       details: options.testExecution?.details,

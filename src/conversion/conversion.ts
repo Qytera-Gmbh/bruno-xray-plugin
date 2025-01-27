@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { basename } from "node:path";
 import type {
   BrunoIteration,
   BrunoRequest,
@@ -24,6 +26,15 @@ import type {
 export function convertBrunoToXray(
   brunoResults: BrunoIteration[],
   options: {
+    /**
+     * Additional evidence to upload to the test results.
+     */
+    evidence?: {
+      /**
+       * The path to a Bruno HTML report.
+       */
+      htmlReportFile?: string;
+    };
     /**
      * The data-driven iteration parameters.
      */
@@ -70,10 +81,18 @@ export function convertBrunoToXray(
     : convertToXrayServerTest(sortedIterations, {
         testKey: options.testKey,
       });
-  if (xrayReport.tests) {
-    xrayReport.tests.push(test);
-  } else {
-    xrayReport.tests = [test];
+  xrayReport.tests = [test];
+  if (options.evidence?.htmlReportFile) {
+    const evidence = {
+      contentType: "text/html",
+      data: Buffer.from(readFileSync(options.evidence.htmlReportFile, "utf-8")).toString("base64"),
+      filename: basename(options.evidence.htmlReportFile),
+    };
+    if (test.evidence) {
+      test.evidence = [evidence, ...test.evidence];
+    } else {
+      test.evidence = [evidence];
+    }
   }
   return xrayReport;
 }

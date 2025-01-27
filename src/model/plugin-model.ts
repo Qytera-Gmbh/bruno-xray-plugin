@@ -21,6 +21,17 @@ export interface PluginTestSuite {
        * The Bruno environment to use.
        */
       environment: string;
+      /**
+       * Bruno reporting settings.
+       */
+      report?: {
+        /**
+         * Whether to create and upload Bruno's HTML report for each test case.
+         *
+         * @default false
+         */
+        html?: boolean;
+      };
     };
     /**
      * The relevant Jira settings.

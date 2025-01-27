@@ -86,6 +86,7 @@ async function runDirectory(
     bruno: {
       certFile: options.bruno.certFile ? resolve(options.cwd, options.bruno.certFile) : undefined,
       environment: options.bruno.environment,
+      report: options.bruno.report,
     },
     jira: options.jira,
   };
@@ -100,6 +101,9 @@ async function runDirectory(
     key: test.key,
   };
   const resolvedResults = resolve(resolvedTest.directory, "results.json");
+  const resolvedHtmlResult = resolvedOptions.bruno.report?.html
+    ? resolve(resolvedTest.directory, "results.html")
+    : undefined;
   if (resolvedTest.dataset) {
     if (!existsSync(resolvedTest.dataset.location)) {
       if (!resolvedTest.dataset.issueKey) {
@@ -116,7 +120,12 @@ async function runDirectory(
     }
   }
   try {
-    await runBruno(resolvedOptions, resolvedTest, resolvedResults, options.cwd);
+    await runBruno(
+      resolvedOptions,
+      resolvedTest,
+      { html: resolvedHtmlResult, json: resolvedResults },
+      options.cwd
+    );
   } catch (error: unknown) {
     console.log("Encountered errors during Bruno execution", error);
     return;
@@ -127,7 +136,10 @@ async function runDirectory(
     jiraToken: process.env[envName("jira-token")],
     jiraUrl: resolvedOptions.jira.url,
     projectKey: resolvedOptions.jira.projectKey,
-    results: resolvedResults,
+    results: {
+      htmlFile: resolvedHtmlResult,
+      jsonFile: resolvedResults,
+    },
     testExecution: resolvedOptions.jira.testExecution,
     testKey: resolvedTest.key,
     xrayClientId: process.env[envName("xray-client-id")],
@@ -138,17 +150,23 @@ async function runDirectory(
 async function runBruno(
   config: PluginTestSuite["config"],
   test: PluginTestSuite["tests"][number],
-  resultsFile: string,
+  results: {
+    html?: string;
+    json: string;
+  },
   workingDirectory: string
 ) {
   const brunoArgs = ["bru", "run", "-r", `"${test.directory}"`];
   brunoArgs.push("--env", `"${config.bruno.environment}"`);
-  brunoArgs.push("--output", `"${resultsFile}"`);
+  brunoArgs.push("--output", `"${results.json}"`);
   if (config.bruno.certFile) {
     brunoArgs.push("--cacert", `"${config.bruno.certFile}"`);
   }
   if (test.dataset?.location) {
     brunoArgs.push("--csv-file-path", `"${test.dataset.location}"`);
+  }
+  if (results.html) {
+    brunoArgs.push("--reporter-html", `"${results.html}"`);
   }
   await run("npx", { args: brunoArgs, cwd: workingDirectory });
 }
