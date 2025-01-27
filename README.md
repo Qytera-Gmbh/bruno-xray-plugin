@@ -169,6 +169,9 @@ FLAGS
   --project-key=<value>  (required) the Jira project key where new test execution issues will be created
   --test-key=<value>     (required) the Jira test issue to attribute the test results to
 
+REPORTING FLAGS
+  --bruno-html-report=<value>  the Bruno HTML report file to upload as evidence
+
 TEST EXECUTION ISSUE FLAGS
   --csv-file=<value>                             a CSV file which was used for data-driven Bruno execution and will be mapped to Xray's iterations
   --test-execution-description=<value>           [default: Generated from Bruno JSON report] the description for the test execution issue
