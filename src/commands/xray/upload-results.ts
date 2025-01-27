@@ -15,12 +15,13 @@ enum Flag {
   CSV_FILE = "csv-file",
   JIRA_TOKEN = "jira-token",
   JIRA_URL = "jira-url",
+  MASK_VALUE = "mask-value",
   PROJECT_KEY = "project-key",
   TEST_EXECUTION_DESCRIPTION = "test-execution-description",
   TEST_EXECUTION_KEY = "test-execution-key",
   TEST_EXECUTION_REVISION = "test-execution-revision",
   TEST_EXECUTION_SUMMARY = "test-execution-summary",
-  TEST_EXECUTION_TEST_ENVIRONMENTS = "test-execution-test-environments",
+  TEST_EXECUTION_TEST_ENVIRONMENT = "test-execution-test-environment",
   TEST_EXECUTION_TEST_PLAN_KEY = "test-execution-test-plan-key",
   TEST_EXECUTION_USER = "test-execution-user",
   TEST_EXECUTION_VERSION = "test-execution-version",
@@ -67,6 +68,12 @@ export default class UploadResults extends Command {
       description: "the Jira URL",
       required: true,
     }),
+    [Flag.MASK_VALUE]: Flags.string({
+      description: "a sensitive value to mask in uploaded evidence",
+      helpGroup: HelpGroup.REPORTING,
+      multiple: true,
+      multipleNonGreedy: true,
+    }),
     [Flag.PROJECT_KEY]: Flags.string({
       description: "the Jira project key where new test execution issues will be created",
       required: true,
@@ -89,10 +96,11 @@ export default class UploadResults extends Command {
       description: "the summary of the test execution issue",
       helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
     }),
-    [Flag.TEST_EXECUTION_TEST_ENVIRONMENTS]: Flags.string({
+    [Flag.TEST_EXECUTION_TEST_ENVIRONMENT]: Flags.string({
       description: "Xray test execution environments to assign the test execution issue to",
       helpGroup: HelpGroup.TEST_EXECUTION_ISSUE,
       multiple: true,
+      multipleNonGreedy: true,
     }),
     [Flag.TEST_EXECUTION_TEST_PLAN_KEY]: Flags.string({
       description: "the test plan key for associating the test execution issue",
@@ -132,12 +140,13 @@ export default class UploadResults extends Command {
         [Flag.CSV_FILE]: csvFile,
         [Flag.JIRA_TOKEN]: jiraToken,
         [Flag.JIRA_URL]: jiraUrl,
+        [Flag.MASK_VALUE]: maskedValues,
         [Flag.PROJECT_KEY]: projectKey,
         [Flag.TEST_EXECUTION_DESCRIPTION]: testExecutionDescription,
         [Flag.TEST_EXECUTION_KEY]: testExecutionKey,
         [Flag.TEST_EXECUTION_REVISION]: testExecutionRevision,
         [Flag.TEST_EXECUTION_SUMMARY]: testExecutionSummary,
-        [Flag.TEST_EXECUTION_TEST_ENVIRONMENTS]: testExecutionTestEnvironments,
+        [Flag.TEST_EXECUTION_TEST_ENVIRONMENT]: testExecutionTestEnvironments,
         [Flag.TEST_EXECUTION_TEST_PLAN_KEY]: testExecutionTestPlanKey,
         [Flag.TEST_EXECUTION_USER]: testExecutionUser,
         [Flag.TEST_EXECUTION_VERSION]: testExecutionVersion,
@@ -159,6 +168,7 @@ export default class UploadResults extends Command {
       csvFile,
       jiraToken,
       jiraUrl,
+      maskedValues,
       projectKey,
       results: { htmlFile: brunoHtmlReport, jsonFile: results },
       testExecution: {
@@ -177,6 +187,7 @@ export async function uploadResults(options: {
   csvFile?: string;
   jiraToken?: string;
   jiraUrl: string;
+  maskedValues?: string[];
   projectKey: string;
   results: {
     htmlFile?: string;
