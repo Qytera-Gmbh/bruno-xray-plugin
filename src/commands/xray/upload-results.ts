@@ -231,6 +231,7 @@ export async function uploadResults(options: {
     evidence: {
       htmlReportFile: options.results.htmlFile,
     },
+    maskedValues: options.maskedValues,
     parameters,
     testExecution: {
       details: options.testExecution?.details,
