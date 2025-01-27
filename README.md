@@ -63,9 +63,10 @@ REPORTING FLAGS
   --mask-value=<value>...  a sensitive value to mask in uploaded evidence
 ```
 
-A typical plugin test suite file looks like this:
+A typical plugin test suite file contains information about the Bruno configuration to be applied when running Bruno, the Jira configuration for test execution information, and the individual test directories to be run:
 
 ```json
+// my-suite.json
 {
   "config": {
     "bruno": {
@@ -95,7 +96,7 @@ A typical plugin test suite file looks like this:
 }
 ```
 
-You can also define the suite in a `.js` or `.mjs` file to benefit from type checking and programmatic/dynamic values:
+You can also define suites in `.js` or `.mjs` files to benefit from programmatic/dynamic values:
 
 ```mjs
 // @ts-check
@@ -119,16 +120,21 @@ export default {
     },
   },
   tests: [
-    {
-      dataset: {
-        issueKey: "BRU-123",
-        location: "my-directory/data.csv",
-      },
-      directory: "my-directory",
-      key: "BRU-123",
-    },
+    // ...
   ],
 };
+```
+
+Plain TypeScript `.ts` suite files are also supported:
+
+```ts
+import type { PluginTestSuite } from "@qytera/bruno-xray-plugin";
+
+const CONFIG: PluginTestSuite = {
+  // ...
+};
+
+export default CONFIG;
 ```
 
 ## Sub Commands
