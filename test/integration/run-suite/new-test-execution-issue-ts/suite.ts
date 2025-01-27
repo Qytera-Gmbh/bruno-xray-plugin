@@ -7,6 +7,11 @@ const CONFIG: PluginTestSuite = {
     },
     jira: {
       projectKey: "BRU",
+      testExecution: {
+        details: {
+          summary: "Test execution using ts file",
+        },
+      },
       url: "https://qualitymaster.atlassian.net",
     },
   },
