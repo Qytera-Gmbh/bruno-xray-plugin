@@ -9,11 +9,9 @@ import type {
 import type { PluginTestSuite } from "../model/plugin-model.js";
 import type {
   XrayEvidenceItem,
-  XrayIterationResultCloud,
-  XrayIterationResultServer,
-  XrayTestCloud,
+  XrayIterationResult,
+  XrayTest,
   XrayTestExecutionResults,
-  XrayTestServer,
 } from "../model/xray/import-execution.js";
 import { maskSensitiveValues } from "../util/security.js";
 
@@ -79,15 +77,14 @@ export function convertBrunoToXray(
   }
   const iterations = getTestIterations(brunoResults, options.parameters);
   const sortedIterations = iterations.sort((a, b) => a.iterationIndex - b.iterationIndex);
-  const test = options.useCloudFormat
-    ? convertToXrayCloudTest(sortedIterations, {
-        maskedValues: options.maskedValues,
-        testKey: options.testKey,
-      })
-    : convertToXrayServerTest(sortedIterations, {
-        maskedValues: options.maskedValues,
-        testKey: options.testKey,
-      });
+  const statusMap = options.useCloudFormat
+    ? { fail: "FAILED", pass: "PASSED" }
+    : { fail: "FAIL", pass: "PASS" };
+  const test = convertToXrayTest(sortedIterations, {
+    maskedValues: options.maskedValues,
+    statusMap: statusMap,
+    testKey: options.testKey,
+  });
   xrayReport.tests = [test];
   if (options.evidence?.htmlReportFile) {
     let htmlContent = readFileSync(options.evidence.htmlReportFile, "utf-8");
@@ -108,74 +105,17 @@ export function convertBrunoToXray(
   return xrayReport;
 }
 
-function convertToXrayCloudTest(
-  iterations: BrunoXrayIteration[],
-  options: { maskedValues?: string[]; testKey: string }
-): XrayTestCloud {
-  const test: XrayTestCloud = {
-    status: "PASSED",
-    testKey: options.testKey,
-  };
-  if (iterations.length === 1) {
-    const summaries = getIterationSummary(iterations[0]);
-    let summaryString = JSON.stringify(summaries, null, 2);
-    if (options.maskedValues) {
-      summaryString = maskSensitiveValues(summaryString, options.maskedValues);
-    }
-    test.evidence = [getEvidence(summaryString, "application/json", "summary.json")];
-    if (summaries.some((summary) => summary.errors.length > 0)) {
-      test.status = "FAILED";
-    }
-  } else {
-    const results: XrayIterationResultCloud[] = [];
-    for (const iteration of iterations) {
-      const parameters: Record<string, string> = {
-        iteration: (iteration.iterationIndex + 1).toString(),
-        ...iteration.parameters,
-      };
-      const iterationResult: XrayIterationResultCloud = {
-        parameters: Object.entries(parameters).map((entry) => {
-          return {
-            name: entry[0],
-            value: entry[1],
-          };
-        }),
-        status: "PASSED",
-      };
-      const summaries = getIterationSummary(iteration);
-      let summaryString = JSON.stringify(summaries, null, 2);
-      if (options.maskedValues) {
-        summaryString = maskSensitiveValues(summaryString, options.maskedValues);
-      }
-      const evidence = getEvidence(
-        summaryString,
-        "application/json",
-        `iteration ${(iteration.iterationIndex + 1).toString()} - summary.json`
-      );
-      if (test.evidence) {
-        test.evidence.push(evidence);
-      } else {
-        test.evidence = [evidence];
-      }
-      if (summaries.some((summary) => summary.errors.length > 0)) {
-        iterationResult.status = "FAILED";
-      }
-      results.push(iterationResult);
-      test.iterations = results;
-    }
-    if (test.iterations?.some((iteration) => iteration.status === "FAILED")) {
-      test.status = "FAILED";
-    }
-  }
-  return test;
+interface XrayStatusMap {
+  fail: string;
+  pass: string;
 }
 
-function convertToXrayServerTest(
+function convertToXrayTest(
   iterations: BrunoXrayIteration[],
-  options: { maskedValues?: string[]; testKey: string }
-): XrayTestServer {
-  const test: XrayTestServer = {
-    status: "PASS",
+  options: { maskedValues?: string[]; statusMap: XrayStatusMap; testKey: string }
+): XrayTest {
+  const test: XrayTest = {
+    status: options.statusMap.pass,
     testKey: options.testKey,
   };
   if (iterations.length === 1) {
@@ -186,23 +126,23 @@ function convertToXrayServerTest(
     }
     test.evidence = [getEvidence(summaryString, "application/json", "summary.json")];
     if (summaries.some((summary) => summary.errors.length > 0)) {
-      test.status = "FAIL";
+      test.status = options.statusMap.fail;
     }
   } else {
-    const results: XrayIterationResultServer[] = [];
+    const results: XrayIterationResult[] = [];
     for (const iteration of iterations) {
       const parameters: Record<string, string> = {
         iteration: (iteration.iterationIndex + 1).toString(),
         ...iteration.parameters,
       };
-      const iterationResult: XrayIterationResultServer = {
+      const iterationResult: XrayIterationResult = {
         parameters: Object.entries(parameters).map((entry) => {
           return {
             name: entry[0],
             value: entry[1],
           };
         }),
-        status: "PASS",
+        status: options.statusMap.pass,
       };
       const summaries = getIterationSummary(iteration);
       let summaryString = JSON.stringify(summaries, null, 2);
@@ -220,13 +160,13 @@ function convertToXrayServerTest(
         test.evidence = [evidence];
       }
       if (summaries.some((summary) => summary.errors.length > 0)) {
-        iterationResult.status = "FAIL";
+        iterationResult.status = options.statusMap.fail;
       }
       results.push(iterationResult);
       test.iterations = results;
     }
-    if (test.iterations?.some((iteration) => iteration.status === "FAIL")) {
-      test.status = "FAIL";
+    if (test.iterations?.some((iteration) => iteration.status === options.statusMap.fail)) {
+      test.status = options.statusMap.fail;
     }
   }
   return test;
