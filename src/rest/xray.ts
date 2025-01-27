@@ -184,6 +184,7 @@ export class XrayClient {
               jira(fields: ["key"])
             }
             evidence {
+              id
               filename
               downloadLink
             }
@@ -234,6 +235,25 @@ export class XrayClient {
       }
     } while (start && start < total);
     return runResults;
+  }
+
+  /**
+   * Downloads an attachment.
+   *
+   * @param attachmentId - the ID of the attachment to download
+   * @returns the attachment content
+   * @see https://docs.getxray.app/display/XRAYCLOUD/Attachments+-+REST+v2
+   */
+  public async downloadAttachment(attachmentId: string): Promise<string> {
+    const authorizationValue = await this.getAuthorizationHeader(this.credentials);
+
+    const response = await fetch(`${XrayClient.CLOUD_URL}/api/v2/attachments/${attachmentId}`, {
+      headers: {
+        ["Authorization"]: authorizationValue,
+      },
+      method: "GET",
+    });
+    return await response.text();
   }
 
   private async getAuthorizationHeader(credentials: XrayCredentials) {
