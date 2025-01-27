@@ -23,7 +23,7 @@ const TESTS: TestCase[] = [
         {
           content: [
             {
-              text: "this test execution issue was reused in a json config",
+              text: "this test execution issue was reused in a config",
               type: "text",
             },
           ],
@@ -33,13 +33,13 @@ const TESTS: TestCase[] = [
       type: "doc",
       version: 1,
     },
-    expectedSummary: "reused test execution issue json",
+    expectedSummary: "reused test execution issue",
     expectedTestExecutionIssueKey: "BRU-8",
     linkedTest: "BRU-23",
     projectDirectory: join(import.meta.dirname),
     projectKey: "BRU",
     service: "cloud",
-    title: "suites can reuse test execution issues in json configurations",
+    title: "suites can reuse test execution issues in configurations",
   },
 ];
 
