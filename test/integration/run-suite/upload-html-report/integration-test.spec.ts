@@ -44,7 +44,7 @@ describe(relative(cwd(), import.meta.filename), { timeout: 180000 }, async () =>
           "cloud"
         ).issueSearch.searchForIssuesUsingJql({
           fields: ["id", "summary", "description"],
-          jql: `issue in (${testExecutionIssueKey}, ${test.linkedTest}) ORDER BY key`,
+          jql: `issue in (${testExecutionIssueKey}, ${test.linkedTest}) ORDER BY key DESC`,
         });
         assert.ok(searchResult.issues);
         const testResults = await getIntegrationClient("xray", "cloud").getTestRunResults({
