@@ -1,10 +1,11 @@
 import { Args, Command, Flags } from "@oclif/core";
 import ansiColors from "ansi-colors";
+import type { Loader } from "cosmiconfig";
+import { defaultLoaders } from "cosmiconfig";
 import { spawn } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { cwd } from "node:process";
-import { pathToFileURL } from "node:url";
 import type { PluginTestSuite } from "../model/plugin-model.js";
 import { envName } from "../util/env.js";
 import { downloadDataset } from "./xray/download-dataset.js";
@@ -57,19 +58,24 @@ export default class RunSuite extends Command {
       flags: { [Flag.COLLECTION_DIRECTORY]: collectionDirectory, [Flag.MASK_VALUE]: maskedValues },
     } = await this.parse(RunSuite);
 
-    let testPlan: PluginTestSuite;
-
     const resolvedPath = resolve(cwd(), testPlanFile);
 
+    let loader: Loader;
+
     if (resolvedPath.endsWith(".mjs") || resolvedPath.endsWith(".js")) {
-      testPlan = (
-        (await import(pathToFileURL(resolvedPath).toString())) as { default: PluginTestSuite }
-      ).default;
-    } else if (testPlanFile.endsWith(".json")) {
-      testPlan = JSON.parse(readFileSync(resolvedPath, "utf-8")) as PluginTestSuite;
+      loader = defaultLoaders[".mjs"];
+    } else if (resolvedPath.endsWith(".mts") || resolvedPath.endsWith(".ts")) {
+      loader = defaultLoaders[".ts"];
+    } else if (resolvedPath.endsWith(".json")) {
+      loader = defaultLoaders[".json"];
     } else {
       throw new Error(`Unsupported test suite file extension: ${resolvedPath}`);
     }
+
+    const testPlan = (await loader(
+      resolvedPath,
+      readFileSync(resolvedPath, "utf-8")
+    )) as PluginTestSuite;
 
     for (const test of testPlan.tests) {
       const response = await runDirectory(test, {
