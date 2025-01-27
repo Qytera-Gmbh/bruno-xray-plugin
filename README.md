@@ -63,79 +63,71 @@ REPORTING FLAGS
   --mask-value=<value>...  a sensitive value to mask in uploaded evidence
 ```
 
-A typical plugin test suite file contains information about the Bruno configuration to be applied when running Bruno, the Jira configuration for test execution information, and the individual test directories to be run:
+A typical plugin test suite file contains information about the Bruno configuration to be applied when running Bruno, the Jira configuration for test execution information, and the individual test directories to be run.
 
-```json
-// my-suite.json
-{
-  "config": {
-    "bruno": {
-      "environment": "local"
-    },
-    "jira": {
-      "projectKey": "BRU",
-      "testExecution": {
-        "details": {
-          "summary": "A Bruno test suite execution",
-          "description": "This test execution issue was created by the bruno-xray-plugin."
-        }
+The plugin uses [cosmiconfig](https://www.npmjs.com/package/cosmiconfig) for suite parsing, allowing you to define suites in:
+
+- `json` format (e.g. `my-suite.json`):
+
+  ```json
+  {
+    "config": {
+      "bruno": {
+        "environment": "local"
       },
-      "url": "https://example.atlassian.net"
-    }
-  },
-  "tests": [
-    {
-      "directory": "my-directory",
-      "dataset": {
-        "location": "my-directory/data.csv",
-        "issueKey": "BRU-1"
-      },
-      "key": "BRU-1"
-    }
-  ]
-}
-```
-
-You can also define suites in `.js` or `.mjs` files to benefit from programmatic/dynamic values:
-
-```mjs
-// @ts-check
-/**
- * @type {import("@qytera/bruno-xray-plugin").PluginTestSuite}
- */
-export default {
-  config: {
-    bruno: {
-      environment: "local",
-    },
-    jira: {
-      projectKey: "BRU",
-      testExecution: {
-        details: {
-          description: `This test execution issue was created by the bruno-xray-plugin at ${new Date()}.`,
-          summary: "A Bruno js suite execution",
+      "jira": {
+        "projectKey": "BRU",
+        "testExecution": {
+          "details": {
+            "summary": "A Bruno test suite execution",
+            "description": "This test execution issue was created by the bruno-xray-plugin."
+          }
         },
-      },
-      url: "https://example.atlassian.net",
+        "url": "https://example.atlassian.net"
+      }
     },
-  },
-  tests: [
-    // ...
-  ],
-};
-```
+    "tests": [
+      {
+        "directory": "my-directory",
+        "dataset": {
+          "location": "my-directory/data.csv",
+          "issueKey": "BRU-1"
+        },
+        "key": "BRU-1"
+      }
+    ]
+  }
+  ```
 
-Plain TypeScript `.ts` suite files are also supported:
+- `js`/`mjs` format (e.g. `my-suite.js`):
 
-```ts
-import type { PluginTestSuite } from "@qytera/bruno-xray-plugin";
+  ```mjs
+  export default {
+    config: {
+      // ...
+    },
+    tests: [
+      // ...
+    ],
+  };
+  ```
 
-const CONFIG: PluginTestSuite = {
-  // ...
-};
+- `ts` format (e.g. `my-suite.ts`):
 
-export default CONFIG;
-```
+  ```ts
+  import type { PluginTestSuite } from "@qytera/bruno-xray-plugin";
+
+  const CONFIG: PluginTestSuite = {
+    config: {
+      // ...
+    },
+    tests: [
+      // ...
+    ],
+  };
+
+  export default CONFIG;
+  ```
 
 ## Sub Commands
 

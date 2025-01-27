@@ -64,7 +64,7 @@ export default class RunSuite extends Command {
 
     if (resolvedPath.endsWith(".mjs") || resolvedPath.endsWith(".js")) {
       loader = defaultLoaders[".mjs"];
-    } else if (resolvedPath.endsWith(".mts") || resolvedPath.endsWith(".ts")) {
+    } else if (resolvedPath.endsWith(".ts")) {
       loader = defaultLoaders[".ts"];
     } else if (resolvedPath.endsWith(".json")) {
       loader = defaultLoaders[".json"];
