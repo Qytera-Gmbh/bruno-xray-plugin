@@ -9,8 +9,8 @@
       "testExecution": {
         "key": "BRU-8",
         "details": {
-          "summary": "reused test execution issue json",
-          "description": "this test execution issue was reused in a json config"
+          "summary": "reused test execution issue",
+          "description": "this test execution issue was reused in a config"
         }
       }
     }
