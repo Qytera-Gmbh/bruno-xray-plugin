@@ -65,7 +65,7 @@ REPORTING FLAGS
 
 A typical plugin test suite file contains information about the Bruno configuration to be applied when running Bruno, the Jira configuration for test execution information, and the individual test directories to be run.
 
-The plugin uses [cosmiconfig](https://www.npmjs.com/package/cosmiconfig) for suite parsing, allowing you to define suites in:
+You can define suites in:
 
 - `json` format (e.g. `my-suite.json`):
 
