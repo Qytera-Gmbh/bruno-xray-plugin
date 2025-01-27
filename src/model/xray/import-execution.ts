@@ -130,12 +130,10 @@ export interface XrayTest {
 /**
  * @see https://docs.getxray.app/display/XRAY/Import+Execution+Results#ImportExecutionResults-%22tests%22object-TestRundetails
  */
-export type XrayTestServer = XrayTest;
 export type XrayExamplesTypeServer = "EXECUTING" | "FAIL" | "PASS" | "TODO";
 /**
  * @see https://docs.getxray.app/display/XRAYCLOUD/Using+Xray+JSON+format+to+import+execution+results#UsingXrayJSONformattoimportexecutionresults-%22test%22object-TestRundetails
  */
-export type XrayTestCloud = XrayTest;
 export type XrayExamplesTypeCloud = "EXECUTING" | "FAILED" | "PASSED" | "TODO";
 
 export interface XrayTestInfo {
