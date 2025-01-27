@@ -13,7 +13,11 @@ export function maskSensitiveValues(
   strategy: "all-stars-except-first-last" | "all-stars" = "all-stars-except-first-last"
 ): string {
   let resultContent = content;
-  for (const sensitiveValue of sensitiveValues) {
+  // Sort values to ensure that we handle situations like this correctly:
+  // Call: maskSensitiveValues("I am a secretValue", ["secret", "secretValue"]);
+  // Without sorting: "I am a s****tValue"
+  // With sorting:    "I am a s*********e"
+  for (const sensitiveValue of sensitiveValues.toSorted((a, b) => b.length - a.length)) {
     switch (strategy) {
       case "all-stars": {
         resultContent = resultContent.replaceAll(sensitiveValue, mask(sensitiveValue, "*"));
