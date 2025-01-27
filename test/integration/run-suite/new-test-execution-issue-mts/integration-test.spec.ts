@@ -25,7 +25,7 @@ describe(relative(cwd(), import.meta.filename), { timeout: 180000 }, async () =>
   ] as TestCase[]) {
     await it(test.title, async () => {
       const output = runPlugin(
-        ["run-suite", "./suite.ts", "--collection-directory", "collection"],
+        ["run-suite", "./suite.mts", "--collection-directory", "collection"],
         {
           cwd: test.projectDirectory,
           includeDefaultEnv: test.service,
