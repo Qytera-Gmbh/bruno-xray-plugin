@@ -149,18 +149,18 @@ function convertToXrayTest(
       if (options.maskedValues) {
         summaryString = maskSensitiveValues(summaryString, options.maskedValues);
       }
+      if (summaries.some((summary) => summary.errors.length > 0)) {
+        iterationResult.status = options.statusMap.fail;
+      }
       const evidence = getEvidence(
         summaryString,
         "application/json",
-        `iteration ${(iteration.iterationIndex + 1).toString()} - summary.json`
+        `iteration ${(iteration.iterationIndex + 1).toString()} ${iterationResult.status}.json`
       );
       if (test.evidence) {
         test.evidence.push(evidence);
       } else {
         test.evidence = [evidence];
-      }
-      if (summaries.some((summary) => summary.errors.length > 0)) {
-        iterationResult.status = options.statusMap.fail;
       }
       results.push(iterationResult);
       test.iterations = results;
