@@ -1,7 +1,7 @@
+import { XrayClientCloud, XrayClientServer } from "@qytera/xray-client";
 import type { Client } from "jira.js";
 import { Version2Client, Version3Client } from "jira.js";
 import assert from "node:assert";
-import { XrayClient } from "../../src/rest/xray.js";
 
 import "dotenv/config";
 
@@ -13,15 +13,20 @@ export function getActualTestExecutionIssueKey(projectKey: string, output: strin
   return testExecutionIssueKey;
 }
 
-const XRAY_CLIENT_CLOUD = new XrayClient({
-  clientId: getEnvValue("XRAY_CLIENT_ID_CLOUD", "XRAY_CLIENT_ID"),
-  clientSecret: getEnvValue("XRAY_CLIENT_SECRET_CLOUD", "XRAY_CLIENT_SECRET"),
+const XRAY_CLIENT_CLOUD = new XrayClientCloud({
+  credentials: {
+    clientId: getEnvValue("XRAY_CLIENT_ID_CLOUD", "XRAY_CLIENT_ID"),
+    clientSecret: getEnvValue("XRAY_CLIENT_SECRET_CLOUD", "XRAY_CLIENT_SECRET"),
+  },
+  url: "https://xray.cloud.getxray.app",
 });
 
-const XRAY_CLIENT_SERVER = new XrayClient({
-  baseUrl: "https://xray-demo3.getxray.app",
-  password: getEnvValue("JIRA_PASSWORD_SERVER"),
-  username: getEnvValue("JIRA_USERNAME_SERVER"),
+const XRAY_CLIENT_SERVER = new XrayClientServer({
+  credentials: {
+    password: getEnvValue("JIRA_PASSWORD_SERVER"),
+    username: getEnvValue("JIRA_USERNAME_SERVER"),
+  },
+  url: "https://xray-demo3.getxray.app",
 });
 
 const JIRA_CLIENT_CLOUD = new Version3Client({
@@ -44,13 +49,14 @@ const JIRA_CLIENT_SERVER = new Version2Client({
   host: "https://xray-demo3.getxray.app",
 });
 
-export function getIntegrationClient(client: "xray", service: "cloud" | "server"): XrayClient;
+export function getIntegrationClient(client: "xray", service: "cloud"): XrayClientCloud;
+export function getIntegrationClient(client: "xray", service: "server"): XrayClientServer;
 export function getIntegrationClient(client: "jira", service: "cloud"): Version3Client;
 export function getIntegrationClient(client: "jira", service: "server"): Version2Client;
 export function getIntegrationClient(
   client: "jira" | "xray",
   service: "cloud" | "server"
-): Client | XrayClient {
+): Client | XrayClientCloud | XrayClientServer {
   switch (client) {
     case "jira": {
       switch (service) {

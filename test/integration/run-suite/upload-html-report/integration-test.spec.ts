@@ -47,14 +47,24 @@ describe(relative(cwd(), import.meta.filename), { timeout: 180000 }, async () =>
           jql: `issue in (${testExecutionIssueKey}, ${test.linkedTest}) ORDER BY key DESC`,
         });
         assert.ok(searchResult.issues);
-        const testResults = await getIntegrationClient("xray", "cloud").getTestRunResults({
-          testExecIssueIds: [searchResult.issues[0].id],
-          testIssueIds: [searchResult.issues[1].id],
-        });
-        assert.strictEqual(testResults.length, 1);
-        assert.ok(testResults[0].evidence);
+        const testResults = await getIntegrationClient("xray", "cloud").graphql.getTestRuns.query(
+          {
+            limit: 1,
+            testExecIssueIds: [searchResult.issues[0].id],
+            testIssueIds: [searchResult.issues[1].id],
+          },
+          (testRunResults) => [
+            testRunResults.results((testRun) => [
+              testRun.evidence((evidence) => [evidence.filename]),
+            ]),
+          ]
+        );
+        assert.strictEqual(testResults.results?.length, 1);
+        assert.ok(testResults.results[0]?.evidence);
         assert.ok(
-          testResults[0].evidence.some((evidence) => evidence.filename === test.expectedReportName)
+          testResults.results[0].evidence.some(
+            (evidence) => evidence?.filename === test.expectedReportName
+          )
         );
       }
     });

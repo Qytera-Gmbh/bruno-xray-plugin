@@ -44,39 +44,50 @@ const TESTS: TestCase[] = [
 ];
 
 describe(relative(cwd(), import.meta.filename), { timeout: 180000 }, async () => {
-  for (const test of TESTS) {
-    await it(test.title, async () => {
+  for (const testCase of TESTS) {
+    await it(testCase.title, async () => {
       const output = runPlugin(
         ["run-suite", "./suite.json", "--collection-directory", "collection"],
         {
-          cwd: test.projectDirectory,
-          includeDefaultEnv: test.service,
+          cwd: testCase.projectDirectory,
+          includeDefaultEnv: testCase.service,
         }
       );
 
-      const testExecutionIssueKey = getActualTestExecutionIssueKey(test.projectKey, output);
+      const testExecutionIssueKey = getActualTestExecutionIssueKey(testCase.projectKey, output);
 
-      assert.strictEqual(testExecutionIssueKey, test.expectedTestExecutionIssueKey);
+      assert.strictEqual(testExecutionIssueKey, testCase.expectedTestExecutionIssueKey);
 
-      if (test.service === "cloud") {
+      if (testCase.service === "cloud") {
         const searchResult = await getIntegrationClient(
           "jira",
           "cloud"
         ).issueSearch.searchForIssuesUsingJql({
           fields: ["id", "summary", "description"],
-          jql: `issue in (${testExecutionIssueKey}, ${test.linkedTest}) ORDER BY key`,
+          jql: `issue in (${testExecutionIssueKey}, ${testCase.linkedTest}) ORDER BY key`,
         });
         assert.ok(searchResult.issues);
-        assert.strictEqual(searchResult.issues[0].fields.summary, test.expectedSummary);
-        assert.deepStrictEqual(searchResult.issues[0].fields.description, test.expectedDescription);
-        const testResults = await getIntegrationClient("xray", "cloud").getTestRunResults({
-          testExecIssueIds: [searchResult.issues[0].id],
-          testIssueIds: [searchResult.issues[1].id],
-        });
-        assert.strictEqual(testResults.length, 1);
-        assert.deepStrictEqual(testResults[0].test, {
+        assert.strictEqual(searchResult.issues[0].fields.summary, testCase.expectedSummary);
+        assert.deepStrictEqual(
+          searchResult.issues[0].fields.description,
+          testCase.expectedDescription
+        );
+        const testResults = await getIntegrationClient("xray", "cloud").graphql.getTestRuns.query(
+          {
+            limit: 1,
+            testExecIssueIds: [searchResult.issues[0].id],
+            testIssueIds: [searchResult.issues[1].id],
+          },
+          (testRunResults) => [
+            testRunResults.results((testRun) => [
+              testRun.test((test) => [test.jira({ fields: ["key"] })]),
+            ]),
+          ]
+        );
+        assert.strictEqual(testResults.results?.length, 1);
+        assert.deepStrictEqual(testResults.results[0]?.test, {
           jira: {
-            key: test.linkedTest,
+            key: testCase.linkedTest,
           },
         });
       }

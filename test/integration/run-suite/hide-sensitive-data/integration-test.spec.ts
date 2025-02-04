@@ -55,20 +55,34 @@ describe(relative(cwd(), import.meta.filename), { timeout: 180000 }, async () =>
         });
         assert.ok(searchResult.issues);
         const xrayClient = getIntegrationClient("xray", "cloud");
-        const testResults = await xrayClient.getTestRunResults({
-          testExecIssueIds: [searchResult.issues[0].id],
-          testIssueIds: [searchResult.issues[1].id],
-        });
-        assert.strictEqual(testResults.length, 1);
-        assert.strictEqual(testResults[0].evidence?.length, 4);
-        assert.ok(testResults[0].evidence[0].id);
-        assert.ok(testResults[0].evidence[1].id);
-        assert.ok(testResults[0].evidence[2].id);
-        assert.ok(testResults[0].evidence[3].id);
-        const htmlReport = await xrayClient.downloadAttachment(testResults[0].evidence[0].id);
-        const iteration1 = await xrayClient.downloadAttachment(testResults[0].evidence[1].id);
-        const iteration2 = await xrayClient.downloadAttachment(testResults[0].evidence[2].id);
-        const iteration3 = await xrayClient.downloadAttachment(testResults[0].evidence[3].id);
+        const testResults = await xrayClient.graphql.getTestRuns.query(
+          {
+            limit: 1,
+            testExecIssueIds: [searchResult.issues[0].id],
+            testIssueIds: [searchResult.issues[1].id],
+          },
+          (testRunResults) => [
+            testRunResults.results((testRun) => [testRun.evidence((evidence) => [evidence.id])]),
+          ]
+        );
+        assert.strictEqual(testResults.results?.length, 1);
+        assert.strictEqual(testResults.results[0]?.evidence?.length, 4);
+        assert.ok(testResults.results[0].evidence[0]?.id);
+        assert.ok(testResults.results[0].evidence[1]?.id);
+        assert.ok(testResults.results[0].evidence[2]?.id);
+        assert.ok(testResults.results[0].evidence[3]?.id);
+        const htmlReport = await xrayClient.attachments.getAttachment(
+          testResults.results[0].evidence[0].id
+        );
+        const iteration1 = await xrayClient.attachments.getAttachment(
+          testResults.results[0].evidence[1].id
+        );
+        const iteration2 = await xrayClient.attachments.getAttachment(
+          testResults.results[0].evidence[2].id
+        );
+        const iteration3 = await xrayClient.attachments.getAttachment(
+          testResults.results[0].evidence[3].id
+        );
 
         for (const evidence of [htmlReport, iteration1]) {
           assert.ok(
