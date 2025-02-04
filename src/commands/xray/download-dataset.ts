@@ -1,8 +1,8 @@
 import { Args, Command, Flags } from "@oclif/core";
+import { XrayClientCloud, XrayClientServer } from "@qytera/xray-client";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { cwd } from "node:process";
-import { XrayClient } from "../../rest/xray.js";
 import { envName } from "../../util/env.js";
 
 import "dotenv/config";
@@ -90,11 +90,14 @@ export async function downloadDataset(options: {
   xrayClientSecret?: string;
 }) {
   // Choose Xray server or cloud client depending on the provided authentication combinations.
-  let xrayClient: XrayClient;
+  let xrayClient;
   if (options.xrayClientId !== undefined && options.xrayClientSecret !== undefined) {
-    xrayClient = XrayClient.instance({
-      clientId: options.xrayClientId,
-      clientSecret: options.xrayClientSecret,
+    xrayClient = new XrayClientCloud({
+      credentials: {
+        clientId: options.xrayClientId,
+        clientSecret: options.xrayClientSecret,
+      },
+      url: "https://xray.cloud.getxray.app",
     });
   } else {
     if (options.jiraToken === undefined) {
@@ -102,9 +105,12 @@ export async function downloadDataset(options: {
         `One of [--${Flag.XRAY_CLIENT_ID} ... --${Flag.XRAY_CLIENT_SECRET} ...] or [--${Flag.JIRA_TOKEN} ... --${Flag.JIRA_URL} ...] must be provided`
       );
     }
-    xrayClient = XrayClient.instance({ baseUrl: options.jiraUrl, token: options.jiraToken });
+    xrayClient = new XrayClientServer({
+      credentials: { token: options.jiraToken },
+      url: options.jiraUrl,
+    });
   }
-  const response = await xrayClient.downloadDataset(options.issueKey);
+  const response = await xrayClient.dataset.export({ testIssueKey: options.issueKey });
   const destination = resolve(options.output);
   mkdirSync(dirname(destination), { recursive: true });
   writeFileSync(destination, response);

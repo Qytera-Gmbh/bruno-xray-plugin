@@ -1,4 +1,4 @@
-import type { XrayTestExecutionInfo } from "./xray/import-execution.js";
+import type { Xray } from "@qytera/xray-client";
 
 /**
  * Models a test suite of the Bruno Xray plugin. It contains a general configuration and an array of
@@ -49,7 +49,7 @@ export interface PluginTestSuite {
          * If `key` is not specified, these details will be applied to a new test execution issue.
          * Otherwise, the existing issue will be updated with the information specified here.
          */
-        details?: XrayTestExecutionInfo;
+        details?: Xray.Import.TestExecutionInfo;
         /**
          * An existing Jira test execution issue to upload the test results to.
          */

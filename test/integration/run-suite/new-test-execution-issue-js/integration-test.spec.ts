@@ -14,7 +14,7 @@ interface TestCase {
 }
 
 describe(relative(cwd(), import.meta.filename), { timeout: 180000 }, async () => {
-  for (const test of [
+  for (const testCase of [
     {
       linkedTest: "BRU-108",
       projectDirectory: join(import.meta.dirname),
@@ -23,35 +23,44 @@ describe(relative(cwd(), import.meta.filename), { timeout: 180000 }, async () =>
       title: "suites can be configured in js files",
     },
   ] as TestCase[]) {
-    await it(test.title, async () => {
+    await it(testCase.title, async () => {
       const output = runPlugin(
         ["run-suite", "./suite.js", "--collection-directory", "collection"],
         {
-          cwd: test.projectDirectory,
-          includeDefaultEnv: test.service,
+          cwd: testCase.projectDirectory,
+          includeDefaultEnv: testCase.service,
         }
       );
 
-      const testExecutionIssueKey = getActualTestExecutionIssueKey(test.projectKey, output);
+      const testExecutionIssueKey = getActualTestExecutionIssueKey(testCase.projectKey, output);
 
-      if (test.service === "cloud") {
+      if (testCase.service === "cloud") {
         const searchResult = await getIntegrationClient(
           "jira",
           "cloud"
         ).issueSearch.searchForIssuesUsingJql({
           fields: ["id"],
-          jql: `issue in (${testExecutionIssueKey}, ${test.linkedTest}) ORDER BY key DESC`,
+          jql: `issue in (${testExecutionIssueKey}, ${testCase.linkedTest}) ORDER BY key DESC`,
         });
         assert.ok(searchResult.issues);
-        const testResults = await getIntegrationClient("xray", "cloud").getTestRunResults({
-          testExecIssueIds: [searchResult.issues[0].id],
-          testIssueIds: [searchResult.issues[1].id],
-        });
-        assert.strictEqual(testResults.length, 1);
-        assert.deepStrictEqual(testResults[0].status, { name: "PASSED" });
-        assert.deepStrictEqual(testResults[0].test, {
+        const testResults = await getIntegrationClient("xray", "cloud").graphql.getTestRuns.query(
+          {
+            limit: 1,
+            testExecIssueIds: [searchResult.issues[0].id],
+            testIssueIds: [searchResult.issues[1].id],
+          },
+          (testRunResults) => [
+            testRunResults.results((testRun) => [
+              testRun.test((test) => [test.jira({ fields: ["key"] })]),
+              testRun.status((status) => [status.name]),
+            ]),
+          ]
+        );
+        assert.strictEqual(testResults.results?.length, 1);
+        assert.deepStrictEqual(testResults.results[0]?.status, { name: "PASSED" });
+        assert.deepStrictEqual(testResults.results[0].test, {
           jira: {
-            key: test.linkedTest,
+            key: testCase.linkedTest,
           },
         });
       }

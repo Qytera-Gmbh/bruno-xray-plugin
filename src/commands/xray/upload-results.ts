@@ -1,11 +1,11 @@
 import { Args, Command, Flags } from "@oclif/core";
+import type { Xray } from "@qytera/xray-client";
+import { XrayClientCloud, XrayClientServer } from "@qytera/xray-client";
 import { parse } from "csv-parse/sync";
 import { readFileSync } from "fs";
 import { convertBrunoToXray } from "../../conversion/conversion.js";
 import type { BrunoIteration } from "../../model/bruno-model.js";
 import type { PluginTestSuite } from "../../model/plugin-model.js";
-import type { XrayTestExecutionInfo } from "../../model/xray/import-execution.js";
-import { XrayClient } from "../../rest/xray.js";
 import { envName } from "../../util/env.js";
 
 import "dotenv/config";
@@ -155,7 +155,7 @@ export default class UploadResults extends Command {
         [Flag.XRAY_CLIENT_SECRET]: xrayClientSecret,
       },
     } = await this.parse(UploadResults);
-    const testExecutionDetails: XrayTestExecutionInfo = {
+    const testExecutionDetails: Xray.Import.TestExecutionInfo = {
       description: testExecutionDescription,
       revision: testExecutionRevision,
       summary: testExecutionSummary,
@@ -203,12 +203,14 @@ export async function uploadResults(options: {
   ) as BrunoIteration[];
 
   // Choose Xray server or cloud depending on the provided option combinations.
-  let xrayClient: XrayClient;
-
+  let xrayClient;
   if (options.xrayClientId !== undefined && options.xrayClientSecret !== undefined) {
-    xrayClient = XrayClient.instance({
-      clientId: options.xrayClientId,
-      clientSecret: options.xrayClientSecret,
+    xrayClient = new XrayClientCloud({
+      credentials: {
+        clientId: options.xrayClientId,
+        clientSecret: options.xrayClientSecret,
+      },
+      url: "https://xray.cloud.getxray.app",
     });
   } else {
     if (options.jiraToken === undefined) {
@@ -216,9 +218,11 @@ export async function uploadResults(options: {
         `One of [--${Flag.XRAY_CLIENT_ID} ... --${Flag.XRAY_CLIENT_SECRET} ...] or [--${Flag.JIRA_TOKEN} ... --${Flag.JIRA_URL} ...] must be provided`
       );
     }
-    xrayClient = XrayClient.instance({ baseUrl: options.jiraUrl, token: options.jiraToken });
+    xrayClient = new XrayClientServer({
+      credentials: { token: options.jiraToken },
+      url: options.jiraUrl,
+    });
   }
-
   let parameters: Record<string, string>[] | undefined = undefined;
   if (options.csvFile) {
     parameters = parse(readFileSync(options.csvFile, "utf-8"), {
@@ -245,5 +249,5 @@ export async function uploadResults(options: {
     throw new Error("No Xray tests found in Bruno JSON");
   }
 
-  return await xrayClient.importExecution(xrayResults, options.projectKey);
+  return await xrayClient.import.execution.xray(xrayResults);
 }

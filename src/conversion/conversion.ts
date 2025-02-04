@@ -1,3 +1,4 @@
+import type { Xray } from "@qytera/xray-client";
 import { readFileSync } from "node:fs";
 import { basename } from "node:path";
 import type {
@@ -7,12 +8,6 @@ import type {
   BrunoResponse,
 } from "../model/bruno-model.js";
 import type { PluginTestSuite } from "../model/plugin-model.js";
-import type {
-  XrayEvidenceItem,
-  XrayIterationResult,
-  XrayTest,
-  XrayTestExecutionResults,
-} from "../model/xray/import-execution.js";
 import { maskSensitiveValues } from "../util/security.js";
 
 /**
@@ -59,8 +54,8 @@ export function convertBrunoToXray(
      */
     useCloudFormat?: boolean;
   }
-): XrayTestExecutionResults {
-  const xrayReport: XrayTestExecutionResults = {
+): Xray.Import.TestExecutionResults {
+  const xrayReport: Xray.Import.TestExecutionResults = {
     info: {
       description: "Generated from Bruno JSON report",
       summary: "Bruno test execution",
@@ -113,8 +108,8 @@ interface XrayStatusMap {
 function convertToXrayTest(
   iterations: BrunoXrayIteration[],
   options: { maskedValues?: string[]; statusMap: XrayStatusMap; testKey: string }
-): XrayTest {
-  const test: XrayTest = {
+): Xray.Import.Test {
+  const test: Xray.Import.Test = {
     status: options.statusMap.pass,
     testKey: options.testKey,
   };
@@ -129,13 +124,13 @@ function convertToXrayTest(
       test.status = options.statusMap.fail;
     }
   } else {
-    const results: XrayIterationResult[] = [];
+    const results: Xray.Import.IterationResult[] = [];
     for (const iteration of iterations) {
       const parameters: Record<string, string> = {
         iteration: (iteration.iterationIndex + 1).toString(),
         ...iteration.parameters,
       };
-      const iterationResult: XrayIterationResult = {
+      const iterationResult: Xray.Import.IterationResult = {
         parameters: Object.entries(parameters).map((entry) => {
           return {
             name: entry[0],
@@ -207,7 +202,11 @@ function getIterationSummary(iteration: BrunoXrayIteration): RequestSummary[] {
   return summaries;
 }
 
-function getEvidence(data: string, contentType: string, filename: string): XrayEvidenceItem {
+function getEvidence(
+  data: string,
+  contentType: string,
+  filename: string
+): Xray.Import.EvidenceItem {
   return {
     contentType,
     data: Buffer.from(data).toString("base64"),
