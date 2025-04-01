@@ -39,7 +39,7 @@
   "type": "module",
   "devDependencies": {
     "@types/node": "^22.13.0",
-    "@usebruno/cli": "^1.38.3",
+    "@usebruno/cli": "^1.40.0",
     "eslint": "^9.23.0",
     "eslint-plugin-perfectionist": "^4.8.0",
     "jira.js": "^4.0.6",
